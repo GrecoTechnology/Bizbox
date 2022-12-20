@@ -2,7 +2,7 @@
 #########################################################################
 # Title:         Plex Autoscan URL Script                               #
 # Author(s):     desimaniac                                             #
-# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# URL:           https://github.com/GrecoTechnology/Bizbox                    #
 # Description:   Prints out the Plex Autoscan URL.                      #
 # --                                                                    #
 #########################################################################
@@ -47,7 +47,7 @@ echo -e "
 ${GREEN}┌───────────────────────────────────────────────────────────────────────────────────┐
 ${GREEN}│ Title:             Plex Autoscan URL Script                                       │
 ${GREEN}│ Author(s):         desimaniac                                                     │
-${GREEN}│ URL:               https://github.com/jeremiahg7/Bizbox                            │
+${GREEN}│ URL:               https://github.com/GrecoTechnology/Bizbox                            │
 ${GREEN}│ Description:       Prints out the Plex Autoscan URL.                              │
 ${GREEN}├───────────────────────────────────────────────────────────────────────────────────┤
 ${GREEN}│                        GNU General Public License v3.0                            │
@@ -64,7 +64,7 @@ function sanity_check() {
         exit 1
     elif ! [[ -x "$(command -v yyq)" ]]; then
         echo -e ${BRED}" Error: "${NORMAL}"'"${BWHITE}"yyq"${NORMAL}"' is not installed."\
-        ${NORMAL}"Run '"${BWHITE}"sb install yyq"${NORMAL}"' to install." >&2
+        ${NORMAL}"Run '"${BWHITE}"bb install yyq"${NORMAL}"' to install." >&2
         echo ""
         exit 1
     elif [[ ! -f ${PAS_CONFIG} ]]; then

@@ -2,7 +2,7 @@
 #########################################################################
 # Title:         Restart Running Containers Script                      #
 # Author(s):     desimaniac                                             #
-# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# URL:           https://github.com/GrecoTechnology/Bizbox                    #
 # Description:   Stop running containers and start them back up.        #
 # --                                                                    #
 #########################################################################
@@ -19,7 +19,7 @@ $GREEN
  ┌───────────────────────────────────────────────────────────────────────────────────┐
  │ Title:             Restart Running Containers Script                              │
  │ Author(s):         desimaniac, salty                                              │
- │ URL:               https://github.com/jeremiahg7/Bizbox                            │
+ │ URL:               https://github.com/GrecoTechnology/Bizbox                            │
  │ Description:       Stop running containers and start them back up.                │
  ├───────────────────────────────────────────────────────────────────────────────────┤
  │                        GNU General Public License v3.0                            │

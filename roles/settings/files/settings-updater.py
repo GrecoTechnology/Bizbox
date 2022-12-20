@@ -4,7 +4,7 @@
     #########################################################################
     # Title:         Settings Updater Script                                #
     # Author(s):     l3uddz                                                 #
-    # URL:           https://github.com/jeremiahg7/Bizbox                    #
+    # URL:           https://github.com/GrecoTechnology/Bizbox                    #
     # Description:   Adds variables to settings.yml.                        #
     # --                                                                    #
     #########################################################################

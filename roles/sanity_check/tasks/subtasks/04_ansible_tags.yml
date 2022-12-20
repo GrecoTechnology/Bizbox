@@ -1,7 +1,7 @@
 #########################################################################
 # Title:         Bizbox: Sanity Check | Ansible Tags                   #
 # Author(s):     desimaniac, EnorMOZ                                    #
-# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# URL:           https://github.com/GrecoTechnology/Bizbox                    #
 # --                                                                    #
 #########################################################################
 #                   GNU General Public License v3.0                     #
@@ -21,7 +21,7 @@
       - '"{{ item }}" in available_ansible_tags.stdout_lines'
     msg: >-
       You must supply valid tag(s)
-      (get a list of valid tags by running 'sb list')
+      (get a list of valid tags by running 'bb list')
     quiet: true
   with_items: "{{ ansible_run_tags }}"
   when: (not continuous_integration)

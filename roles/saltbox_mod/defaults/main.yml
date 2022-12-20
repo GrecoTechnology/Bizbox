@@ -1,12 +1,12 @@
 #########################################################################
 # Title:         Bizbox: Bizbox_mod Role                              #
 # Author(s):     salty                                                  #
-# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# URL:           https://github.com/GrecoTechnology/Bizbox                    #
 # --                                                                    #
 #########################################################################
 #                   GNU General Public License v3.0                     #
 #########################################################################
 ---
-bizbox_mod_repo: "https://github.com/jeremiahg7/bizbox_mod.git"
+bizbox_mod_repo: "https://github.com/GrecoTechnology/bizbox_mod.git"
 bizbox_mod_branch: "master"
 bizbox_mod_force_overwrite: false

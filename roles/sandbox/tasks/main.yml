@@ -1,7 +1,7 @@
 #########################################################################
 # Title:         Bizbox: Sandbox Role                                  #
 # Author(s):     salty                                                  #
-# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# URL:           https://github.com/GrecoTechnology/Bizbox                    #
 # --                                                                    #
 #########################################################################
 #                   GNU General Public License v3.0                     #
@@ -20,7 +20,7 @@
 
 - name: Clone Sandbox repo 'HEAD'
   ansible.builtin.git:
-    repo: https://github.com/jeremiahg7/sandbox.git
+    repo: https://github.com/GrecoTechnology/sandbox.git
     dest: /opt/sandbox
     clone: true
     version: HEAD
@@ -32,7 +32,7 @@
 
 - name: Clone Sandbox repo 'master'
   ansible.builtin.git:
-    repo: https://github.com/jeremiahg7/sandbox.git
+    repo: https://github.com/GrecoTechnology/sandbox.git
     dest: /opt/sandbox
     clone: true
     version: master

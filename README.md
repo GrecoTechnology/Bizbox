@@ -35,7 +35,7 @@ vi accounts.yml
 ```
 
 ```
-sb install preinstall
+bb install preinstall
 ```
 
 This step will create the user account specified in accounts.yml, add it to sudoers, update the kernel, edit GRUB configuration, install Rclone, and reboot the server if needed.

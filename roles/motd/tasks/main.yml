@@ -1,7 +1,7 @@
 #########################################################################
 # Title:         Bizbox: MOTD Role                                     #
 # Author(s):     l3uddz, desimaniac                                     #
-# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# URL:           https://github.com/GrecoTechnology/Bizbox                    #
 # --                                                                    #
 #########################################################################
 #                   GNU General Public License v3.0                     #
@@ -81,7 +81,7 @@
 
 - name: Clone Bizbox MOTD
   ansible.builtin.git:
-    repo: https://github.com/jeremiahg7/motd.git
+    repo: https://github.com/GrecoTechnology/motd.git
     dest: /opt/motd
     clone: true
     version: HEAD

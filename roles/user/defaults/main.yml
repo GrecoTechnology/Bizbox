@@ -1,7 +1,7 @@
 #########################################################################
 # Title:         Bizbox: User | Default Variables                      #
 # Author(s):     desimaniac                                             #
-# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# URL:           https://github.com/GrecoTechnology/Bizbox                    #
 # --                                                                    #
 #########################################################################
 #                   GNU General Public License v3.0                     #
@@ -20,12 +20,12 @@ user_paths_home_bizbox_location: "/srv/git/bizbox"
 srv_folder: "/srv"
 
 # Bizbox
-bizbox_git_repo_url: "https://github.com/jeremiahg7/Bizbox.git"
+bizbox_git_repo_url: "https://github.com/GrecoTechnology/Bizbox.git"
 bizbox_git_repo_dest: "/srv/git/bizbox"
 bizbox_git_repo_branch_primary: "master"
 bizbox_git_repo_branch_secondary: "master"
 
 # CB Scripts
-sb_git_repo_url: "https://github.com/jeremiahg7/sb.git"
-sb_git_repo_dest: "/srv/git/sb"
-sb_git_repo_branch_primary: "master"
+bb_git_repo_url: "https://github.com/GrecoTechnology/bb.git"
+bb_git_repo_dest: "/srv/git/bb"
+bb_git_repo_branch_primary: "master"

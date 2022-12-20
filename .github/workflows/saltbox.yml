@@ -44,7 +44,7 @@ jobs:
 
     - uses: BobAnkh/add-contributors@master
       with:
-        REPO_NAME: 'jeremiahg7/Bizbox'
+        REPO_NAME: 'GrecoTechnology/Bizbox'
         CONTRIBUTOR: '### Contributors'
         COLUMN_PER_ROW: '6'
         ACCESS_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -80,7 +80,7 @@ jobs:
           timeout_minutes: 10
           max_attempts: 3
           shell: bash
-          command: curl https://raw.githubusercontent.com/jeremiahg7/sb/master/sb_dep.sh --output sb_dep.sh && sudo bash sb_dep.sh -v && ansible --version
+          command: curl https://raw.githubusercontent.com/GrecoTechnology/bb/master/bb_dep.sh --output bb_dep.sh && sudo bash bb_dep.sh -v && ansible --version
         
       - name: Create /srv/git
         run: sudo mkdir /srv/git
