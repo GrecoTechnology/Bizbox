@@ -1,0 +1,17 @@
+---
+user:
+  name: bizbox
+  pass: password123
+  email: your@email.com
+  ssh_key:
+cloudflare:
+  email:
+  api:
+plex:
+  user:
+  pass:
+  tfa: no
+dockerhub:
+  user:
+  token:
+apprise:

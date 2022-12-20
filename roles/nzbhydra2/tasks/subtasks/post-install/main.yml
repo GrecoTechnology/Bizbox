@@ -1,0 +1,12 @@
+##########################################################################
+# Title:         Bizbox: NZBHydra2 | Post-Install Tasks                 #
+# Author(s):     desimaniac                                              #
+# URL:           https://github.com/jeremiahg7/Bizbox                     #
+# --                                                                     #
+##########################################################################
+#                   GNU General Public License v3.0                      #
+##########################################################################
+---
+- name: Post-Install | Settings Tweaks
+  ansible.builtin.import_tasks: "settings.yml"
+  when: not nzbhydra2_yml_stat.stat.exists

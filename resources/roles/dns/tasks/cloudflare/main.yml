@@ -1,0 +1,16 @@
+#########################################################################
+# Title:         Bizbox: DNS | Cloudflare                              #
+# Author(s):     desimaniac                                             #
+# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: Cloudflare | Add DNS Record
+  ansible.builtin.include_tasks: "subtasks/add_dns_record.yml"
+  when: dns_action != 'remove'
+
+- name: Cloudflare | Remove DNS Record
+  ansible.builtin.include_tasks: "subtasks/remove_dns_record.yml"
+  when: dns_action == 'remove'

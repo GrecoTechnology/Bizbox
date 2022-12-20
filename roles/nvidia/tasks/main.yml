@@ -1,0 +1,151 @@
+#########################################################################
+# Title:         Bizbox: Nvidia Role                                   #
+# Author(s):     desimaniac, l3uddz                                     #
+# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: Install common pip modules
+  ansible.builtin.pip:
+    name: jmespath
+    executable: pip3
+
+- name: Install pkg-config
+  ansible.builtin.apt:
+    name: pkg-config
+    state: present
+
+- name: Fetch Nvidia card info
+  ansible.builtin.shell: |
+      if [ `lspci | grep -c -E '.*VGA.*NVIDIA'` -eq 1 ]; then
+        lspci -s $(lspci | grep -E '.*VGA.*NVIDIA' | cut -d' ' -f 1)
+      else
+        echo ""
+      fi
+  register: lspci_resp
+
+- name: Nvidia Setup block
+  block:
+
+    - name: Get nvidia-smi driver version
+      ansible.builtin.shell: "nvidia-smi --query-gpu=driver_version --format=csv,noheader"
+      register: nvidia_smi_output
+      ignore_errors: yes
+
+    - name: Set 'nvidia_installed_driver_version' variable
+      ansible.builtin.set_fact:
+        nvidia_installed_driver_version: "{{ nvidia_smi_output.stdout }}"
+
+    # Purge Old Drivers
+
+    - name: Nvidia Purge Drivers Tasks
+      block:
+
+        - name: Purge Nvidia APT packages
+          ansible.builtin.shell: "dpkg --force-depends -P $(dpkg -l | grep nvidia | awk '{print $2}')"
+          register: dpkg_purge_output
+          ignore_errors: yes
+
+        - name: Remove nvtop
+          ansible.builtin.apt:
+            name: nvtop
+            state: absent
+
+        - name: Remove dependencies that are no longer required
+          ansible.builtin.apt:
+            autoremove: yes
+
+        - name: Success message
+          ansible.builtin.debug:
+            msg:
+              - "Purged Nvidia drivers. System will now reboot."
+              - "You will need to re-run your previous tag after the system has rebooted."
+          when: (dpkg_purge_output.stdout | length > 0)
+
+        - name: Reboot
+          ansible.builtin.shell: reboot
+          when: (dpkg_purge_output.stdout | length > 0)
+
+        - name: Reboot message
+          ansible.builtin.fail:
+            msg: "Uninstalled Nvidia driver. You will need to restart the server for changes to take effect."
+          when: (dpkg_purge_output.stdout | length > 0)
+
+      when: (nvidia_installed_driver_version != nvidia_driver_version) and (nvidia_installed_driver_version | length > 0)
+
+    # Configure Nvidia Kernel
+
+    - name: Check if 'blacklist-nouveau.conf' exists
+      ansible.builtin.stat:
+        path: "{{ nvidia_kernel_blacklist_nouveau_conf_location }}"
+      register: blacklist_nouveau_conf
+
+    - name: "Nvidia Kernel Task"
+      ansible.builtin.include_tasks: "subtasks/kernel.yml"
+      when:
+        - (not blacklist_nouveau_conf.stat.exists)
+        - (nvidia_kernel_blacklist_nouveau)
+
+    # Install Nvidia Driver
+
+    - name: Nvidia Driver Tasks
+      block:
+
+        - name: "Nvidia Driver Task"
+          ansible.builtin.include_tasks: "subtasks/driver.yml"
+          when: (nvidia_driver_version | lower != 'ignore')
+
+      when: (nvidia_installed_driver_version != nvidia_driver_version)
+
+    # Install Nvidia Driver Patch to remove transcode limit
+
+    - name: Nvidia Driver Patch Tasks
+      block:
+
+        - name: Check to see if patch backup files exist
+          ansible.builtin.find:
+            paths: "{{ nvidia_patch_backup_file_location }}"
+            file_type: file
+            recurse: true
+            patterns: '*.so*'
+          register: nvidia_patch_backup_files
+
+        - name: "Nvidia Driver Patch Task"
+          ansible.builtin.include_tasks: "subtasks/patch.yml"
+          when: (nvidia_patch_backup_files.matched | int == 0)
+
+      when: ('GeForce' in lspci_resp.stdout)
+
+    # Install Nvidia Runtime Container
+
+    - name: Get contents of 'daemon.json'
+      ansible.builtin.shell: cat /etc/docker/daemon.json
+      register: docker_daemon_json
+
+    - name: Check if '/usr/bin/nvidia-container-runtime' exists
+      ansible.builtin.stat:
+        path: "/usr/bin/nvidia-container-runtime"
+      register: docker_runtime_binary
+
+    - name: Set 'docker_default_runtime'
+      ansible.builtin.set_fact:
+        docker_default_runtime: "{{ docker_daemon_json.stdout | from_json | json_query('\"default-runtime\"') }}"
+
+    - name: "Nvidia Docker Task"
+      ansible.builtin.include_tasks: "subtasks/docker.yml"
+      when: (docker_default_runtime != 'nvidia') or (not docker_runtime_binary.stat.exists)
+
+    # Install Nvidia Nvtop Tool
+
+    - name: Check if 'nvtop' exists
+      ansible.builtin.stat:
+        path: "{{ nvidia_nvtop_binary_path }}"
+      register: nvtop_binary
+
+    - name: "Nvidia Nvtop Task"
+      ansible.builtin.include_tasks: "subtasks/nvtop.yml"
+      when: (not nvtop_binary.stat.exists)
+
+  when: (ansible_distribution == 'Ubuntu') and ('NVIDIA' in lspci_resp.stdout)

@@ -1,0 +1,33 @@
+##########################################################################
+# Title:         Bizbox: Emby | Post-Install Tasks                      #
+# Author(s):     desimaniac                                              #
+# URL:           https://github.com/jeremiahg7/Bizbox                     #
+# --                                                                     #
+##########################################################################
+#                   GNU General Public License v3.0                      #
+##########################################################################
+---
+- name: Post-Install | Wait 10 seconds before continuing
+  ansible.builtin.wait_for:
+    timeout: 10
+
+- name: Post-Install | Ensure transcodes folder has the correct permissions
+  ansible.builtin.file:
+    path: "{{ emby_paths_transcodes_location }}"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: 0775
+    recurse: true
+
+- name: Post-Install | Import 'dlna.xml'
+  ansible.builtin.copy:
+    src: "dlna.xml"
+    dest: "{{ emby_paths_dlna_xml_location }}"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: 0775
+    force: false
+
+- name: Post-Install | Settings Tasks
+  ansible.builtin.import_tasks: "settings.yml"
+  when: reverse_proxy_is_enabled

@@ -1,0 +1,48 @@
+tls:
+  options:
+    securetls:
+      minVersion: VersionTLS12
+      sniStrict : true
+      cipherSuites:
+        - TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+        - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+        - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305
+        - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
+
+http:
+  middlewares:
+    globalHeaders:
+      headers:
+        hostsProxyHeaders:
+          - "X-Forwarded-Host"
+        customResponseHeaders:
+          X-Robots-Tag: "{{ traefik_x_robots }}"
+          server: ""
+        frameDeny: true
+        contentTypeNoSniff: true
+    secureHeaders:
+      headers:
+        sslProxyHeaders:
+          X-Forwarded-Proto: https
+        accessControlAllowMethods: "GET,OPTIONS,PUT"
+        accessControlMaxAge: "100"
+        addVaryHeader: "true"
+        contentSecurityPolicy: "script-src 'self'"
+        stsSeconds: "63072000"
+        stsIncludeSubDomains: "true"
+        stsPreload: "true"
+        forceStsHeader: "true"
+        browserXssFilter: "true"
+        referrerPolicy: "same-origin"
+        featurePolicy: "camera 'none'; geolocation 'none'; microphone 'none'; payment 'none'; usb 'none'; vr 'none';"
+    hsts:
+      headers:
+        stsSeconds: 63072000
+        stsIncludeSubdomains: true
+        stsPreload: true
+        forceSTSHeader: true
+  serversTransports:
+    skipVerify:
+      insecureSkipVerify: true

@@ -1,0 +1,9 @@
+[defaults]
+inventory = ./inventories/local
+roles_path = roles:resources/roles
+fact_path = ./ansible_facts.d
+log_path = ./bizbox.log
+callbacks_enabled = profile_tasks
+interpreter_python = /usr/bin/python3
+remote_tmp = /tmp/ansible
+force_color = True

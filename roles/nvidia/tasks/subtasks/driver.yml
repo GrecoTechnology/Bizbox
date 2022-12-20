@@ -1,0 +1,51 @@
+#########################################################################
+# Title:         Bizbox: Nvidia | Driver Tasks                         #
+# Author(s):     desimaniac, l3uddz, salty                              #
+# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: Driver | Install 'build-essential'
+  ansible.builtin.apt:
+    name: build-essential
+    update_cache: true
+    state: present
+
+- name: Install 'dkms'
+  ansible.builtin.apt:
+    name: dkms
+    update_cache: true
+    state: present
+
+- name: Driver | Download Nvidia drivers
+  ansible.builtin.get_url:
+    url: "{{ nvidia_driver_download_url }}"
+    dest: "{{ nvidia_driver_download_dest }}"
+    mode: 0775
+    owner: root
+    group: root
+    force: true
+    validate_certs: false
+  register: driver_download
+  until: "driver_download is not failed"
+  retries: 5
+  delay: 10
+
+- name: Driver | Uninstall Nvidia drivers
+  ansible.builtin.shell: "{{ nvidia_driver_uninstall_command }}"
+  register: driver_uninstall
+  ignore_errors: true
+
+- name: Driver | Install Nvidia drivers
+  ansible.builtin.shell: "{{ nvidia_driver_install_command }}"
+  register: driver_install
+  ignore_errors: true
+
+- name: Driver | Nvidia driver did not install
+  ansible.builtin.fail:
+    msg:
+      - "{{ driver_install.stdout }}"
+      - "Nvidia driver did not install"
+  when: (driver_install is failed) or ('ERROR' in driver_install.stdout)

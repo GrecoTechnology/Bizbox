@@ -1,0 +1,16 @@
+#########################################################################
+# Title:         Bizbox: Hetzner Role                                  #
+# Author(s):     desimaniac                                             #
+# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: "Hetzner Tasks"
+  ansible.builtin.import_tasks: "subtasks/hetzner.yml"
+
+- name: "Restart Tasks"
+  ansible.builtin.include_tasks: "subtasks/restart.yml"
+  when: (reboot_is_necessary) and
+        (not continuous_integration)

@@ -1,0 +1,20 @@
+########################################################################################
+# Title:         Bizbox: Settings | Migrator | 'accounts.yml' | Migration 01          #
+# Author(s):     desimaniac                                                            #
+# URL:           https://github.com/jeremiahg7/Bizbox                                   #
+# --                                                                                   #
+########################################################################################
+#                            GNU General Public License v3.0                           #
+########################################################################################
+---
+- name: Migrator | 'accounts.yml' | Migration 01 | Remove 'null' values
+  ansible.builtin.replace:
+    path: "{{ playbook_dir }}/{{ file }}"
+    regexp: '(?<=: )\bnull\s*$'
+    replace: ''
+    owner: "{{ bizbox_yml.stat.uid }}"
+    group: "{{ bizbox_yml.stat.gid }}"
+    mode: 0664
+
+- name: Migrator | 'accounts.yml' | Migration 01 | Re-import Variables
+  ansible.builtin.include_vars: "{{ playbook_dir }}/{{ file }}"

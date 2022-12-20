@@ -1,0 +1,184 @@
+#########################################################################
+# Title:         Bizbox: MOTD Role                                     #
+# Author(s):     l3uddz, desimaniac                                     #
+# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: Install required packages
+  ansible.builtin.apt:
+    state: present
+    name:
+      - lsb-release
+      - figlet
+      - jq
+      - toilet
+      - boxes
+
+- name: Install required packages
+  ansible.builtin.apt:
+    state: present
+    name:
+      - update-motd
+      - update-notifier-common
+  when: (ansible_distribution | lower == 'ubuntu')
+
+- name: Remove existing motd
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /etc/update-motd.d
+    - /etc/motd
+    - /etc/motd.dynamic
+
+- name: Create motd directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0775"
+    recurse: true
+  with_items:
+    - /opt/motd
+
+- name: Check if MOTD news service
+  ansible.builtin.stat:
+    path: "/etc/default/motd-news"
+  register: motd_news
+
+- name: Disable MOTD news service
+  community.general.ini_file:
+    path: "/etc/default/motd-news"
+    section: null
+    option: "ENABLED"
+    value: "0"
+    no_extra_spaces: true
+    mode: "0644"
+    state: present
+  when: (motd_news.stat.exists)
+
+- name: Disable MOTD news service
+  ansible.builtin.systemd:
+    name: motd-news.service
+    state: stopped
+    enabled: no
+
+- name: Disable MOTD news timer
+  ansible.builtin.systemd:
+    name: motd-news.timer
+    state: stopped
+    enabled: no
+
+- name: Create dynamic motd directory
+  ansible.builtin.file:
+    path: /etc/update-motd.d
+    state: directory
+    mode: 0775
+
+- name: Clone Bizbox MOTD
+  ansible.builtin.git:
+    repo: https://github.com/jeremiahg7/motd.git
+    dest: /opt/motd
+    clone: true
+    version: HEAD
+    force: true
+  become: true
+  become_user: "{{ user.name }}"
+
+- name: Install pip requirements
+  ansible.builtin.pip:
+    requirements: /opt/motd/requirements.txt
+    executable: pip3
+
+- name: Check if 'config.json' exists
+  ansible.builtin.stat:
+    path: "/opt/motd/config.json"
+  register: motd_config
+
+- name: Import default 'config.json'
+  ansible.builtin.template:
+    src: config.json.j2
+    dest: /opt/motd/config.json
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: 0775
+    force: false
+  when: (not motd_config.stat.exists)
+
+- name: Banner Title migration
+  block:
+
+    - name: Check value of motd banner
+      ansible.builtin.shell: "jq '.motd.banner_title' /opt/motd/config.json"
+      register: motd_banner
+
+    - name: Migrate value of motd banner
+      ansible.builtin.shell: |
+        jq '.motd.banner_title = "Bizbox"' /opt/motd/config.json|sponge /opt/motd/config.json
+      when: motd_banner.stdout == '"Cloudbox"'
+
+  when: motd_config.stat.exists
+
+- name: Config path migration
+  block:
+
+    - name: Check value of motd banner
+      ansible.builtin.shell: "jq '.disk.path' /opt/motd/config.json"
+      register: disk_path
+
+    - name: Migrate value of motd banner  # noqa jinja[spacing]
+      ansible.builtin.shell: |
+        jq --arg disk / '. + {disk: {path: $disk}}' /opt/motd/config.json | sponge /opt/motd/config.json
+      when: disk_path.stdout == 'null'
+
+  when: motd_config.stat.exists
+
+- name: Touch '/opt/motd/activity.log' file
+  ansible.builtin.file:
+    path: /opt/motd/activity.log
+    state: touch
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: 0775
+
+- name: Set 'bizbox-motd.py' as executable
+  ansible.builtin.file:
+    path: /opt/motd/bizbox-motd.py
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: a+x
+
+- name: Import dynamic motd files
+  ansible.builtin.copy:
+    src: /opt/motd/motd/
+    dest: /etc/update-motd.d/
+    force: true
+    mode: 0775
+
+- name: Check if '/etc/ssh/sshd_config' exists
+  ansible.builtin.stat:
+    path: "/etc/ssh/sshd_config"
+  register: sshd_config
+
+- name: Install 'openssh-server'
+  ansible.builtin.apt:
+    name: openssh-server
+    state: present
+  when: (not sshd_config.stat.exists)
+
+- name: Wait for '/etc/ssh/sshd_config' to be created
+  ansible.builtin.wait_for:
+    path: "/etc/ssh/sshd_config"
+    state: present
+  when: (not sshd_config.stat.exists)
+
+- name: Set 'PrintLastLog no' to '/etc/ssh/sshd_config'
+  ansible.builtin.lineinfile:
+    path: "/etc/ssh/sshd_config"
+    regexp: '^PrintLastLog\s?'
+    line: 'PrintLastLog no'
+    state: present

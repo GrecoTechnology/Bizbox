@@ -1,0 +1,25 @@
+#########################################################################
+# Title:         Bizbox: Cloudflare Role                               #
+# Author(s):     desimaniac                                             #
+# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: Variables Task
+  ansible.builtin.import_tasks: "subtasks/variables.yml"
+  ignore_errors: true
+
+- name: bizbox Subdomains Task
+  ansible.builtin.import_tasks: "subtasks/subdomains.yml"
+  when: (bizbox_type | length > 0) and dns.enabled
+  ignore_errors: true
+
+- name: Purge Cache Task
+  ansible.builtin.import_tasks: "subtasks/purge_cache.yml"
+  ignore_errors: true
+
+- name: Page Rules Task
+  ansible.builtin.import_tasks: "subtasks/page_rules.yml"
+  ignore_errors: true

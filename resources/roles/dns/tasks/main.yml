@@ -1,0 +1,17 @@
+#########################################################################
+# Title:         Bizbox: DNS Role                                      #
+# Author(s):     desimaniac, salty                                      #
+# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: Cloudflare | Include DNS Tasks
+  ansible.builtin.include_tasks: "main2.yml"
+  vars:
+    dns_record: "{{ _dns_role_record }}"
+    dns_zone: "{{ _dns_role_zone }}"
+    dns_proxy: "{{ _dns_role_proxy }}"
+    dns_action: "{{ _dns_role_action }}"
+  when: reverse_proxy_is_enabled

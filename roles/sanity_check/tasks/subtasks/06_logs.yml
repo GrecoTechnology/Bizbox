@@ -1,0 +1,21 @@
+#########################################################################
+# Title:         Bizbox: Sanity Check | Logs                           #
+# Author(s):     desimaniac                                             #
+# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: Logs | Get '{{ sanity_check_logs_playbook_path | basename }}' info
+  ansible.builtin.stat:
+    path: "{{ sanity_check_logs_playbook_path }}"
+  register: bizbox_yml
+
+- name: Logs | Touch '{{ sanity_check_logs_logfile_path | basename }}'
+  ansible.builtin.file:
+    path: "{{ sanity_check_logs_logfile_path }}"
+    state: touch
+    owner: "{{ bizbox_yml.stat.uid }}"
+    group: "{{ bizbox_yml.stat.gid }}"
+    mode: 0664

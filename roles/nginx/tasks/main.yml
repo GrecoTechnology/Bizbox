@@ -1,0 +1,16 @@
+#########################################################################
+# Title:         Bizbox: Nginx Role                                    #
+# Author(s):     salty                                                  #
+# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: "Execute Nginx roles"
+  ansible.builtin.include_tasks: main2.yml
+  vars:
+    nginx_name: "{{ role }}"
+  with_items: "{{ nginx_instances }}"
+  loop_control:
+    loop_var: role

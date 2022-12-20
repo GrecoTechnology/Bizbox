@@ -1,0 +1,34 @@
+#########################################################################
+# Title:         Bizbox: Emby | Settings Task                          #
+# Author(s):     desimaniac                                             #
+# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: Post-Install | Wait for config file to be created
+  ansible.builtin.wait_for:
+    path: "{{ emby_paths_config_location }}"
+    state: present
+
+- name: Settings | Stop Docker container
+  community.docker.docker_container:
+    name: "{{ emby_docker_container }}"
+    state: stopped
+    container_default_behavior: compatibility
+
+- name: Settings | Update config file
+  community.general.xml:
+    path: "{{ emby_paths_config_location }}"
+    xpath: "/ServerConfiguration/{{ item.xpath }}"
+    value: "{{ item.value }}"
+  become: true
+  become_user: "{{ user.name }}"
+  loop: "{{ emby_config_settings_list }}"
+
+- name: Settings | Start Docker container
+  community.docker.docker_container:
+    name: "{{ emby_docker_container }}"
+    state: "{{ emby_docker_state }}"
+    container_default_behavior: compatibility

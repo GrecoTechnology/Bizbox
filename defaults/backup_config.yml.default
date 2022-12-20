@@ -1,0 +1,20 @@
+---
+backup:
+  local:
+    enable: true
+    destination: /mnt/local/Backups/Bizbox
+  rclone:
+    enable: true
+    destination: google:/Backups/Bizbox
+  rsync:
+    enable: false
+    destination: rsync://somehost.com/Backups/Bizbox
+    port: 22
+  cron:
+    cron_time: weekly
+    enable: no
+  restore_service:
+    user:
+    pass:
+  misc:
+    snapshot: true

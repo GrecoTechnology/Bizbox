@@ -1,0 +1,13 @@
+#########################################################################
+# Title:         Pre-Tasks: Extra Variables Tasks                       #
+# Author(s):     salty                                                  #
+# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: Load user domain
+  set_fact:
+    user: "{{ user | combine( { 'domain': domain } ) }}"
+  when: domain is defined

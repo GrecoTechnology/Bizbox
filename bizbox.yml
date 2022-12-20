@@ -1,0 +1,95 @@
+---
+- hosts: localhost
+  vars_files:
+    - ['accounts.yml', 'defaults/accounts.yml.default']
+    - ['settings.yml', 'defaults/settings.yml.default']
+    - ['adv_settings.yml', 'defaults/adv_settings.yml.default']
+    - ['backup_config.yml', 'defaults/backup_config.yml.default']
+    - ['providers.yml', 'defaults/providers.yml.default']
+  roles:
+    - { role: settings, tags: ['settings'] }
+    - { role: pre_tasks, tags: ['pre_tasks'] }
+    - { role: sanity_check, tags: ['sanity_check'] }
+    - { role: backup, tags: ['backup'] }
+    - { role: backup2, tags: ['backup2'] }
+    - { role: restore, tags: ['restore'] }
+    # Core
+    - { role: kernel, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'preinstall', 'kernel'] }
+    - { role: hetzner, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'preinstall', 'hetzner'] }
+    - { role: user, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'preinstall', 'user'] }
+    - { role: shell, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'preinstall', 'shell'] }
+    - { role: rclone, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'preinstall', 'rclone'] }
+    - { role: system, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'system'] }
+    - { role: common, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'common'] }
+    - { role: motd, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'motd'] }
+    - { role: docker, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'docker'] }
+    - { role: nvidia, tags: ['core', 'bizbox', 'mediabox', 'nvidia'], when: ['use_nvidia'] }
+    - { role: remote, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'mounts', 'mounts_override'], when: ['use_remote'] }
+    - { role: unionfs, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'mounts', 'mounts_override'] }
+    - { role: scripts, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'scripts'] }
+    - { role: sandbox, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'sandbox'] }
+    - { role: traefik, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'traefik', 'traefik_reset_certs'], when: ['reverse_proxy_is_enabled'] }
+    - { role: cloudflare, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'cloudflare'], when: ['cloudflare_is_enabled'] }
+    # Apps Start
+    - { role: wordpress, tags: ['wordpress'] }
+    - { role: invoiceninjav5, tags: ['invoiceninja'] }
+    - { role: media_server, tags: ['bizbox', 'mediabox', 'media-server'] }
+    - { role: tautulli, tags: ['bizbox', 'mediabox', 'tautulli'] }
+    - { role: overseerr, tags: ['bizbox', 'mediabox', 'overseerr'] }
+    - { role: portainer, tags: ['bizbox', 'feederbox', 'portainer'] }
+    - { role: organizr, tags: ['bizbox', 'feederbox', 'organizr'] }
+    - { role: cloudplow, tags: ['bizbox', 'feederbox', 'cloudplow'], when: ['use_remote'] }
+    - { role: nzbget, tags: ['bizbox', 'feederbox', 'nzbget'], when: ['use_nzbs'] }
+    - { role: rutorrent, tags: ['bizbox', 'feederbox', 'rutorrent'], when: ['use_torrents'] }
+    - { role: jackett, tags: ['bizbox', 'feederbox', 'jackett'], when: ['use_torrents'] }
+    - { role: nzbhydra2, tags: ['bizbox', 'feederbox', 'nzbhydra2'], when: ['use_nzbs'] }
+    - { role: sonarr, tags: ['bizbox', 'feederbox', 'sonarr'] }
+    - { role: radarr, tags: ['bizbox', 'feederbox', 'radarr'] }
+    - { role: lidarr, tags: ['bizbox', 'feederbox', 'lidarr'] }
+    - { role: iperf3, tags: ['bizbox', 'mediabox', 'feederbox', 'iperf3'] }
+    - { role: nethogs, tags: ['bizbox', 'mediabox', 'feederbox', 'nethogs'] }
+    - { role: glances, tags: ['bizbox', 'mediabox', 'feederbox', 'glances'] }
+    - { role: btop, tags: ['bizbox', 'mediabox', 'feederbox', 'btop'] }
+    - { role: asshama, tags: ['asshama'] }
+    - { role: authelia, tags: ['authelia', 'authelia-reset'] }
+    - { role: autoheal, tags: ['autoheal'] }
+    - { role: autoscan, tags: ['autoscan'] }
+    - { role: bazarr, tags: ['bazarr'] }
+    - { role: btrfsmaintenance, tags: ['btrfsmaintenance'] }
+    - { role: cadvisor, tags: ['cadvisor'] }
+    - { role: ddclient, tags: ['ddclient'] }
+    - { role: deluge, tags: ['deluge'] }
+    - { role: diun, tags: ['diun'] }
+    - { role: emby, tags: ['emby'] }
+    - { role: grafana, tags: ['grafana'] }
+    - { role: jellyfin, tags: ['jellyfin'] }
+    - { role: mainline, tags: ['mainline'] }
+    - { role: mariadb, tags: ['mariadb'] }
+    - { role: mongodb, tags: ['mongodb'] }
+    - { role: netdata, tags: ['netdata'] }
+    - { role: nginx, tags: ['nginx'] }
+    - { role: node_exporter, tags: ['node_exporter'] }
+    - { role: nzbthrottle, tags: ['nzbthrottle'] }
+    - { role: petio, tags: ['petio'] }
+    - { role: plex, tags: ['plex'] }
+    - { role: postgres, tags: ['postgres'] }
+    - { role: prometheus, tags: ['prometheus'] }
+    - { role: prowlarr, tags: ['prowlarr'] }
+    - { role: python, tags: ['python'] }
+    - { role: qbittorrent, tags: ['qbittorrent'] }
+    - { role: readarr, tags: ['readarr'] }
+    - { role: redis, tags: ['redis'] }
+    - { role: sabnzbd, tags: ['sabnzbd'] }
+    - { role: subliminal, tags: ['subliminal'] }
+    - { role: trackarr, tags: ['trackarr'] }
+    - { role: traktarr, tags: ['traktarr'] }
+    - { role: transfer, tags: ['transfer'] }
+    - { role: yyq, tags: ['yyq'] }
+    # Apps End
+    - { role: custom, tags: ['custom'] }
+    - { role: hetzner_nfs, tags: ['hetzner_nfs_server', 'hetzner_nfs_server_uninstall', 'hetzner_nfs_client_mount', 'hetzner_nfs_client_unmount'] }
+    - { role: plex_auth_token, tags: ['plex_auth_token'] }
+    - { role: plex_extra_tasks, tags: ['plex-extra-tasks'] }
+    - { role: plex_plugins/sub_zero, tags: ['plex-plugins-sub-zero', 'plex-plugins-sub-zero-reinstall'] }
+    - { role: plex_plugins/webtools, tags: ['plex-plugins-webtools', 'plex-plugins-webtools-reinstall'] }
+    - { role: bizbox_mod, tags: ['bizbox_mod'] }

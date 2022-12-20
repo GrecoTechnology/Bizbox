@@ -1,0 +1,10 @@
+##########################################################################
+# Title:         Bizbox: Media Server | Default Variables               #
+# Author(s):     salty                                                   #
+# URL:           https://github.com/jeremiahg7/Bizbox                     #
+# --                                                                     #
+##########################################################################
+#                   GNU General Public License v3.0                      #
+##########################################################################
+---
+media_servers_enabled: ["plex"]

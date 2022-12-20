@@ -1,0 +1,31 @@
+### MacOS ###
+.DS_Store
+
+### Python ###
+*.pyc
+
+### Ansible ###
+/backup.lock
+
+# Vars
+/inventories/host_vars/*
+!/inventories/host_vars/.gitkeep
+/roles/*/vars/*
+
+# Settings
+/ansible.cfg
+/accounts.yml
+/adv_settings.yml
+/backup_config.yml
+/backup_excludes_list.txt
+/hetzner_nfs.yml
+/providers.yml
+/rclone.conf
+/settings.yml
+
+### Misc ###
+/.idea
+/*.log
+/*.log.*
+.vscode/settings.json
+

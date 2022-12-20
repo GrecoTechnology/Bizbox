@@ -1,0 +1,16 @@
+#########################################################################
+# Title:         Bizbox: Emby Role                                     #
+# Author(s):     salty                                                  #
+# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: "Execute Emby roles"
+  ansible.builtin.include_tasks: main2.yml
+  vars:
+    emby_name: "{{ role }}"
+  with_items: "{{ emby_instances }}"
+  loop_control:
+    loop_var: role

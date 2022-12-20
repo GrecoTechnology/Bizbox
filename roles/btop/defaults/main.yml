@@ -1,0 +1,20 @@
+#########################################################################
+# Title:         Bizbox: btop | Default Variables                      #
+# Author(s):     salty                                                  #
+# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+btop_releases_url: "{{ cvm }}https://api.github.com/repos/aristocratos/btop/releases/latest"
+
+btop_releases_download_url: https://github.com/aristocratos/btop/releases/download
+
+btop_release_lookup_command: |
+  curl -s {{ btop_releases_url }} \
+    | jq -r ".assets[] | select(.name | test(\"btop-x86_64-linux-musl.tbz\")) \
+    | .browser_download_url"
+
+btop_version_lock: false
+btop_version_lock_url: https://github.com/aristocratos/btop/releases/download/v1.2.12/btop-x86_64-linux-musl.tbz

@@ -1,0 +1,53 @@
+#########################################################################
+# Title:         Bizbox: btop Role                                     #
+# Author(s):     salty                                                  #
+# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: "btop | Get URL for latest btop release"
+  ansible.builtin.shell: "{{ btop_release_lookup_command }}"
+  args:
+    executable: /bin/bash
+    warn: false
+  register: btop_download_url
+  ignore_errors: true
+
+- name: "btop | Create directories"
+  ansible.builtin.file:
+    path: "/tmp/btop"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0775"
+
+- name: "btop | Download btop"
+  ansible.builtin.get_url:
+    url: "{{ btop_version_lock_url if btop_version_lock else btop_download_url.stdout }}"
+    dest: "/tmp/btop"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: '0777'
+  register: x
+  until: "x is not failed"
+  retries: 5
+  delay: 10
+
+- name: "btop | Unpack btop"
+  ansible.builtin.shell: "tar -xjf btop-x86_64-linux-musl.tbz"
+  args:
+    chdir: "/tmp/btop"
+
+- name: "btop | Install btop"
+  ansible.builtin.shell: "/tmp/btop/btop/install.sh"
+  args:
+    chdir: "/tmp/btop/btop"
+  become: yes
+  become_user: "{{ user.name }}"
+
+- name: "btop | Remove temp folder"
+  ansible.builtin.file:
+    path: "/tmp/btop"
+    state: absent

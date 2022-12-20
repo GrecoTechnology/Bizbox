@@ -1,0 +1,17 @@
+#########################################################################
+# Title:         Bizbox: Kernel | Preinstall Tasks                     #
+# Author(s):     desimaniac                                             #
+# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: "Preinstall | Bizbox pre-install has started!"
+  ansible.builtin.debug:
+    msg: "Bizbox pre-install has started!"
+
+- name: Preinstall | Set default preinstall variables
+  ansible.builtin.set_fact:
+    preinstall_kernel_restart: false
+    preinstall_user_relogin: false

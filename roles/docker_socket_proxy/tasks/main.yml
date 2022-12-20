@@ -1,0 +1,39 @@
+#########################################################################
+# Title:         Bizbox: Docker Socket Proxy Role                      #
+# Author(s):     salty                                                  #
+# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: Remove existing Docker container
+  community.docker.docker_container:
+    name: "docker-socket-proxy"
+    state: absent
+    container_default_behavior: compatibility
+    tls_hostname: localhost
+
+- name: Create and start container
+  community.docker.docker_container:
+    name: docker-socket-proxy
+    image: "tecnativa/docker-socket-proxy"
+    pull: true
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    env:
+      CONTAINERS: "1"
+      IMAGES: "1"
+    networks:
+      - name: bizbox
+        aliases:
+          - docker-socket-proxy
+    labels:
+      "com.github.bizbox.bizbox_managed": "true"
+    networks_cli_compatible: true
+    network_mode: "{{ docker_networks_name_common }}"
+    container_default_behavior: compatibility
+    purge_networks: true
+    restart_policy: unless-stopped
+    privileged: true
+    state: started

@@ -1,0 +1,65 @@
+#########################################################################
+# Title:         Bizbox: Plex Extra Tasks Role                         #
+# Author(s):     desimaniac                                             #
+# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: Gather list of running Docker containers
+  ansible.builtin.shell: "docker ps --format '{{ '{{' }} .Names{{ '}}' }}' | sort | xargs echo -n"
+  register: docker_running_containers_list
+  changed_when: false
+
+- name: Set 'docker_running_containers_list' variable
+  ansible.builtin.set_fact:
+    docker_running_containers_list: "{{ (docker_running_containers_list.stdout).split() }}"
+
+- name: Set 'plex_is_running_outer_state' variable
+  ansible.builtin.set_fact:
+    plex_is_running_outer_state: "{{ plex_docker_container in docker_running_containers_list }}"
+
+- name: Plex Post-Install Checks
+  ansible.builtin.import_tasks: "subtasks/post_install_checks.yml"
+
+- name: Stop Docker Container
+  community.docker.docker_container:
+    name: "{{ plex_docker_container }}"
+    state: stopped
+    container_default_behavior: compatibility
+    tls_hostname: localhost
+
+  when: plex_is_running_outer_state
+
+  tags:
+    - plex-db-cache-size
+
+- name: "DB Cache Size Settings"
+  ansible.builtin.import_tasks: "subtasks/settings/db_cache_size.yml"
+  tags:
+    - plex-db-cache-size
+
+- name: "Install Sub-Zero Plugin"
+  ansible.builtin.include_role:
+    name: plex_plugins/sub_zero
+
+  when: plex_plugin_sub_zero
+
+- name: "Install WebTools Plugin"
+  ansible.builtin.include_role:
+    name: plex_plugins/webtools
+
+  when: plex_plugin_webtools
+
+- name: Start Docker Container
+  community.docker.docker_container:
+    name: "{{ plex_docker_container }}"
+    state: started
+    container_default_behavior: compatibility
+    tls_hostname: localhost
+
+  when:
+    - plex_is_running_outer_state
+  tags:
+    - plex-db-cache-size

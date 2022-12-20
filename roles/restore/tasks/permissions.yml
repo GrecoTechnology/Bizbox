@@ -1,0 +1,18 @@
+#########################################################################
+# Title:         Restore: Set '/opt' Ownership and Permissions Task     #
+# Author(s):     desimaniac, l3uddz                                     #
+# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: Set '/opt' ownership recursively
+  ansible.builtin.shell: "chown -R {{ user.name }}:{{ user.name }} /opt"
+  args:
+    warn: false
+
+- name: Set '/opt' permissions recursively
+  ansible.builtin.shell: "chmod -R ugo+X /opt"
+  args:
+    warn: false

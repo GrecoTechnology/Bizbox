@@ -1,0 +1,26 @@
+#########################################################################
+# Title:         Bizbox: HTTP Anidb Metadata Agent (HAMA) &            #
+#                           Absolute Series Scanner (ASS)               #
+# Author(s):     maximuskowalski, salty                                 #
+# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: Gather list of running Docker containers
+  ansible.builtin.shell: "docker ps --format '{{ '{{' }} .Names{{ '}}' }}' | xargs echo -n"
+  register: docker_running_containers
+  ignore_errors: true
+
+- name: Convert to list
+  ansible.builtin.set_fact:
+    docker_running_containers: "{{ (docker_running_containers.stdout).split() }}"
+
+- name: Loop tasks
+  ansible.builtin.include_tasks: subtasks/loop.yml
+  loop: "{{ plex_instances }}"
+  loop_control:
+    loop_var: plex_instance
+  vars:
+    plex_name: "{{ plex_instance }}"

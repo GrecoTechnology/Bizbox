@@ -1,0 +1,41 @@
+#########################################################################
+# Title:         Bizbox: Nvidia | nvtop Tasks                          #
+# Author(s):     desimaniac, l3uddz                                     #
+# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: nvtop | Install nvtop dependencies
+  ansible.builtin.apt:
+    state: present
+    update_cache: true
+    name:
+      - cmake
+      - libncurses5-dev
+      - libncursesw5-dev
+
+- name: nvtop | Pull nvtop repo from github
+  ansible.builtin.git:
+    clone: true
+    repo: "{{ nvidia_nvtop_git_repo_url }}"
+    dest: "/tmp/nvtop/"
+  register: nvtop_repo_clone_status
+
+- name: nvtop | Tasks when nvtop repo is cloned
+  block:
+
+    - name: nvtop | Build and install nvtop
+      ansible.builtin.shell: "{{ nvidia_nvtop_binary_build_command }}"
+
+    - name: nvtop | Get nvtop binary version
+      ansible.builtin.shell: "{{ nvidia_nvtop_binary_version_lookup_command }}"
+      register: nvtop_binary_version
+      ignore_errors: true
+
+    - name: nvtop | Display nvtop binary version
+      ansible.builtin.debug:
+        msg: "nvtop {{ nvtop_binary_version.stdout }} installed."
+
+  when: nvtop_repo_clone_status is succeeded

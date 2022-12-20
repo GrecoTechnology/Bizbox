@@ -1,0 +1,13 @@
+##################################################################################
+# Title:         Bizbox: Resources | Tasks | Docker | Check Docker Container    #
+# Author(s):     btmarouane                                                      #
+# URL:           https://github.com/jeremiahg7/Bizbox                             #
+# --                                                                             #
+##################################################################################
+#                   GNU General Public License v3.0                              #
+##################################################################################
+---
+- name: Resources | Tasks | Docker | Check Docker Container | Check Docker Container
+  community.docker.docker_container_info:
+    name: "{{container_name}}"
+  register: result

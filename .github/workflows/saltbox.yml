@@ -1,0 +1,134 @@
+name: CI
+
+on:
+  push:
+    paths-ignore:
+      - '.github/**'
+      - '*.md'
+      - '.gitignore'
+      - 'roles/backup/**'
+      - 'roles/restore/**'
+      - 'roles/settings/**'
+      - 'roles/nvidia/**'
+      - 'roles/plex_extra_tasks/**'
+      - 'roles/plex_auth_token/**'
+      - 'roles/plex_db/**'
+  pull_request:
+    paths-ignore:
+      - '.github/**'
+      - '*.md'
+      - '.gitignore'
+      - 'roles/backup/**'
+      - 'roles/restore/**'
+      - 'roles/settings/**'
+      - 'roles/nvidia/**'
+      - 'roles/plex_extra_tasks/**'
+      - 'roles/plex_auth_token/**'
+      - 'roles/plex_db/**'
+  workflow_dispatch:
+
+jobs:
+  ansible-lint:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Lint Ansible Playbook
+      uses: ansible-community/ansible-lint-action@v6.8.2
+
+  add-contributors:
+    runs-on: ubuntu-22.04
+    if: github.event_name != 'pull_request'
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: BobAnkh/add-contributors@master
+      with:
+        REPO_NAME: 'jeremiahg7/Bizbox'
+        CONTRIBUTOR: '### Contributors'
+        COLUMN_PER_ROW: '6'
+        ACCESS_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        IMG_WIDTH: '100'
+        FONT_SIZE: '14'
+        PATH: '/README.md'
+        COMMIT_MESSAGE: 'docs(README): update contributors'
+        AVATAR_SHAPE: 'square'
+
+  find-roles:
+    runs-on: ubuntu-22.04
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v3
+      - id: set-matrix
+        run: echo "matrix={\"roles\":[$(awk '/# Core/{flag=1;next}/# Apps End/{flag=0}flag' bizbox.yml | awk '!/#/' | awk -F'[][]' '{print $2}' | tr '\n' ',' | sed 's/,*$//' | awk -F',' '{ for( i=1; i<=NF; i++ ) print $i }' | awk '{ gsub(/ /,""); print }'| sort -u | awk -vORS=, '{ print $1 }' | sed 's/,$/\n/' | sed "s/.\(roles\|common\|hetzner\|kernel\|motd\|mounts\|mounts_override\|nvidia\|preinstall\|rclone\|scripts\|shell\|system\|traefik\|traefik_reset_certs\|user\|cloudflare\|plex-db\).,//g")]}" >> $GITHUB_OUTPUT
+
+  install:
+    name: '${{ matrix.roles }}'
+    runs-on: ubuntu-22.04
+    needs: [ansible-lint, find-roles]
+    strategy:
+      matrix: ${{fromJson(needs.find-roles.outputs.matrix)}}
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        uses: nick-fields/retry@v2
+        with:
+          timeout_minutes: 10
+          max_attempts: 3
+          shell: bash
+          command: curl https://raw.githubusercontent.com/jeremiahg7/sb/master/sb_dep.sh --output sb_dep.sh && sudo bash sb_dep.sh -v && ansible --version
+        
+      - name: Create /srv/git
+        run: sudo mkdir /srv/git
+
+      - name: Symlink cloned repository to /srv/git/bizbox
+        run: sudo ln -s $GITHUB_WORKSPACE /srv/git/bizbox
+
+      - name: Chown /srv/git
+        run: sudo chown -R runner:runner /srv/git
+
+      - name: Import default configuration
+        run: for i in defaults/*; do cp -n $i "$(basename "${i%.*}")"; done
+
+      - name: Edit accounts.yml
+        run: sed -i 's/seed/runner/g' accounts.yml
+
+      - name: Run Tree
+        run: tree -a
+
+      - name: Syntax Check
+        run: sudo ansible-playbook bizbox.yml --syntax-check
+
+      - name: Install Bizbox Core
+        uses: nick-fields/retry@v2
+        with:
+          timeout_minutes: 30
+          max_attempts: 3
+          shell: bash
+          command: sudo ansible-playbook bizbox.yml --tags "core" --skip-tags "settings" --extra-vars '{"continuous_integration":true}'
+        if: ${{ !(contains(matrix.roles, 'bizbox') || contains(matrix.roles, 'feederbox') || contains(matrix.roles, 'mediabox') || contains(matrix.roles, 'core')) }}
+
+      - name: Install ${{ matrix.roles }}
+        uses: nick-fields/retry@v2
+        with:
+          timeout_minutes: 30
+          max_attempts: 3
+          shell: bash
+          command: sudo ansible-playbook bizbox.yml --tags "${{ matrix.roles }}" --skip-tags "settings" --extra-vars '{"continuous_integration":true}'
+
+  webhook:
+    name: 'webhook'
+    runs-on: self-hosted
+    needs: install
+    if: always()
+    steps:
+      - uses: technote-space/workflow-conclusion-action@v3
+      - uses: sarisia/actions-status-discord@v1
+        if: always()
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ env.WORKFLOW_CONCLUSION }}

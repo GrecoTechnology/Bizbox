@@ -1,0 +1,16 @@
+#########################################################################
+# Title:         Bizbox: Docker | Docker Hub Tasks                     #
+# Author(s):     salty                                                  #
+# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: Docker Hub | Login
+  ansible.builtin.shell: "docker login -u {{ dockerhub.user }} -p {{ dockerhub.token }}"
+
+- name: Docker Hub | Login
+  ansible.builtin.shell: "docker login -u {{ dockerhub.user }} -p {{ dockerhub.token }}"
+  become: true
+  become_user: "{{ user.name }}"

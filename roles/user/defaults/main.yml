@@ -1,0 +1,31 @@
+#########################################################################
+# Title:         Bizbox: User | Default Variables                      #
+# Author(s):     desimaniac                                             #
+# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+# User
+user_paths_home_location: "/home/{{ user.name }}"
+user_paths_home_bizbox_location: "/srv/git/bizbox"
+
+# Overrides
+# user_docker_group_id: <int>
+# user_group_id: <int>
+# user_id: <int>
+
+# srv
+srv_folder: "/srv"
+
+# Bizbox
+bizbox_git_repo_url: "https://github.com/jeremiahg7/Bizbox.git"
+bizbox_git_repo_dest: "/srv/git/bizbox"
+bizbox_git_repo_branch_primary: "master"
+bizbox_git_repo_branch_secondary: "master"
+
+# CB Scripts
+sb_git_repo_url: "https://github.com/jeremiahg7/sb.git"
+sb_git_repo_dest: "/srv/git/sb"
+sb_git_repo_branch_primary: "master"

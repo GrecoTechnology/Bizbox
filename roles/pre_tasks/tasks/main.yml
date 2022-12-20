@@ -1,0 +1,25 @@
+#########################################################################
+# Title:         Bizbox: Pre-Tasks                                     #
+# Author(s):     desimaniac                                             #
+# URL:           https://github.com/jeremiahg7/Bizbox                    #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+- name: APT Tasks
+  ansible.builtin.import_tasks: "subtasks/apt.yml"
+  tags: always
+
+- name: Git Tasks
+  ansible.builtin.import_tasks: "subtasks/git.yml"
+  tags: always
+
+- name: Extra Variables Tasks
+  ansible.builtin.import_tasks: "subtasks/extra_variables.yml"
+  tags: always
+
+- name: Variables Tasks
+  ansible.builtin.import_tasks: "subtasks/variables.yml"
+  tags: always
+  when: (playbook_dir != "/srv/git/bizbox" and not continuous_integration) or (playbook_dir != "/home/runner/work/Bizbox/Bizbox" and continuous_integration)
