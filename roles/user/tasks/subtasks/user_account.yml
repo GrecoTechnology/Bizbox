@@ -90,9 +90,9 @@
     recurse: true
     follow: false
 
-- name: User Account | Reset ownership of '{{ server_appdata_path }}/' path
+- name: User Account | Reset ownership of '{{ server_root_appdata_path }}/' path
   ansible.builtin.file:  # noqa risky-file-permissions
-    path: "{{ server_appdata_path }}"
+    path: "{{ server_root_appdata_path }}"
     state: directory
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
