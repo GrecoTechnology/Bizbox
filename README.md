@@ -6,6 +6,10 @@ This project was designed for x64 machines running Ubuntu Server 20.04 or 22.04.
 
 - Wordpress
 - InvoiceNinja
+- MariaDB
+- Redis Object Cache
+- Traefik
+- Authelia
 
 ### Install dependencies
 ```
