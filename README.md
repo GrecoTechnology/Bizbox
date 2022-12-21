@@ -37,7 +37,7 @@ Edit accounts.yml file to specify username, password, email address, and Cloudfl
 nano /srv/git/bizbox/accounts.yml
 ```
 
-This step will create teh user account specific in accounts.yml, add it to sudoers, update the kernel, edit GRUB configuration, install Rclone, and reboot if needed.
+This step will create the user account specific in accounts.yml, add it to sudoers, update the kernel, edit GRUB configuration, install Rclone, and reboot if needed.
 ```
 bb install preinstall
 ```
