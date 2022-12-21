@@ -25,6 +25,12 @@ bash -H bb_install.sh
 ### Bizbox preinstall
 
 Create a cloudflare account, and setup your Domain DNS to point to Cloudflare DNS Servers.
+- Go to https://dash.cloudflare.com/profile/api-tokens
+- Click "Create Token"
+- Click "Use template" to the right of "Read all resources"
+- Configure or keep as default and click "Continue to summary" 
+- Review and click "Create Token"
+- Copy your token for the next step
 
 Edit accounts.yml file to specify username, password, email address, and Cloudflare information
 ```
