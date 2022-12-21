@@ -13,7 +13,7 @@ This project was designed for x64 machines running Ubuntu Server 20.04 or 22.04.
 
 ### Install dependencies
 
-Install Bb command line and Bizbox repository
+Install bb command line and Bizbox repository
 
 ```
 git clone https://github.com/GrecoTechnology/bb
@@ -31,6 +31,8 @@ Create a cloudflare account and API token.
 - Configure or keep as default and click "Continue to summary" 
 - Review and click "Create Token"
 - Copy your token for the next step
+
+Configure your domain DNS settings to point to Cloudflare
 
 Edit accounts.yml file to specify username, password, email address, and Cloudflare information
 ```
