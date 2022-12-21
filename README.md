@@ -16,6 +16,7 @@ This project was designed for x64 machines running Ubuntu Server 20.04 or 22.04.
 Login as root and then install bb command line and Bizbox repository
 
 ```
+sudo -i
 git clone https://github.com/GrecoTechnology/bb; cd bb/; chmod u+x bb_install.sh; bash -H bb_install.sh
 ```
 
