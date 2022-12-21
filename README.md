@@ -34,7 +34,7 @@ Configure your domain DNS settings to point to Cloudflare
 
 Edit accounts.yml file to specify username, password, email address, and Cloudflare information
 ```
-nano /srv/git/bixbox/accounts.yml
+nano /srv/git/bizbox/accounts.yml
 ```
 
 This step will create teh user account specific in accounts.yml, add it to sudoers, update the kernel, edit GRUB configuration, install Rclone, and reboot if needed.
