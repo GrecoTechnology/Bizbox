@@ -7,11 +7,6 @@ user:
 cloudflare:
   email:
   api:
-plex:
-  user:
-  pass:
-  tfa: no
 dockerhub:
   user:
   token:
-apprise:

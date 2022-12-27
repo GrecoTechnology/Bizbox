@@ -14,22 +14,22 @@
     - { role: backup2, tags: ['backup2'] }
     - { role: restore, tags: ['restore'] }
     # Core
-    - { role: kernel, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'preinstall', 'kernel'] }
-    - { role: hetzner, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'preinstall', 'hetzner'] }
-    - { role: user, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'preinstall', 'user'] }
-    - { role: shell, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'preinstall', 'shell'] }
-    - { role: rclone, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'preinstall', 'rclone'] }
-    - { role: system, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'system'] }
-    - { role: common, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'common'] }
-    - { role: motd, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'motd'] }
-    - { role: docker, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'docker'] }
-    - { role: nvidia, tags: ['core', 'bizbox', 'mediabox', 'nvidia'], when: ['use_nvidia'] }
-    - { role: remote, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'mounts', 'mounts_override'], when: ['use_remote'] }
-    - { role: unionfs, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'mounts', 'mounts_override'] }
-    - { role: scripts, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'scripts'] }
-    - { role: sandbox, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'sandbox'] }
-    - { role: traefik, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'traefik', 'traefik_reset_certs'], when: ['reverse_proxy_is_enabled'] }
-    - { role: cloudflare, tags: ['core', 'bizbox', 'mediabox', 'feederbox', 'cloudflare'], when: ['cloudflare_is_enabled'] }
+    - { role: kernel, tags: ['bizbox', 'mediabox', 'feederbox', 'preinstall', 'kernel'] }
+    - { role: hetzner, tags: ['bizbox', 'mediabox', 'feederbox', 'preinstall', 'hetzner'] }
+    - { role: user, tags: ['bizbox', 'mediabox', 'feederbox', 'preinstall', 'user'] }
+    - { role: shell, tags: ['bizbox', 'mediabox', 'feederbox', 'preinstall', 'shell'] }
+    - { role: rclone, tags: ['bizbox', 'mediabox', 'feederbox', 'preinstall', 'rclone'] }
+    - { role: system, tags: ['bizbox', 'mediabox', 'feederbox', 'preinstall', 'system'] }
+    - { role: common, tags: ['bizbox', 'mediabox', 'feederbox', 'preinstall', 'common'] }
+    - { role: motd, tags: ['bizbox', 'mediabox', 'feederbox', 'motd'] }
+    - { role: docker, tags: ['bizbox', 'mediabox', 'feederbox', 'preinstall', 'docker'] }
+    - { role: nvidia, tags: ['bizbox', 'mediabox', 'nvidia'], when: ['use_nvidia'] }
+    - { role: remote, tags: ['bizbox', 'mediabox', 'feederbox', 'mounts', 'mounts_override'], when: ['use_remote'] }
+    - { role: unionfs, tags: ['bizbox', 'mediabox', 'feederbox', 'mounts', 'mounts_override'] }
+    - { role: scripts, tags: ['bizbox', 'mediabox', 'feederbox', 'preinstall', 'scripts'] }
+    - { role: sandbox, tags: ['bizbox', 'mediabox', 'feederbox', 'sandbox'] }
+    - { role: traefik, tags: ['bizbox', 'mediabox', 'feederbox', 'traefik', 'traefik_reset_certs'], when: ['reverse_proxy_is_enabled'] }
+    - { role: cloudflare, tags: ['bizbox', 'mediabox', 'feederbox', 'cloudflare'], when: ['cloudflare_is_enabled'] }
     # Apps Start
     - { role: wordpress, tags: ['wordpress'] }
     - { role: invoiceninjav5, tags: ['invoiceninja'] }
