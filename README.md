@@ -24,11 +24,7 @@ git clone https://github.com/GrecoTechnology/bb; cd bb/; chmod u+x bb_install.sh
 
 Create a cloudflare account and API token.
 - Go to https://dash.cloudflare.com/profile/api-tokens
-- Click "Create Token"
-- Click "Use template" to the right of "Read all resources"
-- Configure or keep as default and click "Continue to summary" 
-- Review and click "Create Token"
-- Copy your token for the next step
+- Get your Global API Key for the next step
 
 Configure your domain DNS settings to point to Cloudflare
 
