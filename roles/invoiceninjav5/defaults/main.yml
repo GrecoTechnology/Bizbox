@@ -18,7 +18,7 @@ invoiceninjav5_name: "{{ user.domain | replace('.','-')+'-invoice' }}"
 
 invoiceninjav5_paths_folder: invoice
 invoiceninjav5_paths_location: "{{ server_appdata_path }}/{{ invoiceninjav5_paths_folder }}"
-invoiceninjav5_conf_path: "{{ server_appdata_path }}/{{ invoiceninjav5_paths_folder }}/in-vhost.conf"
+invoiceninjav5_conf_path: "{{ invoiceninjav5_paths_location }}/in-vhost.conf"
 invoiceninjav5_paths_folders_list:
   - "{{ invoiceninjav5_paths_location }}"
   - "{{ invoiceninjav5_paths_location }}/public"
