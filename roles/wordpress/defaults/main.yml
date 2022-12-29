@@ -51,7 +51,7 @@ mariadb_db_name: "{{ user.domain|replace('.com','') }}"
 # Traefik
 ################################
 
-wordpress_traefik_middleware: "{{ traefik_default_middleware }}"
+wordpress_traefik_middleware: "{{ 'wp-migration,' + traefik_default_middleware }}"
 wordpress_traefik_certresolver: "{{ traefik_default_certresolver }}"
 wordpress_traefik_enabled: true
 
@@ -120,6 +120,7 @@ wordpress_docker_labels_custom:
   traefik.http.routers.wordpress-http.rule: "Host(`{{ user.domain }}`)"
   traefik.http.routers.wordpress.entrypoints: websecure
   traefik.http.routers.wordpress.rule: "Host(`{{ user.domain }}`)"
+  traefik.http.middlewares.wp-migration.headers.contentSecurityPolicy: "script-src 'self' 'sha256-rBhJWgLTI5geQ9XiTXf3JBDaj8+M6nd4EH/1WzTlbJI=' 'sha256-hQDpYiHfZXE14eE4y2m45R9t4PkR0vald7i1qNpgQm8=' 'sha256-RPiI+PA1EhKvMw4fF+bgtfSuOePiRT78ovT0mPRd+IQ=' 'sha256-4LIggHk3u7VSFxLgGBH9q/eTAGH8Nqm0QhRvtg1IDlU=' 'sha256-bOHm3jJRjBtOybGrbc7HXXV57Qp8VFC65nGoNACf2EY=' 'sha256-fZIx1ukK+dEJq5T+5M6mayzaPFubN/b85dpdRL7Xwq4=' 'sha256-7+Cai1EhQOt360NzDf0sNdEZ0o2ysQRr6D47MqFd3Mg=' 'sha256-8//zSBdstORCAlBMo1/Cig3gKc7QlPCh9QfWbRu0OjU=' 'sha256-4Iwf2dEl6VGbpkcB/OW7Z5TXT2gOGdkN22VJpM9PwL4=' 'sha256-X/OEkZ/ytkcEbDTUKiyG6q4kvS52ashH/ro1R8MGLa0=' 'sha256-zwGmIUR+Z6gWKbwoJ2Z3yGxI/XLETLqDqCRIV0qt/WA=' 'sha256-HV4D0kIF+EVIO56QJByRpxq5X8TAkP4KjfX2cijcs3Y=' 'sha256-60Y5SZryMP/67Q/k36LVBXH6SBee31fcbdC5y8D7RYw=' 'unsafe-eval';"
 
 wordpress_docker_labels: "{{ docker_labels_common
                              | combine(wordpress_docker_labels_default)
