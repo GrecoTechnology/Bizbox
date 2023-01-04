@@ -95,7 +95,7 @@
 
     - name: "Settings | env tasks | Merge with domain.env.yml YAML files"
       set_fact:
-        merged_yaml: "{{ (lookup('file', server_domain_env_path) | load_yaml) | combine(lookup('file', invoiceninjav5_env_path) | load_yaml) }}"
+        merged_yaml: "{{ (lookup('file', server_domain_env_path)) | combine(lookup('file', invoiceninjav5_env_path)) }}"
       when: grep_invoiceninja is defined and grep_invoiceninja.rc != 0
 
     - name: "Settings | env tasks | Write merged YAML data to domain.env.yml"
