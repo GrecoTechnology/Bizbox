@@ -87,9 +87,9 @@
         mode: 0775
         owner: "{{ user.name }}"
         group: "invoiceninja"
-        with_items:
-          - "{{ invoiceninjav5_smtp_env_path }}"
-          - "{{ invoiceninjav5_user_env_path }}"
+      with_items:
+        - "{{ invoiceninjav5_smtp_env_path }}"
+        - "{{ invoiceninjav5_user_env_path }}"
 
 - name: "Execute nginx role"
   ansible.builtin.include_role:
