@@ -80,7 +80,7 @@
         mode: 0775
         force: yes
 
-    - name: "Setiing | Env File Merger"
+    - name: "Setting | Env File Merger"
       ansible.builtin.copy:
         src: "{{ item }}"
         dest: "{{ invoiceninjav5_domain_env_path }}"
