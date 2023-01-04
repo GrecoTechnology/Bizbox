@@ -101,6 +101,10 @@
         line: "{{lookup('file', invoiceninjav5_env_path)}}"
       when: grep_invoiceninja is defined and grep_invoiceninja.rc != 0
 
+    - name: "Settings | env tasks | Set docker env file"
+      set_fact:
+        invoiceninjav5_docker_env_file: "{{ lookup('file', server_domain_env_path).invoiceninja }}"
+
 - name: "Execute nginx role"
   ansible.builtin.include_role:
     name: nginx
