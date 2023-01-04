@@ -94,15 +94,12 @@
       when: not invoiceninjav5_env.stat.exists
 
     - name: "Settings | env tasks | Merge with domain.env.yml YAML files"
-      set_fact:
-        merged_yaml: "{{ (lookup('file', server_domain_env_path)) | combine(lookup('file', invoiceninjav5_env_path)) }}"
+      lineinfile:
+        dest: "{{ server_domain_env_path }}"
+        insertafter: EOF
+        state: present
+        content: "{{lookup('file', 'invoiceninjav5_env_path')}}"
       when: grep_invoiceninja is defined and grep_invoiceninja.rc != 0
-
-    - name: "Settings | env tasks | Write merged YAML data to domain.env.yml"
-      template:
-        src: "{{merged_yaml}}"
-        dest: "{{server_domain_env_path}}"
-      when: grep_invoiceninja is defined grep_invoiceninja.rc != 0
 
 - name: "Execute nginx role"
   ansible.builtin.include_role:
