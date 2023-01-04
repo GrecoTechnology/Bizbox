@@ -71,7 +71,7 @@
         mode: 0775
         force: yes
 
-    - name: "Setting | Import user.env"
+    - name: "Settings | Import user.env"
       ansible.builtin.template:
         src: user.env.j2
         dest: "{{ invoiceninjav5_user_env_path }}"
@@ -80,16 +80,17 @@
         mode: 0775
         force: yes
 
-    - name: "Setting | Env File Merger"
-      ansible.builtin.copy:
-        src: "{{ item }}"
+    - name: "Settings | Env File Merger"
+      vars:
+        files:
+          - "{{ invoiceninjav5_smtp_env_path }}"
+          - "{{ invoiceninjav5_user_env_path }}"
+      ansible.builtin.template:
+        src: "{{ resources_templates_path }}/domain.env.j2"
         dest: "{{ invoiceninjav5_domain_env_path }}"
         mode: 0775
         owner: "{{ user.name }}"
         group: "invoiceninja"
-      with_items:
-        - "{{ invoiceninjav5_smtp_env_path }}"
-        - "{{ invoiceninjav5_user_env_path }}"
 
 - name: "Execute nginx role"
   ansible.builtin.include_role:
