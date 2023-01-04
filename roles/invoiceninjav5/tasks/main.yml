@@ -41,13 +41,7 @@
   ignore_errors: true
 
 - name: Create directories
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: directory
-    owner: "{{ user.name }}"
-    group: "invoiceninja"
-    mode: "0775"
-  with_items: "{{ lookup('vars', role_name + '_paths_folders_list') }}"
+  ansible.builtin.include_tasks: "{{ resources_tasks_path }}/directories/create_directories.yml"
 
 - name: "Settings | Check if in-vhost.conf exists"
   ansible.builtin.stat:
@@ -71,11 +65,31 @@
     - name: "Settings | Import smtp.env"
       ansible.builtin.template:
         src: smtp.env.j2
-        dest: '{{ invoiceninjav5_smtp_env_path }}'
+        dest: "{{ invoiceninjav5_smtp_env_path }}"
         owner: "{{ user.name }}"
         group: "invoiceninja"
         mode: 0775
         force: yes
+
+    - name: "Setting | Import user.env"
+      ansible.builtin.template:
+        src: user.env.j2
+        dest: "{{ invoiceninjav5_user_env_path }}"
+        owner: "{{ user.name }}"
+        group: "invoiceninja"
+        mode: 0775
+        force: yes
+
+    - name: "Setiing | Env File Merger"
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "{{ invoiceninjav5_domain_env_path }}"
+        mode: 0775
+        owner: "{{ user.name }}"
+        group: "invoiceninja"
+        with_items:
+          - "{{ invoiceninjav5_smtpr_env_path }}"
+          - "{{ invoiceninjav5_user_env_path }}"
 
 - name: "Execute nginx role"
   ansible.builtin.include_role:

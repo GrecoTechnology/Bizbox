@@ -20,6 +20,8 @@ invoiceninjav5_paths_folder: invoice
 invoiceninjav5_paths_location: "{{ server_appdata_path }}/{{ invoiceninjav5_paths_folder }}"
 invoiceninjav5_conf_path: "{{ invoiceninjav5_paths_location }}/in-vhost.conf"
 invoiceninjav5_smtp_env_path: "{{ invoiceninjav5_paths_location }}/env/smtp.env"
+invoiceninjav5_user_env_path: "{{ invoiceninjav5_paths_location }}/env/user.env"
+invoiceninjav5_domain_env_path: "{{ server_domain_env_path }}"
 invoiceninjav5_paths_folders_list:
   - "{{ invoiceninjav5_paths_location }}"
   - "{{ invoiceninjav5_paths_location }}/public"
@@ -112,7 +114,7 @@ invoiceninjav5_docker_envs_default:
 invoiceninjav5_docker_envs_custom: {}
 invoiceninjav5_docker_envs: "{{ invoiceninjav5_docker_envs_default
                                 | combine(invoiceninjav5_docker_envs_custom) }}"
-invoiceninjav5_docker_env_file: "{{ invoiceninjav5_smtp_env_path }}"
+invoiceninjav5_docker_env_file: "{{ invoiceninjav5_domain_env_path }}"
 
 # Commands
 invoiceninjav5_docker_commands_default: []
