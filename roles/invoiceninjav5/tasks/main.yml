@@ -91,7 +91,7 @@
         group: "invoiceninja"
         mode: 0775
         force: yes
-        when: not invoiceninjav5_env.stat.exists
+      when: not invoiceninjav5_env.stat.exists
 
     - name: "Settings | env tasks | Merge with domain.env.yml YAML files"
       set_fact:
