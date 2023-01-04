@@ -80,6 +80,7 @@
 
     - name: "Settings | env tasks | Check if invoiceninja exists"
       shell: "grep -q '^invoiceninja:' {{server_domain_env_path}}"
+      ignore_errors: true
       register: grep_invoiceninja
 
     - name: "Settings | env tasks | Create env.yml"
