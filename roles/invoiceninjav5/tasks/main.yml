@@ -82,7 +82,7 @@
 
     - name: "Settings | Env File Merger"
       vars:
-        input_files:
+        files:
           - "{{ invoiceninjav5_smtp_env_path }}"
           - "{{ invoiceninjav5_user_env_path }}"
       ansible.builtin.template:
