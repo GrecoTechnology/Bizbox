@@ -60,37 +60,48 @@
         force: yes
   when: not invoiceninjav5_config.stat.exists
 
-- name: "Settings | .env tasks"
+- name: "Settings | env tasks"
   block:
-    - name: "Settings | Import smtp.env"
+    - name: "Settings | env tasks | Check if env.yml exists"
+      ansible.builtin.stat:
+        path: "{{ invoiceninjav5_env_path }}"
+      register: invoiceninjav5_env
+
+    - name: "Settings | env tasks | Check if domain.env.yml exists"
+      ansible.builtin.stat:
+        path: "{{ server_domain_env_path }}"
+      register: server_domain_env
+
+    - name: "Settings | env tasks | Initialize domain.env.yml"
+      file:
+        path: "{{ server_domain_env_path }}"
+        state: touch
+      when: not server_domain_env.stat.exists
+
+    - name: "Settings | env tasks | Check if invoiceninja exists"
+      shell: "grep -q '^invoiceninja:' {{server_domain_env_path}}"
+      register: grep_invoiceninja
+
+    - name: "Settings | env tasks | Create env.yml"
       ansible.builtin.template:
-        src: smtp.env.j2
-        dest: "{{ invoiceninjav5_smtp_env_path }}"
+        src: env.yml.default.j2
+        dest: "{{ invoiceninjav5_env_path }}"
         owner: "{{ user.name }}"
         group: "invoiceninja"
         mode: 0775
         force: yes
+        when: not invoiceninjav5_env.stat.exists
 
-    - name: "Settings | Import user.env"
-      ansible.builtin.template:
-        src: user.env.j2
-        dest: "{{ invoiceninjav5_user_env_path }}"
-        owner: "{{ user.name }}"
-        group: "invoiceninja"
-        mode: 0775
-        force: yes
+    - name: "Settings | env tasks | Merge with domain.env.yml YAML files"
+      set_fact:
+        merged_yaml: "{{ (lookup('file', server_domain_env_path) | load_yaml) | combine(lookup('file', invoiceninjav5_env_path) | load_yaml) }}"
+      when: grep_invoiceninja is defined and grep_invoiceninja.rc != 0
 
-    - name: "Settings | Env File Merger"
-      vars:
-        files:
-          - "{{ invoiceninjav5_smtp_env_path }}"
-          - "{{ invoiceninjav5_user_env_path }}"
-      ansible.builtin.template:
-        src: "{{ resources_templates_path }}/domain.env.j2"
-        dest: "{{ invoiceninjav5_domain_env_path }}"
-        mode: 0775
-        owner: "{{ user.name }}"
-        group: "invoiceninja"
+    - name: "Settings | env tasks | Write merged YAML data to domain.env.yml"
+      template:
+        src: "{{merged_yaml}}"
+        dest: "{{server_domain_env_path}}"
+      when: grep_invoiceninja is defined grep_invoiceninja.rc != 0
 
 - name: "Execute nginx role"
   ansible.builtin.include_role:
@@ -118,5 +129,4 @@
 
 - name: Create Docker container
   ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/create_docker_container.yml"
-  vars:
-    env_file: "{{invoiceninjav5_smtp_env_path}}"
+    envfile: "{{ lookup('file', server_domain_env_path).invoiceninja }}"

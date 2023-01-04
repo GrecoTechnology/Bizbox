@@ -12,7 +12,6 @@
 ################################
 
 resources_tasks_path: "/srv/git/bizbox/resources/tasks"
-resources_templates_path: "/srv/git/bizbox/resources/templates"
 
 ################################
 # Continuous Integration
