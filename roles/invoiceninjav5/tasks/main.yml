@@ -88,7 +88,7 @@
         owner: "{{ user.name }}"
         group: "invoiceninja"
         with_items:
-          - "{{ invoiceninjav5_smtpr_env_path }}"
+          - "{{ invoiceninjav5_smtp_env_path }}"
           - "{{ invoiceninjav5_user_env_path }}"
 
 - name: "Execute nginx role"
