@@ -98,7 +98,7 @@
         dest: "{{ server_domain_env_path }}"
         insertafter: EOF
         state: present
-        content: "{{lookup('file', invoiceninjav5_env_path)}}"
+        line: "{{lookup('file', invoiceninjav5_env_path)}}"
       when: grep_invoiceninja is defined and grep_invoiceninja.rc != 0
 
 - name: "Execute nginx role"
