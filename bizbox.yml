@@ -32,7 +32,7 @@
     - { role: cloudflare, tags: ['bizbox', 'mediabox', 'feederbox', 'cloudflare'], when: ['cloudflare_is_enabled'] }
     # Apps Start
     - { role: wordpress, tags: ['wordpress'] }
-    - { role: invoiceninjav5, tags: ['invoiceninja'] }
+    - { role: invoiceninjav5, tags: ['invoiceninja', 'invoice'] }
     - { role: media_server, tags: ['bizbox', 'mediabox', 'media-server'] }
     - { role: tautulli, tags: ['bizbox', 'mediabox', 'tautulli'] }
     - { role: overseerr, tags: ['bizbox', 'mediabox', 'overseerr'] }
