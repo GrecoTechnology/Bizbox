@@ -66,6 +66,17 @@
         force: yes
   when: not invoiceninjav5_config.stat.exists
 
+- name: "Settings | .env tasks"
+  block:
+    - name: "Settings | Import smtp.env"
+      ansible.builtin.template:
+        src: smtp.env.j2
+        dest: '{{ invoiceninjav5_smtp_env_path }}'
+        owner: "{{ user.name }}"
+        group: "invoiceninja"
+        mode: 0775
+        force: yes
+
 - name: "Execute nginx role"
   ansible.builtin.include_role:
     name: nginx
@@ -92,3 +103,5 @@
 
 - name: Create Docker container
   ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/create_docker_container.yml"
+  vars:
+    env_file: "{{invoiceninjav5_smtp_env_path}}"

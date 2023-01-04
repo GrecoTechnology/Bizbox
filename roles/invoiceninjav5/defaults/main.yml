@@ -19,10 +19,12 @@ invoiceninjav5_name: "{{ user.domain | replace('.','-')+'-invoice' }}"
 invoiceninjav5_paths_folder: invoice
 invoiceninjav5_paths_location: "{{ server_appdata_path }}/{{ invoiceninjav5_paths_folder }}"
 invoiceninjav5_conf_path: "{{ invoiceninjav5_paths_location }}/in-vhost.conf"
+invoiceninjav5_smtp_env_path: "{{ invoiceninjav5_paths_location }}/env/smtp.env"
 invoiceninjav5_paths_folders_list:
   - "{{ invoiceninjav5_paths_location }}"
   - "{{ invoiceninjav5_paths_location }}/public"
   - "{{ invoiceninjav5_paths_location }}/storage"
+  - "{{ invoiceninjav5_paths_location }}/env"
 
 ################################
 # Nginx
