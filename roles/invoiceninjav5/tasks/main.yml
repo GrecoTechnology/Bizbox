@@ -103,7 +103,7 @@
 
     - name: "Settings | env tasks | Set docker env file"
       set_fact:
-        invoiceninjav5_docker_env_file: "{{ (lookup('file', server_domain_env_path) | from_yaml ).invoiceninja }}"
+        invoiceninjav5_docker_env_file: "{{ (lookup('file', server_domain_env_path) | from_yaml ).invoiceninja | to_nice_yaml}}"
 
 - name: "Execute nginx role"
   ansible.builtin.include_role:
