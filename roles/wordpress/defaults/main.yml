@@ -84,7 +84,7 @@ wordpress_docker_envs_default:
   WORDPRESS_DB_USER: "root"
   WORDPRESS_DB_PASSWORD: "password321"
   WORDPRESS_DB_NAME: "{{ mariadb_db_name }}"
-wordpress_docker_envs_custom: "{{ (lookup('file', server_domain_env_path) | from_yaml ).invoiceninjav5 }}"
+wordpress_docker_envs_custom: "{{ (lookup('file', server_domain_env_path) | from_yaml ).wordpress }}"
 wordpress_docker_envs: "{{ wordpress_docker_envs_default
                            | combine(wordpress_docker_envs_custom) }}"
 
