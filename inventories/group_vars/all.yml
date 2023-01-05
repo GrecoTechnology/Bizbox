@@ -96,7 +96,7 @@ server_root_appdata_path: "{{ server_root_path | regex_replace('\\/$', '') + '/o
 
 server_appdata_path: "{{ server_root_appdata_path }}/{{user.domain}}"
 
-server_domain_env_path: "{{ server_appdata_path }}/{{ user.domain }}.env"
+server_domain_env_path: "{{ server_appdata_path }}/{{ user.domain }}.env.yml"
 
 ################################
 # Paths
