@@ -62,6 +62,8 @@
 
 - name: "Settings | env tasks"
   ansible.builtin.include_tasks: "{{ resources_tasks_path }}/env/env.yml"
+  vars:
+    role_name: invoiceninja
 
 - name: "Execute nginx role"
   ansible.builtin.include_role:
