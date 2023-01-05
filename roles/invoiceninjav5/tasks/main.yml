@@ -61,45 +61,7 @@
   when: not invoiceninjav5_config.stat.exists
 
 - name: "Settings | env tasks"
-  block:
-    - name: "Settings | env tasks | Check if env.yml exists"
-      ansible.builtin.stat:
-        path: "{{ invoiceninjav5_env_path }}"
-      register: invoiceninjav5_env
-
-    - name: "Settings | env tasks | Check if domain.env.yml exists"
-      ansible.builtin.stat:
-        path: "{{ server_domain_env_path }}"
-      register: server_domain_env
-
-    - name: "Settings | env tasks | Initialize domain.env.yml"
-      file:
-        path: "{{ server_domain_env_path }}"
-        state: touch
-      when: not server_domain_env.stat.exists
-
-    - name: "Settings | env tasks | Check if invoiceninja exists"
-      shell: "grep -q '^invoiceninja:' {{server_domain_env_path}}"
-      ignore_errors: true
-      register: grep_invoiceninja
-
-    - name: "Settings | env tasks | Create env.yml"
-      ansible.builtin.template:
-        src: env.yml.default.j2
-        dest: "{{ invoiceninjav5_env_path }}"
-        owner: "{{ user.name }}"
-        group: "invoiceninja"
-        mode: 0775
-        force: yes
-      when: not invoiceninjav5_env.stat.exists
-
-    - name: "Settings | env tasks | Merge with domain.env.yml YAML files"
-      lineinfile:
-        dest: "{{ server_domain_env_path }}"
-        insertafter: EOF
-        state: present
-        line: "{{lookup('file', invoiceninjav5_env_path)}}"
-      when: grep_invoiceninja is defined and grep_invoiceninja.rc != 0
+  ansible.builtin.include_tasks: "{{ resources_tasks_path }}/env/env.yml"
 
 - name: "Execute nginx role"
   ansible.builtin.include_role:
