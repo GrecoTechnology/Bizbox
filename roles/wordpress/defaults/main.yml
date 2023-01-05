@@ -19,6 +19,7 @@ wordpress_name: "{{ user.domain | replace('.','-')+'-wordpress' }}"
 
 wordpress_paths_folder: wordpress
 wordpress_paths_location: "{{ server_appdata_path }}/{{ wordpress_paths_folder }}"
+wordpress_env_path: "{{ wordpress_paths_location }}/env.yml"
 wordpress_paths_folders_list:
   - "{{ wordpress_paths_location }}"
 
@@ -83,7 +84,7 @@ wordpress_docker_envs_default:
   WORDPRESS_DB_USER: "root"
   WORDPRESS_DB_PASSWORD: "password321"
   WORDPRESS_DB_NAME: "{{ mariadb_db_name }}"
-wordpress_docker_envs_custom: {}
+wordpress_docker_envs_custom: "{{ (lookup('file', server_domain_env_path) | from_yaml ).wordpress }}"
 wordpress_docker_envs: "{{ wordpress_docker_envs_default
                            | combine(wordpress_docker_envs_custom) }}"
 
