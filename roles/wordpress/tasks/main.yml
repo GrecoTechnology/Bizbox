@@ -39,5 +39,8 @@
     login_password: "{{ mariadb_docker_envs_mysql_root_password }}"
     state: present
 
+- name: "Settings | env tasks"
+  ansible.builtin.include_tasks: "{{ resources_tasks_path }}/env/env.yml"
+
 - name: Create Docker container
   ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/create_docker_container.yml"
