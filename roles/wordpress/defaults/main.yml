@@ -66,7 +66,7 @@ wordpress_docker_container: "{{ wordpress_name }}"
 # Image
 wordpress_docker_image_pull: true
 wordpress_docker_image_tag: "latest"
-wordpress_docker_image: "wordpress:{{ wordpress_docker_image_tag }}"
+wordpress_docker_image: "btmarouane/grecotechnologies-wordpress:{{ wordpress_docker_image_tag }}"
 
 # Ports
 wordpress_docker_ports_defaults:
