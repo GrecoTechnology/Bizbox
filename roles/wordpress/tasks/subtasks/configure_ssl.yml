@@ -1,0 +1,76 @@
+############################################################################
+# Title:            Bizbox: Resources | Tasks | apache2 | Configure SSL    #
+# Author(s):        btmarouane                                             #
+# URL:              https://github.com/GrecoTechnology/Bizbox              #
+# --                                                                       #
+############################################################################
+#                   GNU General Public License v3.0                        #
+############################################################################
+---
+- name: Generate server private key
+  community.crypto.openssl_privatekey:
+    size: 4096
+    path: "{{certdir}}/internal_apache.key"
+    mode: 0760
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+
+- name: Generate server csr
+  community.crypto.openssl_csr:
+    privatekey_path: "{{certdir}}/internal_apache.key"
+    digest: sha256
+    path: "{{certdir}}/internal_apache.csr"
+    subject_alt_name: "{{ subject_alt_name }}"
+    extendedKeyUsage: 'serverAuth'
+    subject:
+      CN: "{{common_name}}"
+    mode: 0760
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+
+- name: Load CA passphrase
+  set_fact:
+    passphrase: "{{ lookup('file', passphrase_file).strip() }}"
+
+- name: Sign server csr with CA key
+  community.crypto.x509_certificate:
+    path: "{{certdir}}/internal_apache.crt"
+    ownca_privatekey_path: "{{certdir}}/ca-key.pem"
+    csr_path: "{{certdir}}/internal_apache.csr"
+    ownca_path: "{{ certdir }}/ca.pem"
+    ownca_privatekey_passphrase: "{{passphrase}}"
+    provider: ownca
+    mode: 0760
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+
+- name: Copy private key to container
+  command: "docker cp {{certdir}}/internal_apache.key {{ lookup('vars', role_name + '_docker_container) }}:/etc/ssl/private/internal_apache.key"
+
+- name: Copy Certificate to container
+  command: "docker cp {{certdir}}/internal_apache.crt {{ lookup('vars', role_name + '_docker_container) }}:/etc/ssl/certs/internal_apache.crt"
+
+- name: Enable SSL module for Apache2
+  community.docker.docker_container_exec:
+    container: "{{ lookup('vars', role_name + '_docker_container) }}"
+    command: a2enmod ssl
+
+- name: Add self-signed CA to system certificate store
+  community.docker.docker_container_exec:
+    container: "{{ lookup('vars', role_name + '_docker_container) }}"
+    command: update-ca-certificates
+
+- name: Configure Apache2 to use self-signed SSL certificate
+  block:
+    - name: Template default-ssl.conf
+      template:
+        src: "{{ default_ssl_conf_src_path }}"
+        dest: "{{ default_ssl_conf_dest_path }}"
+
+    - name: Copy default-ssl.conf to container
+      command: "docker cp {{default_ssl_conf_dest_path}} {{ lookup('vars', role_name + '_docker_container) }}:/etc/apache2/sites-available/default-ssl.conf"
+
+- name: Enable default-ssl site
+  community.docker.docker_container_exec:
+    container: "{{ lookup('vars', role_name + '_docker_container) }}"
+    command: a2ensite default-ssl
