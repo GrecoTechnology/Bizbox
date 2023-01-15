@@ -35,7 +35,7 @@
 - name: Sign server csr with CA key
   community.crypto.x509_certificate:
     path: "{{certdir}}/internal_apache.crt"
-    ownca_privatekey_path: "{{certdir}}/ca-key.pem"
+    ownca_privatekey_path: "{{root_certdir}}/ca-key.pem"
     csr_path: "{{certdir}}/internal_apache.csr"
     ownca_path: "{{ root_certdir }}/ca.pem"
     ownca_privatekey_passphrase: "{{passphrase}}"
