@@ -26,7 +26,7 @@ phpmyadmin_paths_folders_list:
 # Web
 ################################
 
-phpmyadmin_web_subdomain: "{{ phpmyadmin }}"
+phpmyadmin_web_subdomain: "phpmyadmin"
 phpmyadmin_web_domain: "{{ user.domain }}"
 phpmyadmin_web_port: "80"
 phpmyadmin_web_url: "{{ 'https://' + phpmyadmin_web_subdomain + '.' + phpmyadmin_web_domain
