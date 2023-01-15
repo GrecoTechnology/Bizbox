@@ -1,0 +1,27 @@
+##########################################################################
+# Title:         Root_CA  | Default Variables                            #
+# Author(s):     btmarouane                                              #
+# URL:           https://github.com/GrecoTechnology/Bizbox               #
+# --                                                                     #
+##########################################################################
+#                   GNU General Public License v3.0                      #
+##########################################################################
+---
+################################
+# CA Subject
+################################
+
+passphrase_file: "{{ root_certdir }}/passphrase.txt"
+country_name: "USA"
+state_name: ""
+locality: ""
+organization_name: ""
+common_name: "{{ user.name }}"
+
+################################
+# Paths
+################################
+
+root_certdir: "{{server_root_appdata_path}}/ssl"
+root_ca_paths_folders_list:
+  - "{{ root_certdir }}"
