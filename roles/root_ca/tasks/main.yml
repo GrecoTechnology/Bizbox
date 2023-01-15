@@ -1,0 +1,43 @@
+##########################################################################
+# Title:         Bizbox: Root_CA                                         #
+# Author(s):     btmarouane                                              #
+# URL:           https://github.com/GrecoTechnology/Bizbox               #
+# --                                                                     #
+##########################################################################
+#                   GNU General Public License v3.0                      #
+##########################################################################
+---
+- name: "Check passphrase presence"
+  assert:
+    that:
+      - user.passphrase is defined
+    fail_msg: "passphrase needs to be set"
+    success_msg: "Required variable passphrase is defined"
+
+- name: Create directories
+  ansible.builtin.include_tasks: "{{ resources_tasks_path }}/directories/create_directories.yml"
+
+- name: Create passphrase file
+  copy:
+    dest: "{{passphrase_file}}"
+    content: "{{passphrase}}"
+
+- name: Generate CA private key
+  community.crypto.openssl_privatekey:
+    passphrase: "{{passphrase}}"
+    cipher: aes256
+    size: 4096
+    path: "{{root_certdir}}/ca-key.pem"
+    mode: 0760
+    owner: "{{user.name}}"
+    group: "{{user.name}}"
+
+- name: Generate CA
+  command: "openssl req -new -x509 -days 365 -key {{ root_certdir }}/ca-key.pem -sha256 -out {{ root_certdir }}/ca.pem -passin file:{{ passphrase_file }} -subj '/C={{ country_name }}/ST={{state_name }}>/L={{ locality }}/O={{ organization_name }}/CN={{ common_name }}'"
+
+- name: Set file permissions
+  file:
+    path: "{{ root_certdir }}/ca.pem"
+    mode: 0760
+    owner: "{{user.name}}"
+    group: "{{user.name}}"
