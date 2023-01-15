@@ -105,7 +105,7 @@ phpmyadmin_docker_hosts: "{{ docker_hosts_common
 # Labels
 phpmyadmin_docker_labels_default: {}
 phpmyadmin_docker_labels_custom:
-  - traefik.http.middlewares.pma-scripts.headers.contentSecurityPolicy: "script-src 'self' 'sha256-P1T74u6yK4Tk72xouxbGVJjV4rJ1wg0w03GhFmUw+l0=' 'sha256-VQ7DMsyZj9nNeRDqCptADmcGq0pPkMhTotx2/4LWPMM=' 'sha256-sslZxb0qwkOWTyEvGblOT+OibehGRR+Bw1ehoCO8lUg=' 'sha256-y8awgzfXEZa0DZFAjC6gho/XEn7rm1QlT1wM7wh6ZJM=' 'sha256-N9soB79UmoH14raqDaSXd7CYj4n+LGdtUHhRkMZYiiA=' 'sha256-OoLpNNUjZ5x3X4unlkU6JjeL2/0HG8o0pAEWoaBvZJ4=';"
+  - traefik.http.middlewares.pma-scripts.headers.contentSecurityPolicy: "script-src 'self' 'sha256-P1T74u6yK4Tk72xouxbGVJjV4rJ1wg0w03GhFmUw+l0=' 'sha256-VQ7DMsyZj9nNeRDqCptADmcGq0pPkMhTotx2/4LWPMM=' 'sha256-sslZxb0qwkOWTyEvGblOT+OibehGRR+Bw1ehoCO8lUg=' 'sha256-y8awgzfXEZa0DZFAjC6gho/XEn7rm1QlT1wM7wh6ZJM=' 'sha256-N9soB79UmoH14raqDaSXd7CYj4n+LGdtUHhRkMZYiiA=' 'sha256-OoLpNNUjZ5x3X4unlkU6JjeL2/0HG8o0pAEWoaBvZJ4=' 'unsafe-inline';"
 
 
 phpmyadmin_docker_labels: "{{ docker_labels_common
