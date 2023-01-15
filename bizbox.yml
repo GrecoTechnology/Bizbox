@@ -14,6 +14,7 @@
     - { role: backup2, tags: ['backup2'] }
     - { role: restore, tags: ['restore'] }
     # Core
+    - { role: root_ca, tags: ['bizbox', 'preinstall', 'root_ca'] }
     - { role: kernel, tags: ['bizbox', 'mediabox', 'feederbox', 'preinstall', 'kernel'] }
     - { role: hetzner, tags: ['bizbox', 'mediabox', 'feederbox', 'preinstall', 'hetzner'] }
     - { role: user, tags: ['bizbox', 'mediabox', 'feederbox', 'preinstall', 'user'] }
