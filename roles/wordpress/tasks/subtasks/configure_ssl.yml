@@ -45,10 +45,10 @@
     group: "{{ user.name }}"
 
 - name: Copy private key to container
-  command: "docker cp {{certdir}}/internal_apache.key {{ lookup('vars', role_name + '_docker_container) }}:/etc/ssl/private/internal_apache.key"
+  command: "docker cp {{certdir}}/internal_apache.key {{ lookup('vars', role_name + '_docker_container') }}:/etc/ssl/private/internal_apache.key"
 
 - name: Copy Certificate to container
-  command: "docker cp {{certdir}}/internal_apache.crt {{ lookup('vars', role_name + '_docker_container) }}:/etc/ssl/certs/internal_apache.crt"
+  command: "docker cp {{certdir}}/internal_apache.crt {{ lookup('vars', role_name + '_docker_container') }}:/etc/ssl/certs/internal_apache.crt"
 
 - name: Enable SSL module for Apache2
   community.docker.docker_container_exec:
