@@ -29,8 +29,8 @@
                 #   /usr/share/doc/apache2/README.Debian.gz for more info.
                 #   If both key and certificate are stored in the same file, only the
                 #   SSLCertificateFile directive is needed.
-                SSLCertificateFile      {{certdir}}/internal_apache.crt
-                SSLCertificateKeyFile {{certdir}}/internal_apache.key
+                SSLCertificateFile      /etc/ssl/certs/internal_apache.crt
+                SSLCertificateKeyFile /etc/ssl/certs/internal_apache.key
 
                 #   Server Certificate Chain:
                 #   Point SSLCertificateChainFile at a file containing the
