@@ -7,24 +7,17 @@
 #                   GNU General Public License v3.0                      #
 ##########################################################################
 ---
-- name: "Check passphrase presence"
-  assert:
-    that:
-      - user.passphrase is defined
-    fail_msg: "passphrase needs to be set"
-    success_msg: "Required variable passphrase is defined"
-
 - name: Create directories
   ansible.builtin.include_tasks: "{{ resources_tasks_path }}/directories/create_directories.yml"
 
 - name: Create passphrase file
   copy:
     dest: "{{passphrase_file}}"
-    content: "{{passphrase}}"
+    content: "{{user.pass}}"
 
 - name: Generate CA private key
   community.crypto.openssl_privatekey:
-    passphrase: "{{passphrase}}"
+    passphrase: "{{user.pass}}"
     cipher: aes256
     size: 4096
     path: "{{root_certdir}}/ca-key.pem"
