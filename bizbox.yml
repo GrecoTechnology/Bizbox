@@ -32,6 +32,7 @@
     - { role: traefik, tags: ['bizbox', 'mediabox', 'feederbox', 'traefik', 'traefik_reset_certs'], when: ['reverse_proxy_is_enabled'] }
     - { role: cloudflare, tags: ['bizbox', 'mediabox', 'feederbox', 'cloudflare'], when: ['cloudflare_is_enabled'] }
     # Apps Start
+    - { role: phpmyadmin, tags: ['phpmyadmin'] }
     - { role: wordpress, tags: ['wordpress'] }
     - { role: invoiceninjav5, tags: ['invoiceninja', 'invoice'] }
     - { role: media_server, tags: ['bizbox', 'mediabox', 'media-server'] }
