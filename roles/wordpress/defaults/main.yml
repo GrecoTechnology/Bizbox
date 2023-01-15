@@ -59,7 +59,7 @@ wordpress_dns_proxy: "{{ dns.proxied }}"
 # Mariadb
 ################################
 
-mariadb_db_name: "{{ user.domain|replace('.com','')-wordpress }}"
+mariadb_db_name: "{{ user.domain|replace('.com','')+'-wordpress' }}"
 
 ################################
 # Traefik
