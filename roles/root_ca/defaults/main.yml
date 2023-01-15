@@ -12,7 +12,7 @@
 ################################
 
 passphrase_file: "{{ root_certdir }}/passphrase.txt"
-country_name: "USA"
+country_name: "US"
 state_name: ""
 locality: ""
 organization_name: ""
