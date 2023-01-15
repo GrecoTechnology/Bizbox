@@ -18,7 +18,7 @@
 - name: Generate CA private key
   community.crypto.openssl_privatekey:
     passphrase: "{{user.pass}}"
-    cipher: aes256
+    cipher: auto
     size: 4096
     path: "{{root_certdir}}/ca-key.pem"
     mode: 0760
