@@ -105,7 +105,7 @@ phpmyadmin_docker_hosts: "{{ docker_hosts_common
 # Labels
 phpmyadmin_docker_labels_default: {}
 phpmyadmin_docker_labels_custom:
-  - traefik.http.middlewares.pma-scripts.headers.contentSecurityPolicy: "unsafe-inline;"
+  - traefik.http.middlewares.pma-scripts.headers.contentSecurityPolicy: ""
 
 
 phpmyadmin_docker_labels: "{{ docker_labels_common
