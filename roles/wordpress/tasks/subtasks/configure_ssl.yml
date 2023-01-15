@@ -37,7 +37,7 @@
     path: "{{certdir}}/internal_apache.crt"
     ownca_privatekey_path: "{{certdir}}/ca-key.pem"
     csr_path: "{{certdir}}/internal_apache.csr"
-    ownca_path: "{{ certdir }}/ca.pem"
+    ownca_path: "{{ root_certdir }}/ca.pem"
     ownca_privatekey_passphrase: "{{passphrase}}"
     provider: ownca
     mode: 0760
