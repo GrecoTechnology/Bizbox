@@ -52,12 +52,12 @@
 
 - name: Enable SSL module for Apache2
   community.docker.docker_container_exec:
-    container: "{{ lookup('vars', role_name + '_docker_container) }}"
+    container: "{{ lookup('vars', role_name + '_docker_container') }}"
     command: a2enmod ssl
 
 - name: Add self-signed CA to system certificate store
   community.docker.docker_container_exec:
-    container: "{{ lookup('vars', role_name + '_docker_container) }}"
+    container: "{{ lookup('vars', role_name + '_docker_container') }}"
     command: update-ca-certificates
 
 - name: Configure Apache2 to use self-signed SSL certificate
