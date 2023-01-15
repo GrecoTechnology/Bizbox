@@ -22,3 +22,4 @@
     state: absent
     stop_timeout: "{{ lookup('vars', _var_prefix + '_docker_stop_timeout', default='10') }}"
     tls_hostname: localhost
+    keep_volumes: "{{ lookup('vars', _var_prefix + '_docker_keep_volumes', default=true) }}"
