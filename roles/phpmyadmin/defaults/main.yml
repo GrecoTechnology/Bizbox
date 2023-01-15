@@ -45,7 +45,7 @@ phpmyadmin_dns_proxy: "{{ dns.proxied }}"
 # Traefik
 ################################
 
-phpmyadmin_traefik_middleware: "{{ traefik_default_middleware }}"
+phpmyadmin_traefik_middleware: "{{ 'pma-scripts,' + traefik_default_middleware }}"
 phpmyadmin_traefik_certresolver: "{{ traefik_default_certresolver }}"
 phpmyadmin_traefik_enabled: true
 
@@ -104,7 +104,9 @@ phpmyadmin_docker_hosts: "{{ docker_hosts_common
 
 # Labels
 phpmyadmin_docker_labels_default: {}
-phpmyadmin_docker_labels_custom: {}
+phpmyadmin_docker_labels_custom:
+  - traefik.http.middlewares.pma-scripts.headers.contentSecurityPolicy: "script-src 'self' 'sha256-P1T74u6yK4Tk72xouxbGVJjV4rJ1wg0w03GhFmUw+l0=';"
+
 
 phpmyadmin_docker_labels: "{{ docker_labels_common
                              | combine(phpmyadmin_docker_labels_default)
