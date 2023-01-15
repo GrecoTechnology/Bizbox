@@ -51,7 +51,7 @@
   command: "docker cp {{certdir}}/internal_apache.crt {{ lookup('vars', role_name + '_docker_container') }}:/etc/ssl/certs/internal_apache.crt"
 
 - name: Copy CA to container
-  command: "docker cp {{ root_certdir }}/ca.pem {{ lookup('vars', role_name + '_docker_container') }}:/usr/local/share/ca-certificates/root_ca.pem"
+  command: "docker cp {{ root_certdir }}/ca.pem {{ lookup('vars', role_name + '_docker_container') }}:/usr/local/share/ca-certificates/root_ca.crt"
 
 - name: Enable SSL module for Apache2
   community.docker.docker_container_exec:
