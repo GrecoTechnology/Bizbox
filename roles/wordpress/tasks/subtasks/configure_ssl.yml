@@ -68,9 +68,9 @@
         dest: "{{ default_ssl_conf_dest_path }}"
 
     - name: Copy default-ssl.conf to container
-      command: "docker cp {{default_ssl_conf_dest_path}} {{ lookup('vars', role_name + '_docker_container) }}:/etc/apache2/sites-available/default-ssl.conf"
+      command: "docker cp {{default_ssl_conf_dest_path}} {{ lookup('vars', role_name + '_docker_container') }}:/etc/apache2/sites-available/default-ssl.conf"
 
 - name: Enable default-ssl site
   community.docker.docker_container_exec:
-    container: "{{ lookup('vars', role_name + '_docker_container) }}"
+    container: "{{ lookup('vars', role_name + '_docker_container') }}"
     command: a2ensite default-ssl
