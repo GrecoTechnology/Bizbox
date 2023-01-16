@@ -17,6 +17,6 @@ uninstall_docker_keep_volumes: false
 ################################
 # Mariadb
 ################################
-mariadb_docker_container: "{{ user.domain | replace('.','-')+'-'+mariadb }}"
+mariadb_docker_container: "{{ user.domain | replace('.','-')+'-'+'mariadb' }}"
 root_user: "root"
 root_password: "password321"
