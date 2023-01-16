@@ -11,7 +11,7 @@
 # Basics
 ################################
 
-authelia_name: authelia
+authelia_name: "{{ user.domain | replace('.','-')+'-authelia' }}"
 
 ################################
 # Paths

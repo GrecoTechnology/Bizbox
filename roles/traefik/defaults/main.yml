@@ -1,7 +1,7 @@
 ##########################################################################
-# Title:         Bizbox: Traefik | Default Variables                    #
+# Title:         Bizbox: Traefik | Default Variables                     #
 # Author(s):     RXWatcher, salty                                        #
-# URL:           https://github.com/GrecoTechnology/Bizbox                     #
+# URL:           https://github.com/GrecoTechnology/Bizbox               #
 # --                                                                     #
 ##########################################################################
 #                   GNU General Public License v3.0                      #
@@ -11,7 +11,7 @@
 # Basics
 ################################
 
-traefik_name: traefik
+traefik_name: "{{ user.domain | replace('.','-')+'-traefik' }}"
 
 ################################
 # Config
