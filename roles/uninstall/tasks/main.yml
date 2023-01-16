@@ -8,7 +8,7 @@
 ##########################################################################
 ---
 - name: Get list of apps' subfolders
-  ansible.posix.find:
+  ansible.builtin.find:
     paths: "{{ server_appdata_path }}"
     file_type: directory
     recurse: true
