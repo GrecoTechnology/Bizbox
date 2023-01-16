@@ -21,7 +21,7 @@
 
 - name: Print apps names
   ansible.builtin.debug:
-    vars: apps
+    var: apps
 
 - name: Remove apps
   include_tasks: subtasks/uninstall_app.yml
