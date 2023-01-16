@@ -13,7 +13,7 @@
     file_type: directory
     recurse: true
   register: apps
-  when: all == 'true'
+  when: all is defined and all == 'true'
 
 - name: Set apps names
   set_fact:
