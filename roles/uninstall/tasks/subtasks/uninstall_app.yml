@@ -18,11 +18,11 @@
     uninstall_docker_container: "{{ user.domain | replace('.','-')+'-'+item }}"
 
 - name: Remove apps | Remove wordpress database
-  command: docker exec -it {{ mariadb_docker_container }} mysql -uroot -p{{ root_password }} -e "DROP DATABASE wordpress;"
+  command: docker exec {{ mariadb_docker_container }} mysql -u{{root_user}} -p{{ root_password }} -e "DROP DATABASE wordpress;"
   when: (item == "wordpress")
 
 - name: Remove apps | Remove invoiceninjav5 database
-  command: docker exec -it {{ mariadb_docker_container }} mysql -u{{root_user}} -p{{ root_password }} -e "DROP DATABASE invoice;"
+  command: docker exec {{ mariadb_docker_container }} mysql -u{{root_user}} -p{{ root_password }} -e "DROP DATABASE invoice;"
   when: (item == "invoice")
 
 - name: Remove apps | Remove files
