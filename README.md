@@ -5,11 +5,13 @@ This project was designed for x64 machines running Ubuntu Server 20.04 or 22.04.
 ### Featured Applications
 
 - Wordpress
+- PhpMyAdmin
 - InvoiceNinja
 - MariaDB
 - Redis Object Cache
 - Traefik
 - Authelia
+- Portainer
 
 ### Install dependencies
 
@@ -67,5 +69,3 @@ To switch a domain to primary, you need to specify the domain with a --primary s
 ```
 bb install domain.tld --primary
 ```
-
-
