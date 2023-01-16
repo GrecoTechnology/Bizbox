@@ -8,16 +8,18 @@
 ##########################################################################
 ---
 - name: Get list of apps' subfolders
-  ansible.builtin.find:
-    paths: "{{ server_appdata_path }}"
-    file_type: directory
-    recurse: true
-  register: apps
-  when: all is defined and all == 'true'
+  block:
+    - name: Get list of apps' subfolders | Get apps
+      ansible.builtin.find:
+        paths: "{{ server_appdata_path }}"
+        file_type: directory
+        recurse: true
+        register: apps
 
-- name: Set apps names
-  set_fact:
-    apps: apps.files
+    - name: Set apps names
+      set_fact:
+        apps: apps.files
+  when: all is defined and all == 'true'
 
 - name: Print apps names
   ansible.builtin.debug:
