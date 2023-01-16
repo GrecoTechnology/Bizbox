@@ -1,0 +1,22 @@
+#########################################################################
+# Title:         Bizbox: Uninstall Role                                 #
+# Author(s):     btmarouane                                             #
+# URL:           https://github.com/GrecoTechnology/Bizbox              #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+################################
+# Basics
+################################
+
+uninstall_docker_container: "{{ user.domain | replace('.','-')+'-'+container_name }}"
+uninstall_docker_keep_volumes: false
+
+################################
+# Mariadb
+################################
+mariadb_docker_container: "{{ user.domain | replace('.','-')+'-'+mariadb }}"
+root_user: "root"
+root_password: "password321"
