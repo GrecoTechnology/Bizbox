@@ -24,31 +24,5 @@
     vars: apps
 
 - name: Remove apps
-  block:
-    - name: Remove apps | Set invoiceninja container name
-      set_fact:
-        item: invoice
-      when: (item == "invoiceninja")
-
-    - name: Remove apps | Remove container
-      ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/remove_docker_container.yml"
-      vars:
-        uninstall_docker_container: "{{ user.domain | replace('.','-')+'-'+item }}"
-
-    - name: Remove apps | Remove wordpress database
-      command: docker exec -it {{ mariadb_docker_container }} mysql -uroot -p{{ root_password }} -e "DROP DATABASE wordpress;"
-      vars:
-        database_name:
-      when: (item == "wordpress")
-
-    - name: Remove apps | Remove invoiceninjav5 database
-      command: docker exec -it {{ mariadb_docker_container }} mysql -u{{root_user}} -p{{ root_password }} -e "DROP DATABASE invoice;"
-      vars:
-        database_name:
-      when: (item == "invoice")
-
-    - name: Remove apps | Remove files
-      ansible.builtin.file:
-        path: "{{ server_appdata_path }}/{{ item }}"
-        state: absent
+  include_tasks: subtasks/uninstall_app.yml
   with_items: "{{ apps.split(',') }}"
