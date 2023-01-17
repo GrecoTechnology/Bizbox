@@ -36,12 +36,19 @@
 - name: Permissions | Add to invoiceninja group
   ansible.builtin.user:
     name: "{{ user.name }}"
-    groups: "{{ user.name }}"
+    groups: invoiceninja
     append: yes
   ignore_errors: true
 
 - name: Create directories
-  ansible.builtin.include_tasks: "{{ resources_tasks_path }}/directories/create_directories.yml"
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{user.name}}"
+    group: "invoiceninja"
+    mode: "0775"
+    recurse: true
+    with_items: "{{ lookup('vars', role_name + '_paths_folders_list') }}"
 
 - name: "Settings | Check if in-vhost.conf exists"
   ansible.builtin.stat:
