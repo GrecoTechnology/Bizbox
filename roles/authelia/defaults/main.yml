@@ -17,7 +17,7 @@ authelia_name: "{{ user.domain | replace('.','-')+'-authelia' }}"
 # Paths
 ################################
 
-authelia_paths_folder: "{{ authelia_name }}"
+authelia_paths_folder: authelia
 authelia_paths_location: "{{ server_appdata_path }}/{{ authelia_paths_folder }}"
 authelia_paths_folders_list:
   - "{{ authelia_paths_location }}"

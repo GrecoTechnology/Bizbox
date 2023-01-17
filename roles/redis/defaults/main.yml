@@ -17,7 +17,7 @@ redis_name: "{{ user.domain | replace('.','-')+'-redis' }}"
 # Paths
 ################################
 
-redis_paths_folder: "{{ redis_name }}"
+redis_paths_folder: redis
 redis_paths_location: "{{ server_appdata_path }}/{{ redis_paths_folder }}"
 redis_paths_folders_list:
   - "{{ redis_paths_location }}"
