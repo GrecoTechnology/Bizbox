@@ -9,7 +9,7 @@
 ---
 - name: Remove apps | Set invoiceninja container name
   set_fact:
-    item: invoice
+    item: "invoice"
   when: (item == "invoiceninja")
 
 - name: Print item
