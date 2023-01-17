@@ -60,6 +60,7 @@ The first installed domain will automatically be assigned as your primary domain
 - Redis
 - Portainer
 
+#### Install new app
 To install a domain with roles, you need to specify the domain and then a comma separated list of roles.  See the following example:
 ```
 bb install domain.tld wordpress,invoiceninja
@@ -68,4 +69,16 @@ bb install domain.tld wordpress,invoiceninja
 To switch a domain to primary, you need to specify the domain with a --primary switch
 ```
 bb install domain.tld --primary
+```
+
+#### Uninstall an app
+To uninstall an app, you need to specify the domain and then a comma separated list of roles.  See the following example:
+```
+bb uninstall domain.tld wordpress,invoiceninja
+```
+This command will remove the docker apps containers, app files and databases.
+
+To uninstall all apps, you need to use --all tag.  See the following example:
+```
+bb uninstall domain.tld --all
 ```
