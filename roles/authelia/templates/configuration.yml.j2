@@ -73,7 +73,7 @@ session:
   same_site: lax
   domain: {{ user.domain }}
   redis:
-    host: redis
+    host: {{redis_name}}
     port: 6379
 
 regulation:
