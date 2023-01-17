@@ -14,7 +14,7 @@
         paths: "{{ server_appdata_path }}"
         file_type: directory
         recurse: true
-        register: apps
+      register: apps
 
     - name: Set apps names
       set_fact:
