@@ -12,6 +12,10 @@
     item: invoice
   when: (item == "invoiceninja")
 
+- name: Print item
+  ansible.builtin.debug:
+    var: item
+
 - name: Remove apps | Remove containers
   block:
     - name: Remove apps | Remove containers | Remove container
