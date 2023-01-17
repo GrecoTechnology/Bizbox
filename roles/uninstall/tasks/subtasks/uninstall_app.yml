@@ -7,40 +7,39 @@
 #                   GNU General Public License v3.0                        #
 ############################################################################
 ---
-- name: Remove apps | Set invoiceninja container name
+- name: Remove apps | Set app name
   set_fact:
-    item: "invoice"
-  when: (item == "invoiceninja")
+    app: "{{'invoice' if item == 'invoiceninja' else item}}"
 
-- name: Print item
+- name: Print app
   ansible.builtin.debug:
-    var: item
+    var: app
 
 - name: Remove apps | Remove containers
   block:
     - name: Remove apps | Remove containers | Remove container
       ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/remove_docker_container.yml"
       vars:
-        uninstall_docker_container: "{{ user.domain | replace('.','-')+'-'+item }}"
+        uninstall_docker_container: "{{ user.domain | replace('.','-')+'-'+app }}"
 
     - name: Remove apps | Remove container | Remove invoiceninja nginx container
       ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/remove_docker_container.yml"
       vars:
-        uninstall_docker_container: "{{ user.domain | replace('.','-')+'-'+item+'-nginx' }}"
-      when: (item == "invoice")
+        uninstall_docker_container: "{{ user.domain | replace('.','-')+'-'+app+'-nginx' }}"
+      when: (app == "invoice")
 
 - name: Remove apps | Remove db
   block:
   - name: Remove apps | Remove wordpress database
     command: docker exec {{ mariadb_docker_container }} mysql -u{{root_user}} -p{{ root_password }} -e "DROP DATABASE wordpress;"
-    when: (item == "wordpress")
+    when: (app == "wordpress")
 
   - name: Remove apps | Remove invoiceninjav5 database
     command: docker exec {{ mariadb_docker_container }} mysql -u{{root_user}} -p{{ root_password }} -e "DROP DATABASE invoice;"
-    when: (item == "invoice")
+    when: (app == "invoice")
   when: (all is defined and all == 'false')
 
 - name: Remove apps | Remove files
   ansible.builtin.file:
-    path: "{{ server_appdata_path }}/{{ item }}"
+    path: "{{ server_appdata_path }}/{{ app }}"
     state: absent
