@@ -13,7 +13,7 @@
       ansible.builtin.find:
         paths: "{{ server_appdata_path }}"
         file_type: directory
-        recurse: true
+        recurse: false
       register: apps
 
     - name: Set apps names
@@ -27,4 +27,4 @@
 
 - name: Remove apps
   include_tasks: subtasks/uninstall_app.yml
-  with_items: "{{ apps.split(',') }}"
+  with_items: "{{ apps|map(attribute='path')|list }}"
