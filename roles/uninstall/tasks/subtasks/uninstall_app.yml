@@ -12,10 +12,17 @@
     item: invoice
   when: (item == "invoiceninja")
 
-- name: Remove apps | Remove container
-  ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/remove_docker_container.yml"
-  vars:
-    uninstall_docker_container: "{{ user.domain | replace('.','-')+'-'+item }}"
+- name: Remove apps | Remove containers
+  block:
+    - name: Remove apps | Remove containers | Remove container
+      ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/remove_docker_container.yml"
+      vars:
+        uninstall_docker_container: "{{ user.domain | replace('.','-')+'-'+item }}"
+    - name: Remove apps | Remove container | Remove invoiceninja nginx container
+      ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/remove_docker_container.yml"
+      vars:
+        uninstall_docker_container: "{{ user.domain | replace('.','-')+'-'+item+'-nginx' }}"
+      when: (item == "invoice")
 
 - name: Remove apps | Remove wordpress database
   command: docker exec {{ mariadb_docker_container }} mysql -u{{root_user}} -p{{ root_password }} -e "DROP DATABASE wordpress;"
