@@ -18,7 +18,7 @@
 
     - name: Set apps names
       set_fact:
-        apps: apps.files
+        apps: "{{apps.files}}"
   when: all is defined and all == 'true'
 
 - name: Print apps names
