@@ -17,7 +17,7 @@ portainer_name: "{{ user.domain | replace('.','-')+'-portainer' }}"
 # Paths
 ################################
 
-portainer_paths_folder: "{{ portainer_name }}"
+portainer_paths_folder: portainer
 portainer_paths_location: "{{ server_appdata_path }}/{{ portainer_paths_folder }}"
 portainer_paths_folders_list:
   - "{{ portainer_paths_location }}"
