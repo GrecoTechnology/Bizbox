@@ -11,10 +11,6 @@
   set_fact:
     app: "{{'invoice' if item == 'invoiceninja' else item}}"
 
-- name: Print app
-  ansible.builtin.debug:
-    var: app
-
 - name: Remove apps | Remove containers
   block:
     - name: Remove apps | Remove containers | Remove container
