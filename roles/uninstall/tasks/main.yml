@@ -27,4 +27,4 @@
 
 - name: Remove apps
   include_tasks: subtasks/uninstall_app.yml
-  with_items: "{{ apps|map(attribute='path')|list }}"
+  with_items: "{{ apps|map(attribute='path')|map('basename')|list }}"
