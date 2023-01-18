@@ -33,6 +33,7 @@
     - { role: cloudflare, tags: ['bizbox', 'mediabox', 'feederbox', 'cloudflare'], when: ['cloudflare_is_enabled'] }
     - { role: uninstall, tags: ['uninstall'] }
     # Apps Start
+    - { role: vaultwarden, tags: ['vaultwarden'] }
     - { role: phpmyadmin, tags: ['phpmyadmin'] }
     - { role: wordpress, tags: ['wordpress'] }
     - { role: invoiceninjav5, tags: ['invoiceninja', 'invoice'] }
