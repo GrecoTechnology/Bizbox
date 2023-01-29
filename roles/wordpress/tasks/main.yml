@@ -57,7 +57,7 @@
 
 - name: Copy uploads.ini file
   template:
-    src: templates/uploads.ini.js
+    src: templates/uploads.ini.j2
     dest: "{{wordpress_env_config_path}}/uploads.ini"
 
 - name: Restart Docker container
