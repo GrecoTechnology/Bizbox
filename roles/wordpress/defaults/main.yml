@@ -37,6 +37,12 @@ wordpress_paths_folders_list:
 root_certdir: "{{server_root_appdata_path}}/ssl"
 
 ################################
+# PHP
+################################
+
+UPLOAD_MAX_FILESIZE: "150M"
+
+################################
 # Web
 ################################
 
@@ -110,6 +116,7 @@ wordpress_docker_commands: "{{ wordpress_docker_commands_default
 # Volumes
 wordpress_docker_volumes_default:
   - "{{ wordpress_data_path }}:/var/www/html"
+  - "{{ wordpress_env_config_path }}/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini"
 wordpress_docker_volumes_custom: []
 wordpress_docker_volumes: "{{ wordpress_docker_volumes_default
                               + wordpress_docker_volumes_custom }}"
