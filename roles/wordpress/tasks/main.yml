@@ -42,6 +42,11 @@
 - name: "Settings | env tasks"
   ansible.builtin.include_tasks: "{{ resources_tasks_path }}/env/env.yml"
 
+- name: Copy uploads.ini file
+  template:
+    src: templates/uploads.ini.j2
+    dest: "{{wordpress_env_config_path}}/uploads.ini"
+
 - name: Create Docker container
   ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/create_docker_container.yml"
 
@@ -54,11 +59,6 @@
     passphrase_file: "{{ root_certdir }}/passphrase.txt"
     default_ssl_conf_src_path: templates/default-ssl.conf.default.j2
     default_ssl_conf_dest_path: "{{wordpress_env_config_ssl_path}}/default-ssl.conf"
-
-- name: Copy uploads.ini file
-  template:
-    src: templates/uploads.ini.j2
-    dest: "{{wordpress_env_config_path}}/uploads.ini"
 
 - name: Restart Docker container
   ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/restart_docker_container.yml"
