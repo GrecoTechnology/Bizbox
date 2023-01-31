@@ -100,4 +100,4 @@
 - name: Restart Nginx Docker container
   ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/restart_docker_container.yml"
   vars:
-    var_prefix: "{{invoiceninjav5_nginx_name}}"
+    var_prefix: invoiceninjav5_nginx
