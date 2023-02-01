@@ -29,7 +29,7 @@ invoiceninjav5_paths_folders_list:
   - "{{ invoiceninjav5_env_config_path }}"
 
 ################################
-PHP
+#PHP
 ################################
 max_execution_time: 300
 
