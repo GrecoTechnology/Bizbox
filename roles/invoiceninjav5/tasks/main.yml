@@ -67,6 +67,23 @@
         force: yes
   when: not invoiceninjav5_config.stat.exists
 
+- name: "Settings | Check if php.ini exists"
+  ansible.builtin.stat:
+    path: "{{ invoiceninjav5_php_path }}"
+  register: php_config
+
+- name: "Settings | in-vhost.conf tasks"
+  block:
+    - name: "Settings | Import php.ini"
+      ansible.builtin.template:
+        src: php.ini.j2
+        dest: '{{ invoiceninjav5_php_path }}'
+        owner: "{{ user.name }}"
+        group: "{{ user.name }}"
+        mode: 0775
+        force: yes
+  when: not php_config.stat.exists
+
 - name: "Settings | env tasks"
   ansible.builtin.include_tasks: "{{ resources_tasks_path }}/env/env.yml"
 

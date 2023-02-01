@@ -18,7 +18,8 @@ invoiceninjav5_name: "{{ user.domain | replace('.','-')+'-invoice' }}"
 
 invoiceninjav5_paths_folder: invoice
 invoiceninjav5_paths_location: "{{ server_appdata_path }}/{{ invoiceninjav5_paths_folder }}"
-invoiceninjav5_conf_path: "{{ invoiceninjav5_paths_location }}/in-vhost.conf"
+invoiceninjav5_conf_path: "{{ invoiceninjav5_paths_location }}/config/in-vhost.conf"
+invoiceninjav5_php_path: "{{ invoiceninjav5_paths_location }}/config/php.ini"
 invoiceninjav5_env_config_path: "{{ invoiceninjav5_paths_location }}/config"
 invoiceninjav5_env_path: "{{ invoiceninjav5_env_config_path }}/invoiceninjav5.env.yml"
 invoiceninjav5_paths_folders_list:
@@ -26,6 +27,11 @@ invoiceninjav5_paths_folders_list:
   - "{{ invoiceninjav5_paths_location }}/public"
   - "{{ invoiceninjav5_paths_location }}/storage"
   - "{{ invoiceninjav5_env_config_path }}"
+
+################################
+PHP
+################################
+max_execution_time: 300
 
 ################################
 # Nginx
@@ -125,6 +131,7 @@ invoiceninjav5_docker_commands: "{{ invoiceninjav5_docker_commands_default
 invoiceninjav5_docker_volumes_default:
   - "{{ invoiceninjav5_paths_location }}/public:/var/www/app/public"
   - "{{ invoiceninjav5_paths_location }}/storage:/var/www/app/storage"
+  - "{{ invoiceninjav5_paths_location }}/config/php.ini:/usr/local/etc/php/php.ini"
 invoiceninjav5_docker_volumes_custom: []
 invoiceninjav5_docker_volumes: "{{ invoiceninjav5_docker_volumes_default
                                    + invoiceninjav5_docker_volumes_custom }}"
