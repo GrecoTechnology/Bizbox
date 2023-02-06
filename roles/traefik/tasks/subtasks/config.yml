@@ -21,14 +21,6 @@
     group: "{{ user.name }}"
     mode: "0664"
 
-- name: Create config file
-  ansible.builtin.template:
-    src: traefik.yml.j2
-    dest: "{{traefik_paths_location}}/traefik.yml"
-    owner: "{{ user.name }}"
-    group: "{{ user.name }}"
-    mode: "0775"
-
 - name: Create config directory
   ansible.builtin.file:
     path: /opt/traefik/config
