@@ -39,3 +39,8 @@
   ansible.builtin.file:
     path: "{{ server_appdata_path }}/{{ app }}"
     state: absent
+
+- name: Remove http_headers.yml file
+  ansible.builtin.file:
+    path: "{{ traefik_path_http_headers_config_location }}/{{ user.domain | replace('.','-')+'-'+app+'-http-headers.yml' }}"
+    state: absent
