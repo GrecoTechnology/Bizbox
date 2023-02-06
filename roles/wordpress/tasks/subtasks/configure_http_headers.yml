@@ -22,5 +22,5 @@
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "0775"
+    follow: false
     state: link
-
