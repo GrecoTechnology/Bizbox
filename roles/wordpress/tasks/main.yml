@@ -49,6 +49,9 @@
   template:
     src: templates/uploads.ini.j2
     dest: "{{wordpress_env_config_path}}/uploads.ini"
+    owner: "{{user.name}}"
+    group: "{{user.name}}"
+    mode: "0775"
 
 - name: Create Docker container
   ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/create_docker_container.yml"
