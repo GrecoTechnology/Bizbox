@@ -1,0 +1,16 @@
+############################################################################
+# Title:            Bizbox: Wordpress | Configure HTTP Headers             #
+# Author(s):        btmarouane                                             #
+# URL:              https://github.com/GrecoTechnology/Bizbox              #
+# --                                                                       #
+############################################################################
+#                   GNU General Public License v3.0                        #
+############################################################################
+---
+- name: Copy http_headers.yml file
+  template:
+    src: templates/http_headers.yml.j2
+    dest: "{{wordpress_traefik_config_folder_location}}/http_headers.yml"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0775"

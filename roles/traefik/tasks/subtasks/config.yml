@@ -1,7 +1,7 @@
 #########################################################################
-# Title:         Bizbox: Traefik | Config Task                         #
+# Title:         Bizbox: Traefik | Config Task                          #
 # Author(s):     RXWatcher, salty                                       #
-# URL:           https://github.com/GrecoTechnology/Bizbox                    #
+# URL:           https://github.com/GrecoTechnology/Bizbox              #
 # --                                                                    #
 #########################################################################
 #                   GNU General Public License v3.0                     #
@@ -11,7 +11,6 @@
   ansible.builtin.template:
     src: dynamic.yml.j2
     dest: "{{ traefik_paths_location }}/dynamic.yml"
-    force: true
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "0775"
@@ -29,3 +28,19 @@
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "0664"
+
+- name: Create config file
+  ansible.builtin.template:
+    src: traefik.yml.j2
+    dest: /opt/traefik/traefik.yml
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0775"
+
+- name: Create config directory
+  ansible.builtin.file:
+    path: /opt/traefik/config
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0775"
