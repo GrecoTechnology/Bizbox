@@ -39,8 +39,8 @@
 
 - name: "Import 'dynamic.yml'"
   ansible.builtin.template:
-    src: dynamic-default.yml.j2
-    dest: "/opt/traefik/config/dynamic-default.yml"
+    src: dynamic.yml.j2
+    dest: /opt/traefik/config/dynamic.yml
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "0775"

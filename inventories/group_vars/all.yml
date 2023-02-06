@@ -215,7 +215,7 @@ traefik_error_pages_middleware: "{{ 'error-pages-middleware,'
                                  if traefik_error_pages_enabled and traefik_error_pages_role_enabled
                                  else '' }}"
 
-traefik_default_middleware_default: "{{ traefik_error_pages_middleware + 'globalHeaders@file,'+'secureHeaders@file'
+traefik_default_middleware_default: "{{ traefik_error_pages_middleware + 'globalHeaders@file'
                                         + (',gzip'
                                           if (lookup('vars', traefik_role_var + '_traefik_gzip_enabled', default=lookup('vars', role_name + '_traefik_gzip_enabled', default=true)))
                                           else '')
