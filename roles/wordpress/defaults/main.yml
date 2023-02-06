@@ -74,7 +74,7 @@ mariadb_db_name: wordpress
 # Traefik
 ################################
 
-wordpress_traefik_middleware: "{{ wordpress_name+','+ traefik_default_middleware }}"
+wordpress_traefik_middleware: "{{ wordpress_name@file+','+ traefik_default_middleware }}"
 wordpress_traefik_certresolver: "{{ traefik_default_certresolver }}"
 wordpress_traefik_enabled: true
 
