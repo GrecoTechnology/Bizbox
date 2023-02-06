@@ -10,7 +10,16 @@
 - name: Copy http_headers.yml file
   template:
     src: templates/http_headers.yml.j2
-    dest: "{{wordpress_traefik_config_folder_location}}/http_headers.yml"
+    dest: "{{traefik_path_http_headers_config_location}}/{{wordpress_name}}-http-headers.yml"
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "0775"
+
+- name: Create http_headers.yml symbolic link
+  ansible.builtin.file:
+    src: "{{traefik_path_http_headers_config_location}}/{{wordpress_name}}-http-headers.yml"
+    dest: "{{wordpress_env_config_path}}/http_headers.yml"
+    owner: foo
+    group: foo
+    state: link
+

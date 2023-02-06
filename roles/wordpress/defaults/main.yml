@@ -23,7 +23,6 @@ wordpress_env_config_path: "{{ wordpress_paths_location }}/config"
 wordpress_env_config_ssl_path: "{{ wordpress_env_config_path }}/ssl"
 wordpress_data_path: "{{ wordpress_paths_location }}/_data"
 wordpress_env_path: "{{ wordpress_env_config_path }}/wordpress.env.yml"
-wordpress_traefik_config_folder_location: "/opt/traefik/config/wordpress"
 
 wordpress_paths_folders_list:
   - "{{ wordpress_paths_location }}"
@@ -31,7 +30,6 @@ wordpress_paths_folders_list:
   - "{{ wordpress_data_path }}"
   - "{{ wordpress_env_config_path }}"
   - "{{ wordpress_env_config_ssl_path }}"
-  - "{{wordpress_traefik_config_folder_location}}"
 
 ################################
 # SSL

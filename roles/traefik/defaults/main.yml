@@ -33,9 +33,10 @@ traefik_x_robots: "none,noarchive,nosnippet,notranslate,noimageindex"
 traefik_paths_folder: traefik
 traefik_paths_location: "{{ server_appdata_path }}/{{ traefik_paths_folder }}"
 traefik_paths_acme_config_location: "{{ traefik_paths_location }}/acme.json"
+traefik_path_http_headers_config_location: "/opt/traefik/config"
 traefik_paths_folders_list:
   - "{{ traefik_paths_location }}"
-
+  - "{{ traefik_path_http_headers_config_location }}"
 ################################
 # Web
 ################################
