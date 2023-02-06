@@ -19,7 +19,8 @@
   ansible.builtin.file:
     src: "{{traefik_path_http_headers_config_location}}/{{wordpress_name}}-http-headers.yml"
     dest: "{{wordpress_env_config_path}}/http_headers.yml"
-    owner: foo
-    group: foo
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0775"
     state: link
 
