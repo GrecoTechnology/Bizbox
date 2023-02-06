@@ -22,20 +22,6 @@ http:
           server: ""
         frameDeny: true
         contentTypeNoSniff: true
-    secureHeaders:
-      headers:
-        sslProxyHeaders:
-          X-Forwarded-Proto: https
-        accessControlAllowMethods: "GET,OPTIONS,PUT"
-        accessControlMaxAge: "100"
-        addVaryHeader: "true"
-        stsSeconds: "63072000"
-        stsIncludeSubDomains: "true"
-        stsPreload: "true"
-        forceStsHeader: "true"
-        browserXssFilter: "true"
-        referrerPolicy: "same-origin"
-        featurePolicy: "camera 'none'; geolocation 'none'; microphone 'none'; payment 'none'; usb 'none'; vr 'none';"
     hsts:
       headers:
         stsSeconds: 63072000

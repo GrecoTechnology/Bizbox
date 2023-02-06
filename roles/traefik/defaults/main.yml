@@ -32,11 +32,9 @@ traefik_x_robots: "none,noarchive,nosnippet,notranslate,noimageindex"
 
 traefik_paths_folder: traefik
 traefik_paths_location: "{{ server_appdata_path }}/{{ traefik_paths_folder }}"
-traefik_paths_config_folder_location: "/opt/traefik"
 traefik_paths_acme_config_location: "{{ traefik_paths_location }}/acme.json"
 traefik_paths_folders_list:
   - "{{ traefik_paths_location }}"
-  - "{{ traefik_paths_config_folder_location }}"
 
 ################################
 # Web
@@ -255,8 +253,7 @@ traefik_docker_commands: "{{ traefik_docker_commands_default
 traefik_docker_volumes_default:
   - "/var/run/docker.sock:/var/run/docker.sock:ro"
   - "{{ traefik_paths_location }}:/etc/traefik"
-  - "/opt/traefik/traefik.yml:/etc/traefik/traefik.yml"
-  - "/opt/traefik/config:/etc/traefik/config"
+  - "/opt/traefik/config:/opt/traefik/config"
 
 traefik_docker_volumes_custom: []
 traefik_docker_volumes: "{{ traefik_docker_volumes_default
