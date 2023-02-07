@@ -10,7 +10,7 @@
 - name: Copy http_headers.yml file
   template:
     src: "{{http_headers_tamplate}}"
-    dest: "{{traefik_path_http_headers_config_location}}/{{role_name}}-http-headers.yml"
+    dest: "{{ traefik_path_http_headers_config_location }}/{{ user.domain | replace('.','-')+'-'+role_name+'-http-headers.yml' }}"
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "0775"
