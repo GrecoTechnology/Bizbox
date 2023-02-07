@@ -36,11 +36,19 @@
   when: (all is defined and all == 'false')
 
 - name: Remove apps | Remove files
-  ansible.builtin.file:
-    path: "{{ server_appdata_path }}/{{ app }}"
-    state: absent
+  block:
+  - name: Remove apps | Remove files | Remove appdata files
+    ansible.builtin.file:
+      path: "{{ server_appdata_path }}/{{ app }}"
+      state: absent
 
-- name: Remove http_headers.yml file
-  ansible.builtin.file:
-    path: "{{ traefik_path_http_headers_config_location }}/{{ user.domain | replace('.','-')+'-'+app+'-http-headers.yml' }}"
-    state: absent
+  - name: Remove apps | Remove files | Remove http_headers.yml file
+    ansible.builtin.file:
+      path: "{{ traefik_path_http_headers_config_location }}/{{ user.domain | replace('.','-')+'-'+app+'-http-headers.yml' }}"
+      state: absent
+
+  - name: Remove apps | Remove files | Remove traefik config
+    ansible.builtin.file:
+      path: "/opt/traefik"
+      state: absent
+    when: (app == "traefik")
