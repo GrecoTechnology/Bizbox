@@ -68,7 +68,7 @@ mariadb_db_name: invoice
 # Traefik
 ################################
 
-invoiceninjav5_nginx_traefik_middleware: "{{ 'unpkg,' + traefik_default_middleware }}"
+invoiceninjav5_nginx_traefik_middleware: "{{ invoiceninjav5_name +'@file' +','+ traefik_default_middleware }}"
 invoiceninjav5_nginx_traefik_certresolver: "{{ traefik_default_certresolver }}"
 invoiceninjav5_nginx_traefik_enabled: true
 

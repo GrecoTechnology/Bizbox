@@ -1,6 +1,6 @@
 http:
   middlewares:
-    {{wordpress_name}}:
+    {{invoiceninjav5_name}}:
       headers:
         sslProxyHeaders:
           X-Forwarded-Proto: https
@@ -13,4 +13,5 @@ http:
         forceStsHeader: "true"
         browserXssFilter: "true"
         referrerPolicy: "same-origin"
+        contentSecurityPolicy: "script-src 'self' 'sha256-EENjFVXlTTULOhYtTN/zGOSoEvoN3FVnPeJep9kP1v8=' 'sha256-YNPXVTnq+9TglJW+Zjb+ooe+v0EjUySnyGob/QoS8Tk=' 'sha256-gIADf8IxSPe2KmL5qZWc2iFD96/LdG4JEL6ae8ds8FM=' 'unsafe-eval';"
         featurePolicy: "camera 'none'; geolocation 'none'; microphone 'none'; payment 'none'; usb 'none'; vr 'none';"
