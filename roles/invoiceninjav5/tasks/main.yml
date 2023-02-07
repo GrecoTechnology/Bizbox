@@ -52,7 +52,7 @@
 
 - name: "Settings | Check if in-vhost.conf exists"
   ansible.builtin.stat:
-    path: "{{ invoiceninjav5_conf_path }}"
+    path: "{{ invoiceninjav5_vhost_conf_path }}"
   register: invoiceninjav5_config
 
 - name: "Settings | in-vhost.conf tasks"
@@ -60,7 +60,7 @@
     - name: "Settings | Import in-vhost.conf"
       ansible.builtin.template:
         src: in-vhost.conf.j2
-        dest: '{{ invoiceninjav5_conf_path }}'
+        dest: '{{ invoiceninjav5_vhost_conf_path }}'
         owner: "{{ user.name }}"
         group: "{{ user.name }}"
         mode: 0775
