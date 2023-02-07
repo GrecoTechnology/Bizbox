@@ -43,12 +43,15 @@
   ansible.builtin.include_tasks: "{{ resources_tasks_path }}/env/env.yml"
 
 - name: Configure Http Headers
-  ansible.builtin.include_tasks: subtasks/configure_http_headers.yml
+  ansible.builtin.include_tasks: "{{ resources_tasks_path }}/traefik/configure_http_headers.yml"
+  vars:
+    http_headers_tamplate: templates/http_headers.yml.j2
+    role_config_path: "{{wordpress_config_path}}"
 
 - name: Copy uploads.ini file
   template:
     src: templates/uploads.ini.j2
-    dest: "{{wordpress_env_config_path}}/uploads.ini"
+    dest: "{{wordpress_config_path}}/uploads.ini"
     owner: "{{user.name}}"
     group: "{{user.name}}"
     mode: "0775"
@@ -59,12 +62,12 @@
 - name: Configure Internal Apache SSL
   ansible.builtin.include_tasks: subtasks/configure_ssl.yml
   vars:
-    certdir: "{{wordpress_env_config_ssl_path}}"
+    certdir: "{{wordpress_config_ssl_path}}"
     subject_alt_name: "DNS:{{user.domain}},IP:{{ip_address_public}},IP:127.0.0.1"
     common_name: "{{user.domain}}"
     passphrase_file: "{{ root_certdir }}/passphrase.txt"
     default_ssl_conf_src_path: templates/default-ssl.conf.default.j2
-    default_ssl_conf_dest_path: "{{wordpress_env_config_ssl_path}}/default-ssl.conf"
+    default_ssl_conf_dest_path: "{{wordpress_config_ssl_path}}/default-ssl.conf"
 
 - name: Restart Docker container
   ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/restart_docker_container.yml"

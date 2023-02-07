@@ -19,17 +19,17 @@ wordpress_name: "{{ user.domain | replace('.','-')+'-wordpress' }}"
 
 wordpress_paths_folder: wordpress
 wordpress_paths_location: "{{ server_appdata_path }}/{{ wordpress_paths_folder }}"
-wordpress_env_config_path: "{{ wordpress_paths_location }}/config"
-wordpress_env_config_ssl_path: "{{ wordpress_env_config_path }}/ssl"
+wordpress_config_path: "{{ wordpress_paths_location }}/config"
+wordpress_config_ssl_path: "{{ wordpress_config_path }}/ssl"
 wordpress_data_path: "{{ wordpress_paths_location }}/_data"
-wordpress_env_path: "{{ wordpress_env_config_path }}/wordpress.env.yml"
+wordpress_env_path: "{{ wordpress_config_path }}/wordpress.env.yml"
 
 wordpress_paths_folders_list:
   - "{{ wordpress_paths_location }}"
-  - "{{ wordpress_env_config_path }}"
+  - "{{ wordpress_config_path }}"
   - "{{ wordpress_data_path }}"
-  - "{{ wordpress_env_config_path }}"
-  - "{{ wordpress_env_config_ssl_path }}"
+  - "{{ wordpress_config_path }}"
+  - "{{ wordpress_config_ssl_path }}"
 
 ################################
 # SSL
@@ -117,7 +117,7 @@ wordpress_docker_commands: "{{ wordpress_docker_commands_default
 # Volumes
 wordpress_docker_volumes_default:
   - "{{ wordpress_data_path }}:/var/www/html"
-  - "{{ wordpress_env_config_path }}/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini"
+  - "{{ wordpress_config_path }}/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini"
 wordpress_docker_volumes_custom: []
 wordpress_docker_volumes: "{{ wordpress_docker_volumes_default
                               + wordpress_docker_volumes_custom }}"
