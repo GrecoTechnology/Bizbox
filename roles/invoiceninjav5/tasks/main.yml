@@ -89,9 +89,6 @@
 
 - name: Configure Http Headers
   ansible.builtin.include_tasks: "{{ resources_tasks_path }}/traefik/configure_http_headers.yml"
-  vars:
-    http_headers_tamplate: templates/http_headers.yml.j2
-    role_config_path: "{{invoiceninjav5_config_path}}"
 
 - name: "Execute nginx role"
   ansible.builtin.include_role:

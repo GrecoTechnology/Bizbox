@@ -7,18 +7,24 @@
 #                   GNU General Public License v3.0                        #
 ############################################################################
 ---
+- name: "Settings | env tasks | Set '_var_prefix' variable"
+  ansible.builtin.set_fact:
+    _var_prefix: "{{ var_prefix
+                  if (var_prefix is defined)
+                  else role_name }}"
+
 - name: Copy http_headers.yml file
   template:
-    src: "{{http_headers_tamplate}}"
-    dest: "{{ traefik_path_http_headers_config_location }}/{{ user.domain | replace('.','-')+'-'+role_name+'-http-headers.yml' }}"
+    src: templates/http_headers.yml.j2
+    dest: "{{ traefik_path_http_headers_config_location }}/{{ user.domain | replace('.','-')+'-'+_var_prefix+'-http-headers.yml' }}"
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "0775"
 
 - name: Create http_headers.yml symbolic link
   ansible.builtin.file:
-    src: "{{ traefik_path_http_headers_config_location }}/{{ user.domain | replace('.','-')+'-'+role_name+'-http-headers.yml' }}"
-    dest: "{{role_config_path}}/http_headers.yml"
+    src: "{{ traefik_path_http_headers_config_location }}/{{ user.domain | replace('.','-')+'-'+_var_prefix+'-http-headers.yml' }}"
+    dest: "{{lookup('vars', _var_prefix + '_config_path')}}/http_headers.yml"
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "0775"
