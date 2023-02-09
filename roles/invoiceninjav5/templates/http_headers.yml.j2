@@ -1,6 +1,6 @@
 http:
   middlewares:
-    {{invoiceninjav5_name}}:
+    {{ ( user.domain | replace('.','-') )+'-invoiceninjav5'}}:
       headers:
         sslProxyHeaders:
           X-Forwarded-Proto: https
