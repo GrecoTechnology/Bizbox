@@ -1,5 +1,5 @@
-file_uploads = On
-memory_limit = 500M
-upload_max_filesize = {{ UPLOAD_MAX_FILESIZE}}
-post_max_size = 500M
-max_execution_time = 600
+file_uploads = {{ FILE_UPLLOADS | default("On") }}
+memory_limit = {{ MEMORY_LIMIT | default("500M") }}
+upload_max_filesize = {{ UPLOAD_MAX_FILESIZE | default("150M") }}
+post_max_size = {{ POST_MAX_SIZE | default("500M") }}
+max_execution_time = {{ MAX_EXECUTION_TIME | default("600") }}
