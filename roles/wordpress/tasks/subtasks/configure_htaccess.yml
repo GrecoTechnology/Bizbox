@@ -1,0 +1,16 @@
+############################################################################
+# Title:            Bizbox: Wordpress |  Configure HTACCESS                #
+# Author(s):        btmarouane                                             #
+# URL:              https://github.com/GrecoTechnology/Bizbox              #
+# --                                                                       #
+############################################################################
+#                   GNU General Public License v3.0                        #
+############################################################################
+---
+- name: Copy .htaccess file
+  template:
+    src: templates/.htaccess.default.j2
+    dest: "{{wordpress_data_path}}/.htaccess"
+    owner: "www-data"
+    group: "www-data"
+    mode: "0644"
