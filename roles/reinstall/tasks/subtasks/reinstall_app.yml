@@ -1,0 +1,22 @@
+############################################################################
+# Title:            Bizbox: Reinstall | Reinstall apps Task                #
+# Author(s):        btmarouane                                             #
+# URL:              https://github.com/GrecoTechnology/Bizbox              #
+# --                                                                       #
+############################################################################
+#                   GNU General Public License v3.0                        #
+############################################################################
+---
+- name: Reinstall apps | Set app name
+  set_fact:
+    app: "{{'invoiceninjav5' if item in ['invoiceninja', 'invoice'] else item}}"
+
+- name: Reinstall apps | Check role name
+  stat:
+    path: "{{roles_path}}/{{ app }}"
+  register: role_name
+
+- name: Reinstall apps | Reinstall app
+  ansible.builtin.include_role:
+    name: "{{app}}"
+  when: role_name.stat.exists

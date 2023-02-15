@@ -1,0 +1,26 @@
+##########################################################################
+# Title:         Bizbox  | Reinstall                                     #
+# Author(s):     btmarouane                                              #
+# URL:           https://github.com/GrecoTechnology/Bizbox               #
+# --                                                                     #
+##########################################################################
+#                   GNU General Public License v3.0                      #
+##########################################################################
+---
+- name: Get list of apps' subfolders
+  block:
+    - name: Get list of apps' subfolders | Get apps
+      ansible.builtin.find:
+        paths: "{{ server_appdata_path }}"
+        file_type: directory
+        recurse: false
+      register: apps
+
+    - name: Set apps names
+      set_fact:
+        apps: "{{apps.files}}"
+  when: all is defined and all == 'true'
+
+- name: Reinstall apps
+  include_tasks: subtasks/reinstall_app.yml
+  with_items: "{{ apps|map(attribute='path')|map('basename')|list if (apps | type_debug == 'list') else apps}}"
