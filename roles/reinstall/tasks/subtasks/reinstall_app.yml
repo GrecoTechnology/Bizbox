@@ -17,6 +17,11 @@
   register: register_role_name
 
 - name: Reinstall apps | Reinstall app
-  ansible.builtin.include_role:
-    name: "{{ app }}"
-  when: register_role_name.stat.exists
+  block:
+    - ansible.builtin.include_role:
+        name: uninstall
+        apps: "{{ app }}"
+      when: force is defined and force == 'true'
+    - ansible.builtin.include_role:
+        name: "{{ app }}"
+  when: register_role_name.stat.exists and app not in {{ utils_apps }}
