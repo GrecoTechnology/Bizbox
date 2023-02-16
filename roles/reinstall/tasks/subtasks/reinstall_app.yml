@@ -9,7 +9,7 @@
 ---
 - name: Reinstall apps | Set app name
   set_fact:
-    app: "{{ 'invoice' if app_iem in ['invoiceninja', 'invoiceninjav5'] else app_iem }}"
+    app: "{{ 'invoice' if app_item in ['invoiceninja', 'invoiceninjav5'] else app_item }}"
 
 - name: Reinstall apps | Check role name
   stat:
