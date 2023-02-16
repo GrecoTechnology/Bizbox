@@ -20,6 +20,7 @@
   block:
     - ansible.builtin.include_role:
         name: uninstall
+      vars:
         apps: "{{ app }}"
       when: force is defined and force == 'true'
     - ansible.builtin.include_role:
