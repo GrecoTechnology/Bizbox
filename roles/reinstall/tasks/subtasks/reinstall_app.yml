@@ -9,14 +9,14 @@
 ---
 - name: Reinstall apps | Set app name
   set_fact:
-    app: "{{'invoiceninjav5' if item in ['invoiceninja', 'invoice'] else item}}"
+    app: "{{ 'invoiceninjav5' if app_item in ['invoiceninja', 'invoice'] else app_item }}"
 
 - name: Reinstall apps | Check role name
   stat:
-    path: "{{roles_path}}/{{ app }}"
+    path: "{{ roles_path }}/{{ app }}"
   register: register_role_name
 
 - name: Reinstall apps | Reinstall app
   ansible.builtin.include_role:
-    name: "{{app}}"
+    name: "{{ app }}"
   when: register_role_name.stat.exists
