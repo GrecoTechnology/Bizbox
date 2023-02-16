@@ -53,11 +53,13 @@
 
   - name: Remove apps | Remove files | Remove traefik redis and authelia appdata files
     ansible.builtin.file:
-      path: "{{ server_appdata_path }}/{{ item }}"
+      path: "{{ server_appdata_path }}/{{ traefik_item }}"
       state: absent
     with_items:
       - redis
       - authelia
+    loop_control:
+      loop_var: traefik_item
     when: app == "traefik"
 
   - name: Remove apps | Remove files | Remove http_headers.yml file
