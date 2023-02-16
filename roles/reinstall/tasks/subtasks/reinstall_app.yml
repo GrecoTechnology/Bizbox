@@ -13,18 +13,19 @@
 
 - name: Reinstall apps | Check role name
   stat:
-    path: "{{ roles_path }}/{{ app }}"
+    path: "{{ server_appdata_path }}/{{ app }}"
   register: register_role_name
 
 - name: Reinstall apps | Reinstall app
   block:
-    - name: Reinstall apps | Reinstall app | Uninstall app
-      ansible.builtin.include_role:
-        name: uninstall
-      vars:
-        apps: "{{ app }}"
-      when: force is defined and force == 'true'
-    - name: Reinstall apps | Reinstall app | Install app
-      ansible.builtin.include_role:
-        name: "{{ app }}"
+  - name: Reinstall apps | Reinstall app | Uninstall app
+    ansible.builtin.include_role:
+      name: uninstall
+    vars:
+      apps: "{{ app }}"
+    when: force is defined and force == 'true'
+
+  - name: Reinstall apps | Reinstall app | Install app
+    ansible.builtin.include_role:
+      name: "{{ app }}"
   when: register_role_name.stat.exists and app not in utils_apps

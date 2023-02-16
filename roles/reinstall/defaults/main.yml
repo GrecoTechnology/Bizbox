@@ -11,5 +11,4 @@
 # Basics
 ################################
 
-roles_path: "/srv/git/bizbox/roles/"
 utils_apps: ['redis', 'mariadb', 'authelia']
