@@ -14,9 +14,9 @@
 - name: Reinstall apps | Check role name
   stat:
     path: "{{roles_path}}/{{ app }}"
-  register: role_name
+  register: register_role_name
 
 - name: Reinstall apps | Reinstall app
   ansible.builtin.include_role:
     name: "{{app}}"
-  when: role_name.stat.exists
+  when: register_role_name.stat.exists
