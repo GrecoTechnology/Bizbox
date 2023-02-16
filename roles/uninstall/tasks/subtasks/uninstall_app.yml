@@ -26,8 +26,8 @@
 
   - name: Remove apps | Remove containers | Remove traefik redis and authelia containers
     ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/remove_docker_container.yml"
-      vars:
-        uninstall_docker_container: "{{ user.domain | replace('.','-')+'-'+item }}"
+    vars:
+      uninstall_docker_container: "{{ user.domain | replace('.','-')+'-'+item }}"
     with_items:
       - redis
       - authelia
