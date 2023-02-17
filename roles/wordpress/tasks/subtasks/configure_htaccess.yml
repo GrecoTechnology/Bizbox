@@ -13,4 +13,4 @@
     dest: "{{wordpress_data_path}}/.htaccess"
     owner: "www-data"
     group: "www-data"
-    mode: "0444"
+    mode: "0644"
