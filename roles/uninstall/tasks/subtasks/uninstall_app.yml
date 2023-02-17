@@ -10,7 +10,7 @@
 - name: Remove apps | Set app name
   set_fact:
     app: "{{'invoice' if item in ['invoiceninja', 'invoiceninjav5'] else item}}"
-  when: app is undefined
+  when: item is defined
 
 - name: Remove apps | Remove containers
   block:
