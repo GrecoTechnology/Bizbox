@@ -25,6 +25,12 @@
       uninstall_docker_container: "{{ user.domain | replace('.','-')+'-'+app+'-nginx' }}"
     when: app == "invoice"
 
+  - name: Remove apps | Remove containers | Remove wordpress redis container
+    ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/remove_docker_container.yml"
+    vars:
+      uninstall_docker_container: "{{ user.domain | replace('.','-')+'-'+app+'-redis' }}"
+    when: app == "wordpress"
+
   - name: Remove apps | Remove containers | Remove traefik redis and authelia containers
     ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/remove_docker_container.yml"
     vars:
