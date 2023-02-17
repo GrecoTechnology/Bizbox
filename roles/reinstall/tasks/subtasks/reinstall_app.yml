@@ -19,11 +19,9 @@
 - name: Reinstall apps | Reinstall app
   block:
   - name: Reinstall apps | Reinstall app | Uninstall app
-    ansible.builtin.include_role:
-      name: uninstall
+    ansible.builtin.import_tasks: {{ uninstall_task_path }}
     vars:
-      apps: "{{ app }}"
-      all: 'false'
+      app: "{{ app }}"
     when: force is defined and force == 'true'
 
   - name: Reinstall apps | Reinstall app | Install app

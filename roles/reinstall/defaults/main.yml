@@ -12,3 +12,4 @@
 ################################
 
 utils_apps: ['redis', 'mariadb', 'authelia']
+uninstall_task_path: "/srv/git/bizbox/roles/uninstall/subtasks/uninstall_app.yml"
