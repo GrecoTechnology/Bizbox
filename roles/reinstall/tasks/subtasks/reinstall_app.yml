@@ -23,6 +23,7 @@
       name: uninstall
     vars:
       apps: "{{ app }}"
+      all: false
     when: force is defined and force == 'true'
 
   - name: Reinstall apps | Reinstall app | Install app
