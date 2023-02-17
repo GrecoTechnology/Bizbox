@@ -9,20 +9,29 @@
 ---
 - name: Get list of apps' subfolders
   block:
-    - name: Get list of apps' subfolders | Get apps
-      ansible.builtin.find:
-        paths: "{{ server_appdata_path }}"
-        file_type: directory
-        recurse: false
-      register: apps
+  - name: Get list of apps' subfolders | Get apps
+    ansible.builtin.find:
+      paths: "{{ server_appdata_path }}"
+      file_type: directory
+      recurse: false
+    register: apps
 
-    - name: Set apps names
-      set_fact:
-        apps: "{{apps.files}}"
+  - name: Set apps names
+    set_fact:
+      apps: "{{apps.files}}"
   when: all is defined and all == 'true'
+
+- name: Set apps list
+  block:
+  - set_fact:
+      apps: "{{ apps|map(attribute='path')|map('basename')|list if (apps | type_debug == 'list') else apps | split(',') }}"
+
+  - set_fact:
+      apps: "{{ [ 'traefik' ] + apps | reject('equalto', 'traefik') | list }}"
+    when: traefik in apps
 
 - name: Reinstall apps
   include_tasks: subtasks/reinstall_app.yml
-  with_items: "{{ apps|map(attribute='path')|map('basename')|list if (apps | type_debug == 'list') else apps | split(',') }}"
+  with_items: "{{apps}}"
   loop_control:
     loop_var: app_item
