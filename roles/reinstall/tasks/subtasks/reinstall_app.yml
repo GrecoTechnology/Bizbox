@@ -27,5 +27,5 @@
 
   - name: Reinstall apps | Reinstall app | Install app
     ansible.builtin.include_role:
-      apps: "{{ 'invoiceninjav5' if app == 'invoice' else app }}"
+      name: "{{ 'invoiceninjav5' if app == 'invoice' else app }}"
   when: register_role_name.stat.exists and app not in utils_apps
