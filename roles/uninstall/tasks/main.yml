@@ -9,16 +9,16 @@
 ---
 - name: Get list of apps' subfolders
   block:
-    - name: Get list of apps' subfolders | Get apps
-      ansible.builtin.find:
-        paths: "{{ server_appdata_path }}"
-        file_type: directory
-        recurse: false
-      register: apps
+  - name: Get list of apps' subfolders | Get apps
+    ansible.builtin.find:
+      paths: "{{ server_appdata_path }}"
+      file_type: directory
+      recurse: false
+    register: apps
 
-    - name: Set apps names
-      set_fact:
-        apps: "{{apps.files}}"
+  - name: Set apps names
+    set_fact:
+      apps: "{{apps.files}}"
   when: all is defined and all == 'true'
 
 - name: Remove apps
