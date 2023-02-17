@@ -44,6 +44,13 @@ root_certdir: "{{server_root_appdata_path}}/ssl"
 UPLOAD_MAX_FILESIZE: "150M"
 
 ################################
+# Redis
+################################
+
+redis_name: "{{ user.domain | replace('.','-')+'-wordpress-redis' }}"
+redis_paths_location: "{{ wordpress_config_path }}/redis"
+
+################################
 # Web
 ################################
 

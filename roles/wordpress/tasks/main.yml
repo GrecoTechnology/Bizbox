@@ -13,6 +13,13 @@
     container_name: "{{ user.domain | replace('.','-')+'-mariadb' }}"
   register: result
 
+- name: Redis Role
+  ansible.builtin.include_role:
+    name: redis
+  vars:
+    redis_name: "{{redis_name}}"
+    redis_paths_location: "{{redis_name}}"
+
 - name: MariaDB Role
   ansible.builtin.include_role:
     name: mariadb
