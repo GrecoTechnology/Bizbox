@@ -47,8 +47,8 @@ UPLOAD_MAX_FILESIZE: "150M"
 # Redis
 ################################
 
-redis_name: "{{ user.domain | replace('.','-')+'-wordpress-redis' }}"
-redis_paths_location: "{{ wordpress_config_path }}/redis"
+wordpress_redis_name: "{{ user.domain | replace('.','-')+'-wordpress-redis' }}"
+wordpress_redis_paths_location: "{{ wordpress_config_path }}/redis"
 
 ################################
 # Web

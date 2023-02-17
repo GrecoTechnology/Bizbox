@@ -17,8 +17,8 @@
   ansible.builtin.include_role:
     name: redis
   vars:
-    redis_name: "{{redis_name}}"
-    redis_paths_location: "{{redis_name}}"
+    redis_name: "{{wordpress_redis_name}}"
+    redis_paths_location: "{{wordpress_redis_paths_location}}"
 
 - name: MariaDB Role
   ansible.builtin.include_role:
