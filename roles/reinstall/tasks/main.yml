@@ -29,9 +29,11 @@
   - set_fact:
       apps: "{{ [ 'traefik' ] + apps | reject('equalto', 'traefik') | list }}"
     when: "'traefik' in apps"
+  when: apps is defined
 
 - name: Reinstall apps
   include_tasks: subtasks/reinstall_app.yml
   with_items: "{{apps}}"
   loop_control:
     loop_var: app_item
+  when: apps is defined
