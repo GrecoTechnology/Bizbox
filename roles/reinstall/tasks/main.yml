@@ -28,7 +28,7 @@
     when: "apps | type_debug == 'list'"
 
   - set_fact:
-      apps: "{{ apps | split(',') }}"
+      apps: "{{ apps.split(',') }}"
     when: "apps | type_debug != 'list'"
 
   - debug:
