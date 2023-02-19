@@ -27,8 +27,11 @@
       apps: "{{ apps|map(attribute='path')|map('basename')|list }}"
     when: "apps | type_debug == 'list'"
 
+  - debug:
+      msg: "{{apps}}"
+
   - set_fact:
-      apps: "{{ apps.split(',') }}"
+      apps: "{{ apps | split(',') }}"
     when: "apps | type_debug != 'list'"
 
   - debug:
