@@ -12,5 +12,5 @@
 ################################
 
 reinstall_docker_container: "{{ user.domain | replace('.','-')+'-'+app }}"
-utils_apps: ['redis', 'authelia', 'mariadb']
+utils_apps: ['mariadb']
 uninstall_task_path: "/srv/git/bizbox/roles/uninstall/tasks/subtasks/uninstall_app.yml"
