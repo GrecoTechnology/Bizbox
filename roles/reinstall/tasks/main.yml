@@ -32,7 +32,7 @@
     when: "apps | type_debug != 'list'"
 
   - debug:
-      msg: "{{apps}}"
+      msg: "{{apps[0]}}"
 
   - set_fact:
       apps: "{{ [ 'traefik' ] + apps | reject('equalto', 'traefik') | list }}"
