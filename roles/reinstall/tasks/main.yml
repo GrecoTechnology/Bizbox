@@ -27,15 +27,9 @@
       apps_list: "{{ apps|map(attribute='path')|map('basename')|list }}"
     when: "apps | type_debug == 'list'"
 
-  - debug:
-      msg: "{{apps}}"
-
   - set_fact:
       apps_list: "{{ apps | split(',') }}"
     when: "apps | type_debug != 'list'"
-
-  - debug:
-      msg: "{{apps_list[0]}}"
 
   - set_fact:
       apps: "{{ [ 'traefik' ] + apps | reject('equalto', 'traefik') | list }}"
