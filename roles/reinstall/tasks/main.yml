@@ -26,6 +26,9 @@
   - set_fact:
       apps: "{{ apps|map(attribute='path')|map('basename')|list if (apps | type_debug == 'list') else (apps | split(',') | list) }}"
 
+  - debug:
+      msg: "{{apps}}"
+
   - set_fact:
       apps: "{{ [ 'traefik' ] + apps | reject('equalto', 'traefik') | list }}"
     when: "'traefik' in apps"
