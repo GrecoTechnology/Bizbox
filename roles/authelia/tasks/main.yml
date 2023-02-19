@@ -33,7 +33,7 @@
 
 - name: Reset Authelia directory
   ansible.builtin.file:
-    path: "{{ authelia_paths_location }}"
+    path: "{{ authelia_data_path }}"
     state: absent
   when: ('authelia-reset' in ansible_run_tags)
 
@@ -42,18 +42,18 @@
 
 - name: Check if 'configuration.yml' exists
   ansible.builtin.stat:
-    path: "{{ authelia_paths_location }}/configuration.yml"
+    path: "{{ authelia_data_path }}/configuration.yml"
   register: authelia_config_stat
 
 - name: Check if 'users_database.yml' exists
   ansible.builtin.stat:
-    path: "{{ authelia_paths_location }}/users_database.yml"
+    path: "{{ authelia_data_path }}/users_database.yml"
   register: authelia_user_config_stat
 
 - name: Import default 'configuration.yml'
   ansible.builtin.template:
     src: configuration.yml.j2
-    dest: "{{ authelia_paths_location }}/configuration.yml"
+    dest: "{{ authelia_data_path }}/configuration.yml"
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "0775"
@@ -66,7 +66,7 @@
     command: "authelia hash-password '{{ user.pass }}'"
     detach: no
     volumes:
-      - "{{ authelia_paths_location }}:/config"
+      - "{{ authelia_data_path }}:/config"
     networks:
       - name: bizbox
     purge_networks: yes
@@ -83,7 +83,7 @@
 - name: Import default 'users_database.yml'
   ansible.builtin.template:
     src: users_database.yml.j2
-    dest: "{{ authelia_paths_location }}/users_database.yml"
+    dest: "{{ authelia_data_path }}/users_database.yml"
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "0775"
