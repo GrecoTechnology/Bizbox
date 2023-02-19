@@ -1,7 +1,7 @@
 #########################################################################
-# Title:         Bizbox: Traefik Role                                  #
+# Title:         Bizbox: Traefik Role                                   #
 # Author(s):     RXWatcher, salty                                       #
-# URL:           https://github.com/GrecoTechnology/Bizbox                    #
+# URL:           https://github.com/GrecoTechnology/Bizbox              #
 # --                                                                    #
 #########################################################################
 #                   GNU General Public License v3.0                     #
@@ -41,7 +41,7 @@
 
 - name: Remove Certificates
   ansible.builtin.file:
-    path: "{{ traefik_paths_location }}/acme.json"
+    path: "{{ traefik_data_path }}/acme.json"
     state: absent
   when: ('traefik_reset_certs' in ansible_run_tags)
 
