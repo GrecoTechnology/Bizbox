@@ -19,8 +19,13 @@ portainer_name: "{{ user.domain | replace('.','-')+'-portainer' }}"
 
 portainer_paths_folder: portainer
 portainer_paths_location: "{{ server_appdata_path }}/{{ portainer_paths_folder }}"
+portainer_config_path: "{{ portainer_paths_location }}/config"
+portainer_data_path: "{{ portainer_paths_location }}/_data"
+portainer_env_path: "{{ portainer_config_path }}/portainer.env.yml"
 portainer_paths_folders_list:
   - "{{ portainer_paths_location }}"
+  - "{{ portainer_config_path }}"
+  - "{{ portainer_data_path }}"
 
 ################################
 # Web
@@ -115,7 +120,7 @@ portainer_docker_commands: "{{ portainer_docker_commands_default
 
 # Volumes
 portainer_docker_volumes_default:
-  - "{{ portainer_paths_location }}:/data"
+  - "{{ portainer_data_path }}:/data"
   - "/var/run/docker.sock:/var/run/docker.sock"
 portainer_docker_volumes_custom: []
 portainer_docker_volumes: "{{ portainer_docker_volumes_default

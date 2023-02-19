@@ -25,8 +25,13 @@ redis_name: "{{ user.domain | replace('.','-')+'-redis' }}"
 
 authelia_paths_folder: authelia
 authelia_paths_location: "{{ server_appdata_path }}/{{ authelia_paths_folder }}"
+authelia_config_path: "{{ authelia_paths_location }}/config"
+authelia_data_path: "{{ authelia_paths_location }}/_data"
+authelia_env_path: "{{ authelia_config_path }}/authelia.env.yml"
 authelia_paths_folders_list:
   - "{{ authelia_paths_location }}"
+  - "{{ authelia_config_path }}"
+  - "{{ authelia_data_path }}"
 
 ################################
 # Web
@@ -95,7 +100,7 @@ authelia_docker_commands: "{{ authelia_docker_commands_default
 
 # Volumes
 authelia_docker_volumes_default:
-  - "{{ authelia_paths_location }}:/config"
+  - "{{ authelia_data_path }}:/config"
 authelia_docker_volumes_custom: []
 authelia_docker_volumes: "{{ authelia_docker_volumes_default
                              + authelia_docker_volumes_custom }}"

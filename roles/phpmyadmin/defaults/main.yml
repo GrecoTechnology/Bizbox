@@ -19,8 +19,11 @@ phpmyadmin_name: "{{ user.domain | replace('.','-')+'-phpmyadmin' }}"
 
 phpmyadmin_paths_folder: phpmyadmin
 phpmyadmin_paths_location: "{{ server_appdata_path }}/{{ phpmyadmin_paths_folder }}"
+phpmyadmin_config_path: "{{ phpmyadmin_paths_location }}/config"
+phpmyadmin_env_path: "{{ phpmyadmin_config_path }}/phpmyadmin.env.yml"
 phpmyadmin_paths_folders_list:
   - "{{ phpmyadmin_paths_location }}"
+  - "{{ phpmyadmin_config_path }}"
 
 ################################
 # Web
