@@ -24,18 +24,18 @@
 - name: Set apps list
   block:
   - set_fact:
-      apps: "{{ apps|map(attribute='path')|map('basename')|list }}"
+      apps_list: "{{ apps|map(attribute='path')|map('basename')|list }}"
     when: "apps | type_debug == 'list'"
 
   - debug:
       msg: "{{apps}}"
 
   - set_fact:
-      apps: "{{ apps | split(',') }}"
+      apps_list: "{{ apps | split(',') }}"
     when: "apps | type_debug != 'list'"
 
   - debug:
-      msg: "{{apps[0]}}"
+      msg: "{{apps_list[0]}}"
 
   - set_fact:
       apps: "{{ [ 'traefik' ] + apps | reject('equalto', 'traefik') | list }}"
@@ -43,6 +43,6 @@
 
 - name: Reinstall apps
   include_tasks: subtasks/reinstall_app.yml
-  with_items: "{{apps}}"
+  with_items: "{{apps_list}}"
   loop_control:
     loop_var: app_item
