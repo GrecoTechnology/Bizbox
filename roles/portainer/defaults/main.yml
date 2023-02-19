@@ -103,7 +103,7 @@ portainer_docker_ports: "{{ portainer_docker_ports_defaults
 # Envs
 portainer_docker_envs_default:
   TZ: "{{ tz }}"
-portainer_docker_envs_custom: {}
+portainer_docker_envs_custom: "{{ (lookup('file', server_domain_env_path) | from_yaml ).portainer }}"
 portainer_docker_envs: "{{ portainer_docker_envs_default
                            | combine(portainer_docker_envs_custom) }}"
 
