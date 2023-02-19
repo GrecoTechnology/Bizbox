@@ -24,7 +24,7 @@
 - name: Set apps list
   block:
   - set_fact:
-      apps: "{{ apps|map(attribute='path')|map('basename')|list if (apps | type_debug == 'list') else (apps | split(',') | list) }}"
+      apps: "{{ apps|map(attribute='path')|map('basename')|list if (apps | type_debug == 'list') else (apps | split(',')) }}"
 
   - debug:
       msg: "{{apps}}"
