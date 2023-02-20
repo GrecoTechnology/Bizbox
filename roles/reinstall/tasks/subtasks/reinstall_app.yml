@@ -19,7 +19,7 @@
 - name: debug
   debug:
     msg: "force enabled"
-  when: force is defined and force == 'true'
+  when: register_role_name.stat.exists and force is defined and force == 'true'
 
 - name: Reinstall apps | Reinstall app
   block:
