@@ -16,13 +16,18 @@
     path: "{{ server_appdata_path }}/{{ app }}"
   register: register_role_name
 
+- name: debug
+  debug:
+    msg: "force enabled"
+  when: force is defined and force == 'true'
+
 - name: Reinstall apps | Reinstall app
   block:
   - name: Reinstall apps | Reinstall app | Uninstall app
     ansible.builtin.import_tasks: "{{ uninstall_task_path }}"
     vars:
       app: "{{ app }}"
-    when: force is defined and force == true
+    when: force is defined and force == 'true'
 
   - name: Reinstall apps | Reinstall app | Install app
     ansible.builtin.include_role:
