@@ -16,11 +16,6 @@
     path: "{{ server_appdata_path }}/{{ app }}"
   register: register_role_name
 
-- name: debug
-  debug:
-    msg: "force enabled"
-  when: register_role_name.stat.exists and force is defined and force == 'true'
-
 - name: Reinstall apps | Reinstall app
   block:
   - name: Reinstall apps | Reinstall app | Uninstall app
