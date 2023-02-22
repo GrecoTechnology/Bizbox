@@ -10,3 +10,9 @@ cloudflare:
 dockerhub:
   user:
   token:
+azure:
+  ad:
+    client_id:
+    client_secret:
+    issuer_url:
+    jwt_secret:

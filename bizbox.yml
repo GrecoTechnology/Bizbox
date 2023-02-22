@@ -30,6 +30,7 @@
     - { role: scripts, tags: ['bizbox', 'mediabox', 'feederbox', 'preinstall', 'scripts'] }
     - { role: sandbox, tags: ['bizbox', 'mediabox', 'feederbox', 'sandbox'] }
     - { role: traefik, tags: ['bizbox', 'mediabox', 'feederbox', 'traefik', 'traefik_reset_certs'], when: ['reverse_proxy_is_enabled'] }
+    - { role: traefikauth, tags: ['bizbox', 'mediabox', 'feederbox', 'traefikauth', 'traefik_reset_certs'], when: ['reverse_proxy_is_enabled'] }
     - { role: cloudflare, tags: ['bizbox', 'mediabox', 'feederbox', 'cloudflare'], when: ['cloudflare_is_enabled'] }
     - { role: reinstall, tags: ['reinstall'] }
     - { role: uninstall, tags: ['uninstall'] }
