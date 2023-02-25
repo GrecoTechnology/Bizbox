@@ -1,0 +1,34 @@
+############################################################################
+# Title:            Bizbox: Reinstall | Clone apps Task                    #
+# Author(s):        btmarouane                                             #
+# URL:              https://github.com/GrecoTechnology/Bizbox              #
+# --                                                                       #
+############################################################################
+#                   GNU General Public License v3.0                        #
+############################################################################
+---
+- name: Clone apps | Set app name
+  set_fact:
+    app: "{{ 'invoice' if app_item in ['invoiceninja', 'invoiceninjav5'] else app_item }}"
+
+- name: Clone apps | Check role name
+  stat:
+    path: "{{ server_appdata_path_src }}/{{ app }}"
+  register: register_role_name
+
+- name: Clone apps | Clone app
+  block:
+    - name: Clone apps | clone app | set app name
+      set_fact:
+        app: "{{ 'invoiceninjav5' if app == 'invoice' else app }}"
+
+    - name: Clone apps | clone app | Install app
+      ansible.builtin.include_role:
+        name: "{{ app }}"
+      vars:
+        user:
+          domain: "{{ dst_domain }}"
+
+    - name: Clone apps | clone app | Clone app
+
+  when: register_role_name.stat.exists and app not in primary_roles

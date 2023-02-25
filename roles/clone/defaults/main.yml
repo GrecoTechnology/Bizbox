@@ -1,0 +1,21 @@
+#########################################################################
+# Title:         Bizbox: Clone | Default Variables                      #
+# Author(s):     btmarouane                                             #
+# URL:           https://github.com/GrecoTechnology/Bizbox              #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
+---
+################################
+# Basics
+################################
+
+clone_docker_container: "{{ user.domain | replace('.','-')+'-'+app }}"
+primary_roles: ['traefik,portainer']
+
+################################
+# Paths
+################################
+
+server_appdata_path_src: "{{ server_root_appdata_path }}/{{src_domain}}"
