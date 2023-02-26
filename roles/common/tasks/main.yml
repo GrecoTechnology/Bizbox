@@ -159,6 +159,7 @@
       - passlib
       - PyMySQL
       - tld
+      - mysqlclient
     executable: pip3
   ignore_errors: true
 
