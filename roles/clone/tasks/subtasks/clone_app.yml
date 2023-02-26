@@ -1,5 +1,5 @@
 ############################################################################
-# Title:            Bizbox: Reinstall | Clone apps Task                    #
+# Title:            Bizbox: Clone | Clone apps Task                        #
 # Author(s):        btmarouane                                             #
 # URL:              https://github.com/GrecoTechnology/Bizbox              #
 # --                                                                       #
@@ -7,10 +7,6 @@
 #                   GNU General Public License v3.0                        #
 ############################################################################
 ---
-- name: Clone apps | Set app name
-  set_fact:
-    app: "{{ 'invoice' if app_item in ['invoiceninja', 'invoiceninjav5'] else app_item }}"
-
 - name: Clone apps | Check role name
   stat:
     path: "{{ server_appdata_path_src }}/{{ app }}"
@@ -18,17 +14,32 @@
 
 - name: Clone apps | Clone app
   block:
-    - name: Clone apps | clone app | set app name
-      set_fact:
-        app: "{{ 'invoiceninjav5' if app == 'invoice' else app }}"
+    - name: Clone apps | Clone app | Load variables
+      include_vars: "/srv/git/bizbox/roles/{{app}}/defaults/main.yml"
+
+    - name: Clone apps | Clone app | Create directories
+      ansible.builtin.include_tasks: "{{ resources_tasks_path }}/directories/create_directories.yml"
+      vars:
+        var_prefix: "{{ app }}"
+
+    - name: Clone apps | Clone app | Copy env.yml file
+      copy:
+        src: "{{ clone_env_path }}"
+        dest: "{{ lookup('vars', app + '_env_path') }}"
+
+    - name: Clone apps | Clone app | Configure env.yml file
+      lineinfile:
+        path: "{{ clone_env_path }}"
+        regexp: "{{ clone_name }}"
+        line: "{{ lookup('vars', app + '_name') }}"
 
     - name: Clone apps | clone app | Install app
       ansible.builtin.include_role:
         name: "{{ app }}"
-      vars:
-        user:
-          domain: "{{ dst_domain }}"
-
+    - name: Clone apps | clone app | Stop docker container
+      ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/stop_docker_container.yml"
     - name: Clone apps | clone app | Clone app
-
+      ansible.builtin.include_tasks: clone.yml
+    - name: Clone apps | clone app | Start docker container
+        ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/start_docker_container.yml"
   when: register_role_name.stat.exists and app not in primary_roles

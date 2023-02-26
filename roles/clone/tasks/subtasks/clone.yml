@@ -1,0 +1,40 @@
+############################################################################
+# Title:            Bizbox: Clone | Clone app Task                         #
+# Author(s):        btmarouane                                             #
+# URL:              https://github.com/GrecoTechnology/Bizbox              #
+# --                                                                       #
+############################################################################
+#                   GNU General Public License v3.0                        #
+############################################################################
+---
+- name: Clone app | Copy data
+  copy:
+    src: "{{ clone_data_path }}"
+    dest: "{{ lookup('vars', app + '_data_path') }}"
+    recurse: yes
+    force: yes
+
+- name: Clone app | Copy configuration
+  block:
+    - name: Clone wordpress | Copy configuration | Copy http headers file
+      copy:
+        src: "{{clone_http_headers_path}}"
+        dest: "{{ lookup('vars', app + '_config_path') }}"
+        follow: yes
+    - name: Clone app | Copy configuration | Configure http headers file
+      block:
+      - lineinfile:
+          path: "{{ lookup('vars', app + '_config_path') }}"
+          regexp: "{{ clone_name }}"
+          line: "{{ lookup('vars', app + '_name') }}"
+      - lineinfile:
+          path: "{{ lookup('vars', app + '_config_path') }}"
+          regexp: "{{ src_domain }}"
+          line: "{{ user.domain }}"
+
+- name: Clone app | Backup database
+  ansible.builtin.include_role:
+    name: mariadb_backup
+
+- name: Clone app | Import database
+  ansible.builtin.import_tasks: import_db.yml
