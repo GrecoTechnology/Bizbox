@@ -1,0 +1,43 @@
+##########################################################################
+# Title:         Bizbox  | Clone                                         #
+# Author(s):     btmarouane                                              #
+# URL:           https://github.com/GrecoTechnology/Bizbox               #
+# --                                                                     #
+##########################################################################
+#                   GNU General Public License v3.0                      #
+##########################################################################
+---
+- name: "Fail if src_domain == dst_domain"
+  ansible.builtin.fail:
+    msg: "source domain must be different than destination domain !"
+  when: src_domain == dst_domain
+
+- name: Get list of apps' subfolders
+  block:
+    - name: Get list of apps' subfolders | Get apps
+      ansible.builtin.find:
+        paths: "{{ server_appdata_path_src }}"
+        file_type: directory
+        recurse: false
+      register: apps
+
+    - name: Set apps names
+      set_fact:
+        apps: "{{apps.files}}"
+  when: all is defined and all == 'true'
+
+- name: Set apps list
+  block:
+    - set_fact:
+        apps_list: "{{ apps|map(attribute='path')|map('basename')|list }}"
+      when: "apps | type_debug == 'list'"
+
+    - set_fact:
+        apps_list: "{{ apps | split(',') }}"
+      when: "apps | type_debug != 'list'"
+
+- name: Clone apps
+  include_tasks: subtasks/clone_app.yml
+  with_items: "{{apps_list}}"
+  loop_control:
+    loop_var: app_item

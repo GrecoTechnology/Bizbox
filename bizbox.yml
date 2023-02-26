@@ -34,6 +34,7 @@
     - { role: cloudflare, tags: ['bizbox', 'mediabox', 'feederbox', 'cloudflare'], when: ['cloudflare_is_enabled'] }
     - { role: reinstall, tags: ['reinstall'] }
     - { role: uninstall, tags: ['uninstall'] }
+    - { role: clone, tags: ['clone'] }
     # Apps Start
     - { role: adguardhome, tags: ['adguardhome', 'adguard'] }
     - { role: vaultwarden, tags: ['vaultwarden'] }

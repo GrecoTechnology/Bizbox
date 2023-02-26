@@ -1,0 +1,17 @@
+############################################################################
+# Title:            Bizbox: Clone | Import db Task                         #
+# Author(s):        btmarouane                                             #
+# URL:              https://github.com/GrecoTechnology/Bizbox              #
+# --                                                                       #
+############################################################################
+#                   GNU General Public License v3.0                        #
+############################################################################
+---
+- name: Import db
+  mysql_db:
+    name: "{{ DB_NAME }}"
+    state: import
+    target: "{{ mariadb_backup_path }}/{{ app }}.sql"
+    login_host: "{{ DB_HOST }}"
+    login_user: "{{ DB_USER }}"
+    login_password: "{{ DB_PASSWORD }}"

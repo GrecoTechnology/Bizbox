@@ -1,7 +1,7 @@
 #########################################################################
-# Title:            Sandbox: InvoiceNinja v5                            #
+# Title:            Bizbox: InvoiceNinja v5                             #
 # Author(s):        addbee                                              #
-# URL:              https://github.com/GrecoTechnology/Sandbox                 #
+# URL:              https://github.com/GrecoTechnology/Bizbox           #
 # --                                                                    #
 #########################################################################
 #                   GNU General Public License v3.0                     #
@@ -10,13 +10,13 @@
 ################################
 # Basics
 ################################
-invoiceninjav5_name: "{{ user.domain | replace('.','-')+'-invoice' }}"
+invoiceninjav5_name: "{{ user.domain | replace('.','-')+'-invoiceninjav5' }}"
 
 ################################
 # Paths
 ################################
 
-invoiceninjav5_paths_folder: invoice
+invoiceninjav5_paths_folder: invoiceninjav5
 invoiceninjav5_paths_location: "{{ server_appdata_path }}/{{ invoiceninjav5_paths_folder }}"
 invoiceninjav5_config_path: "{{ invoiceninjav5_paths_location }}/config"
 invoiceninjav5_vhost_conf_path: "{{ invoiceninjav5_config_path }}/in-vhost.conf"
@@ -37,7 +37,7 @@ max_execution_time: 300
 # Nginx
 ################################
 
-invoiceninjav5_nginx_name: "{{ user.domain | replace('.','-')+'-invoice-nginx' }}"
+invoiceninjav5_nginx_name: "{{ user.domain | replace('.','-')+'-invoiceninjav5-nginx' }}"
 
 ################################
 # Web
@@ -62,7 +62,7 @@ invoiceninjav5_nginx_dns_proxy: "{{ dns.proxied }}"
 # Mariadb
 ################################
 
-mariadb_db_name: invoice
+mariadb_db_name: invoiceninjav5
 
 ################################
 # Traefik

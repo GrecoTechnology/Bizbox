@@ -1,0 +1,28 @@
+##########################################################################
+# Title:         Sandbox: Mariadb Backup | Default Variables             #
+# Author(s):     GrecoTechnology                                         #
+# URL:           https://github.com/GrecoTechnology/Bizbox               #
+# --                                                                     #
+##########################################################################
+#                   GNU General Public License v3.0                      #
+##########################################################################
+---
+################################
+# Paths
+################################
+
+mariadb_backup_paths_folder: "{{ app }}"
+mariadb_backup_location: "{{ server_appdata_path }}/{{ mariadb_backup_paths_folder }}"
+mariadb_backup_path: "{{ mariadb_backup_paths_location }}/backup"
+
+mariadb_backup_paths_folders_list:
+  - "{{ mariadb_backup_path }}"
+
+################################
+# Mariadb
+################################
+
+DB_NAME: "{{ app }}"
+DB_HOST: "{{ user.domain | replace('.','-')+'-mariadb' }}"
+DB_USER: "root"
+DB_PASSWORD: "password321"

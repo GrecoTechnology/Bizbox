@@ -7,6 +7,12 @@
 #                   GNU General Public License v3.0                              #
 ##################################################################################
 ---
+- name: "Settings | env tasks | Set '_var_prefix' variable"
+  ansible.builtin.set_fact:
+    _var_prefix: "{{ var_prefix
+                  if (var_prefix is defined)
+                  else role_name }}"
+
 - name: Resources | Tasks | Directories | Create directories
   ansible.builtin.file:
     path: "{{ item }}"
@@ -14,5 +20,5 @@
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "0775"
-  with_items: "{{ lookup('vars', role_name + '_paths_folders_list')
-                  + lookup('vars', role_name + '_paths_folders_list_custom', default=[]) }}"
+  with_items: "{{ lookup('vars', _var_prefix + '_paths_folders_list')
+                  + lookup('vars', _var_prefix + '_paths_folders_list_custom', default=[]) }}"

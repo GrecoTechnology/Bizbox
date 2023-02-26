@@ -7,15 +7,9 @@
 #                   GNU General Public License v3.0                        #
 ############################################################################
 ---
-- name: Remove apps | Set app name
-  set_fact:
-    app: "{{'invoice' if item in ['invoiceninja', 'invoiceninjav5'] else item}}"
-  when: item is defined
-
 - name: Remove apps | Remove containers
   block:
-  - name: Remove apps | Remove containers | Remove container
-    ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/remove_docker_container.yml"
+  - ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/remove_docker_container.yml"
     vars:
       uninstall_docker_container: "{{ user.domain | replace('.','-')+'-'+app }}"
 
@@ -23,7 +17,7 @@
     ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/remove_docker_container.yml"
     vars:
       uninstall_docker_container: "{{ user.domain | replace('.','-')+'-'+app+'-nginx' }}"
-    when: app == "invoice"
+    when: app == "invoiceninjav5"
 
   - name: Remove apps | Remove containers | Remove wordpress redis container
     ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/remove_docker_container.yml"
@@ -43,14 +37,13 @@
     when: app == "traefik"
 
 - name: Remove apps | Remove db
-  block:
-  - name: Remove apps | Remove wordpress database
-    command: docker exec {{ mariadb_docker_container }} mysql -u{{root_user}} -p{{ root_password }} -e "DROP DATABASE wordpress;"
-    when: app == "wordpress"
-
-  - name: Remove apps | Remove invoiceninjav5 database
-    command: docker exec {{ mariadb_docker_container }} mysql -u{{root_user}} -p{{ root_password }} -e "DROP DATABASE invoice;"
-    when: app == "invoice"
+  mysql_db:
+    name: "{{ app }}"
+    state: absent
+    target: "{{ mariadb_backup_path }}/{{ app }}.sql"
+    login_host: "{{ mariadb_docker_container }}"
+    login_user: "{{ root_user }}"
+    login_password: "{{ root_password }}"
   when: all is defined and all == 'false'
 
 - name: Remove apps | Remove files

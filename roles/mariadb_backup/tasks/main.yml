@@ -1,0 +1,20 @@
+############################################################################
+# Title:            Bizbox: Mariadb Backup                                 #
+# Author(s):        btmarouane                                             #
+# URL:              https://github.com/GrecoTechnology/Bizbox              #
+# --                                                                       #
+############################################################################
+#                   GNU General Public License v3.0                        #
+############################################################################
+---
+- name: Create directories
+  ansible.builtin.include_tasks: "{{ resources_tasks_path }}/directories/create_directories.yml"
+
+- name: Create db backup
+  mysql_db:
+    name: "{{ DB_NAME }}"
+    state: dump
+    target: "{{ mariadb_backup_path }}/{{ app }}.sql"
+    login_host: "{{ DB_HOST }}"
+    login_user: "{{ DB_USER }}"
+    login_password: "{{ DB_PASSWORD }}"
