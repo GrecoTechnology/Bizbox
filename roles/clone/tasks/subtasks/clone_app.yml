@@ -41,5 +41,5 @@
     - name: Clone apps | clone app | Clone app
       ansible.builtin.include_tasks: clone.yml
     - name: Clone apps | clone app | Start docker container
-        ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/start_docker_container.yml"
+      ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/start_docker_container.yml"
   when: register_role_name.stat.exists and app not in primary_roles
