@@ -11,6 +11,7 @@
   copy:
     src: "{{ clone_data_path }}"
     dest: "{{ lookup('vars', app + '_data_path') }}"
+    directory_mode: yes
     force: yes
 
 - name: Clone app | Copy configuration
