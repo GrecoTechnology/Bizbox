@@ -12,7 +12,7 @@
 ################################
 
 clone_docker_container: "{{ user.domain | replace('.','-')+'-'+app }}"
-primary_roles: ['traefik,portainer']
+primary_roles: ['traefik,portainer','authelia']
 
 ################################
 # Paths
