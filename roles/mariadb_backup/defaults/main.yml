@@ -12,7 +12,7 @@
 ################################
 
 mariadb_backup_paths_folder: "{{ app }}"
-mariadb_backup_location: "{{ server_appdata_path }}/{{ mariadb_backup_paths_folder }}"
+mariadb_backup_paths_location: "{{ server_appdata_path }}/{{ mariadb_backup_paths_folder }}"
 mariadb_backup_path: "{{ mariadb_backup_paths_location }}/backup"
 
 mariadb_backup_paths_folders_list:
