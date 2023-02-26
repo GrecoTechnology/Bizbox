@@ -23,6 +23,6 @@ mariadb_backup_paths_folders_list:
 ################################
 
 DB_NAME: "{{ app }}"
-DB_HOST: "{{ user.domain | replace('.','-')+'-mariadb' }}"
+DB_HOST: "{{ user_domain | replace('.','-')+'-mariadb' }}"
 DB_USER: "root"
 DB_PASSWORD: "password321"

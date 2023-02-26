@@ -36,8 +36,7 @@
   ansible.builtin.include_role:
     name: mariadb_backup
   vars:
-    user:
-      domain: "{{ src_domain }}"
+    user_domain: "{{ src_domain }}"
 
 - name: Clone app | Import database
   ansible.builtin.import_tasks: import_db.yml
