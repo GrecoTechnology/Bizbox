@@ -11,7 +11,7 @@
   mysql_db:
     name: "{{ DB_NAME }}"
     state: import
-    target: "{{ mariadb_backup_path }}/{{ app }}.sql"
+    target: "{{ BACKUP_PATH }}"
     login_host: "{{ DB_HOST }}"
     login_user: "{{ DB_USER }}"
     login_password: "{{ DB_PASSWORD }}"

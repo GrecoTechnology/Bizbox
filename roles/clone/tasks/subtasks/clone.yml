@@ -37,6 +37,17 @@
     name: mariadb_backup
   vars:
     user_domain: "{{ src_domain }}"
+    server_appdata_path: "{{ server_root_appdata_path }}/{{src_domain}}"
+    DB_NAME: "{{ app }}"
+    DB_HOST: "{{ src_domain | replace('.','-')+'-mariadb' }}"
+    DB_USER: "root"
+    DB_PASSWORD: "password321"
 
 - name: Clone app | Import database
   ansible.builtin.import_tasks: import_db.yml
+  vars:
+    DB_NAME: "{{ app }}"
+    DB_HOST: "{{ user.domain | replace('.','-')+'-mariadb' }}"
+    DB_USER: "root"
+    DB_PASSWORD: "password321"
+    BACKUP_PATH: "{{ server_root_appdata_path }}/{{src_domain}}/{{app}}/{{ app }}.sql"

@@ -18,11 +18,3 @@ mariadb_backup_path: "{{ mariadb_backup_paths_location }}/backup"
 mariadb_backup_paths_folders_list:
   - "{{ mariadb_backup_path }}"
 
-################################
-# Mariadb
-################################
-
-DB_NAME: "{{ app }}"
-DB_HOST: "{{ user_domain | replace('.','-')+'-mariadb' }}"
-DB_USER: "root"
-DB_PASSWORD: "password321"
