@@ -7,10 +7,10 @@
 #                   GNU General Public License v3.0                      #
 ##########################################################################
 ---
-- name: "Fail if src_domain == dst_domain"
+- name: "Fail if src_domain == user.domain"
   ansible.builtin.fail:
     msg: "source domain must be different than destination domain !"
-  when: src_domain == dst_domain
+  when: src_domain == user.domain
 
 - name: Get list of apps' subfolders
   block:
