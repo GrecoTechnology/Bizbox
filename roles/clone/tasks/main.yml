@@ -40,4 +40,4 @@
   include_tasks: subtasks/clone_app.yml
   with_items: "{{apps_list}}"
   loop_control:
-    loop_var: app_item
+    loop_var: app
