@@ -16,7 +16,7 @@
 
 - name: Clone app | Copy configuration
   block:
-    - name: Clone wordpress | Copy configuration | Copy http headers file
+    - name: Clone app | Copy configuration | Copy http headers file
       copy:
         src: "{{clone_http_headers_path}}"
         dest: "{{ lookup('vars', app + '_config_path') }}"
