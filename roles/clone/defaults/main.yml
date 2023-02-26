@@ -21,7 +21,7 @@ primary_roles: ['traefik,portainer','authelia']
 server_appdata_path_src: "{{ server_root_appdata_path }}/{{src_domain}}"
 
 clone_paths_location: "{{ server_appdata_path_src }}/{{ app }}"
-clone_data_path: "{{clone_paths_location}}/_data"
+clone_data_path: "{{clone_paths_location}}/_data/"
 clone_env_path: "{{clone_paths_location}}/config/{{ app }}.env.yml"
 clone_name: "{{ src_domain | replace('.','-')+'-'+app }}"
 clone_http_headers_path:  "{{clone_paths_location}}/config/http_headers.yml"
