@@ -12,4 +12,3 @@
 
 - name: Create db backup
   shell: mysqldump --column-statistics=0 -h {{ DB_HOST }} -u {{ DB_USER }} -p{{ DB_PASSWORD }} {{ DB_NAME }} > {{ mariadb_backup_path }}/{{ app }}.sql
-
