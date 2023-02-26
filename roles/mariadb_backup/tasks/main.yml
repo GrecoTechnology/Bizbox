@@ -11,10 +11,5 @@
   ansible.builtin.include_tasks: "{{ resources_tasks_path }}/directories/create_directories.yml"
 
 - name: Create db backup
-  mysql_db:
-    name: "{{ DB_NAME }}"
-    state: dump
-    target: "{{ mariadb_backup_path }}/{{ app }}.sql"
-    login_host: "{{ DB_HOST }}"
-    login_user: "{{ DB_USER }}"
-    login_password: "{{ DB_PASSWORD }}"
+  shell: mysqldump -column-statistics=0 -h {{ DB_HOST }} -u {{ DB_USER }} -p{{ DB_PASSWORD }} {{ DB_NAME }} > {{ mariadb_backup_path }}/{{ app }}.sql
+
