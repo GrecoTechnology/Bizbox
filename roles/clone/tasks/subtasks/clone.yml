@@ -23,14 +23,14 @@
         follow: yes
     - name: Clone app | Copy configuration | Configure http headers file
       block:
-      - lineinfile:
+      - replace:
           path: "{{ lookup('vars', app + '_config_path') }}/http_headers.yml"
           regexp: "{{ clone_name }}"
-          line: "{{ lookup('vars', app + '_name') }}"
-      - lineinfile:
+          replace: "{{ lookup('vars', app + '_name') }}"
+      - replace:
           path: "{{ lookup('vars', app + '_config_path') }}/http_headers.yml"
           regexp: "{{ src_domain }}"
-          line: "{{ user.domain }}"
+          replace: "{{ user.domain }}"
 
 - name: Clone app | Backup database
   ansible.builtin.include_role:
