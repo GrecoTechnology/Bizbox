@@ -185,6 +185,7 @@
     name: yyq
   when: (yyq_current_version is version(yyq_install_version, 'lt', version_type='semver'))
         or (not yyq_binary.stat.exists)
+  ignore_errors: true
 
 - name: "Install Nano Syntax Highlighting"
   ansible.builtin.shell: "curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh"
