@@ -107,7 +107,7 @@
     nginx_traefik_certresolver: "{{ invoiceninjav5_nginx_traefik_certresolver }}"
     nginx_docker_volumes_default:
       - "{{ invoiceninjav5_vhost_conf_path }}:/etc/nginx/conf.d/in-vhost.conf:ro"
-      - "{{ invoiceninjav5_paths_location }}/public:/var/www/app/public"
+      - "{{ invoiceninjav5_data_path }}/public:/var/www/app/public"
 
 - name: Remove existing Docker container
   ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/remove_docker_container.yml"
