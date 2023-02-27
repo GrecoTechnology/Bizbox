@@ -19,5 +19,5 @@
 - name: Update db
   mysql_query:
     login_db: "{{ DB_NAME }}"
-    query: UPDATE wp_options SET option_value = https://{{user.domain}}   WHERE option_name = 'home' OR option_name = 'siteurl';
+    query: UPDATE wp_options SET option_value = https://{{ lookup('vars', app + '_web_url') }}  WHERE option_name = 'home' OR option_name = 'siteurl';
   when: app == wordpress
