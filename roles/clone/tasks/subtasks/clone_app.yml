@@ -28,10 +28,10 @@
         dest: "{{ lookup('vars', app + '_env_path') }}"
 
     - name: Clone apps | Clone app | Configure env.yml file
-      lineinfile:
+      replace:
         path: "{{ clone_env_path }}"
         regexp: "{{ clone_name }}"
-        line: "{{ lookup('vars', app + '_name') }}"
+        replace: "{{ lookup('vars', app + '_name') }}"
 
     - name: Clone apps | clone app | Install app
       ansible.builtin.include_role:
