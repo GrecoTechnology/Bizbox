@@ -44,7 +44,7 @@
       login_user: "{{ root_user }}"
       login_password: "{{ root_password }}"
     ignore_errors: true
-  when: all is defined and all == 'false'
+    when: all is defined and all == 'false'
 
 - name: Remove apps | Remove files
   block:
