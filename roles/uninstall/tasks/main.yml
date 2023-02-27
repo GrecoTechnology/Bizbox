@@ -24,6 +24,8 @@
 - name: Remove apps
   include_tasks: subtasks/uninstall_app.yml
   with_items: "{{ apps|map(attribute='path')|map('basename')|list if (apps | type_debug == 'list') else apps | split(',') }}"
+  loop_control:
+    loop_var: app
 
 - name: Remove domain folder
   ansible.builtin.file:

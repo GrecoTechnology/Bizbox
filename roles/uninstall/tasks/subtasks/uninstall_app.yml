@@ -36,14 +36,13 @@
       loop_var: traefik_item
     when: app == "traefik"
 
-- name: Remove apps | Remove db
-  mysql_db:
-    name: "{{ app }}"
-    state: absent
-    target: "{{ mariadb_backup_path }}/{{ app }}.sql"
-    login_host: "{{ mariadb_docker_container }}"
-    login_user: "{{ root_user }}"
-    login_password: "{{ root_password }}"
+  - name: Remove apps | Remove db
+    mysql_db:
+      name: "{{ app }}"
+      state: absent
+      login_host: "{{ mariadb_docker_container }}"
+      login_user: "{{ root_user }}"
+      login_password: "{{ root_password }}"
   when: all is defined and all == 'false'
 
 - name: Remove apps | Remove files
