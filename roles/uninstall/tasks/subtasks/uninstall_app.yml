@@ -53,6 +53,21 @@
       path: "{{ server_appdata_path }}/{{ app }}"
       state: absent
 
+- name: Remove apps | Update domain.tld.env.yml
+  block:
+    - name: Remove apps | Update domain.tld.env.yml | Delete role env config
+      ansible.builtin.shell: |
+        yyq e '.del({{app}})' {{server_domain_env_path}}
+      register: updated_domain_env_config
+    - name: Remove apps | Update domain.tld.env.yml
+      copy:
+        dest: "{{ lookup('vars', _var_prefix + '_env_path') }}"
+        content: "{{updated_domain_env_config.stdout}}"
+        owner: "{{ user.name }}"
+        group: "{{ user.name }}"
+        mode: 0775
+        force: true
+
   - name: Remove apps | Remove files | Remove traefik redis and authelia appdata files
     ansible.builtin.file:
       path: "{{ server_appdata_path }}/{{ traefik_item }}"
