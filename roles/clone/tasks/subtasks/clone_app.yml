@@ -31,11 +31,11 @@
       block:
       - replace:
           path: "{{ clone_env_path }}"
-          regexp: "{{ clone_name }}"
+          regexp: '\b({{ clone_name }})\b'
           replace: "{{ lookup('vars', app + '_name') }}"
       - replace:
           path: "{{ clone_env_path }}"
-          regexp: "{{ src_domain }}"
+          regexp: '\b({{ src_domain }})\b'
           replace: "{{ user.domain }}"
 
     - name: Clone apps | clone app | Install app
