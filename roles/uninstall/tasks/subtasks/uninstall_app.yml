@@ -68,24 +68,24 @@
         mode: 0775
         force: true
 
-  - name: Remove apps | Remove files | Remove traefik redis and authelia appdata files
-    ansible.builtin.file:
-      path: "{{ server_appdata_path }}/{{ traefik_item }}"
-      state: absent
-    with_items:
-      - redis
-      - authelia
-    loop_control:
-      loop_var: traefik_item
-    when: app == "traefik"
+- name: Remove apps | Remove files | Remove traefik redis and authelia appdata files
+  ansible.builtin.file:
+    path: "{{ server_appdata_path }}/{{ traefik_item }}"
+    state: absent
+  with_items:
+    - redis
+    - authelia
+  loop_control:
+    loop_var: traefik_item
+  when: app == "traefik"
 
-  - name: Remove apps | Remove files | Remove http_headers.yml file
-    ansible.builtin.file:
-      path: "{{ traefik_path_http_headers_config_location }}/{{ user.domain | replace('.','-')+'-'+app+'-http-headers.yml' }}"
-      state: absent
+- name: Remove apps | Remove files | Remove http_headers.yml file
+  ansible.builtin.file:
+    path: "{{ traefik_path_http_headers_config_location }}/{{ user.domain | replace('.','-')+'-'+app+'-http-headers.yml' }}"
+    state: absent
 
-  - name: Remove apps | Remove files | Remove traefik config
-    ansible.builtin.file:
-      path: "/opt/traefik"
-      state: absent
-    when: app == "traefik"
+- name: Remove apps | Remove files | Remove traefik config
+  ansible.builtin.file:
+    path: "/opt/traefik"
+    state: absent
+  when: app == "traefik"
