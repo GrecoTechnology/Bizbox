@@ -111,3 +111,33 @@ To clone all apps, you need to use --all tag.  See the following example:
 ```
 bb clone src-domain.tld dst-domain.tld --all
 ```
+
+### Custom Environment variables Configuration
+To configure custom environment variables for apps, there are two configuration levels:
+
+- /opt/domain.tld/domain.tld.env.yml : contains custom environment variables for all apps containers belonging to domain.tld.
+  
+- /opt/domain.tld/role/config/role.env.yml : contains custom environment variables for the role belonging to domain.tld.
+
+Please note that custom environment variables at domain level have the highest priority.
+
+Custom App/domain environment variables configuration files can be used to declare custom configuration before running bb install command :
+```
+mkdir -p /opt/domain.tld/role/config/
+vi /opt/domain.tld/role/config/role.env.yml
+bb install domain.tld role
+```
+Or
+```
+mkdir /opt/domain.tld/
+vi /opt/domain.tld/domain.tld.env.yml
+bb install domain.tld role
+```
+
+
+### Custom Traefik http headers Configuration
+To configure custom Traefik http headers for apps :
+
+```
+vi /opt/domain.tld/role/config/http_headers.yml
+```
