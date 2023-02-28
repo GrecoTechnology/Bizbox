@@ -83,7 +83,7 @@
     register: updated_domain_env_config
   - name: Remove apps | Update domain.tld.env.yml
     copy:
-      dest: "{{ lookup('vars', _var_prefix + '_env_path') }}"
+      dest: "{{ server_domain_env_path }}"
       content: "{{updated_domain_env_config.stdout}}"
       owner: "{{ user.name }}"
       group: "{{ user.name }}"
