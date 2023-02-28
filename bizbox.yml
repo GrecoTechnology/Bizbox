@@ -40,7 +40,7 @@
     - { role: vaultwarden, tags: ['vaultwarden'] }
     - { role: phpmyadmin, tags: ['phpmyadmin'] }
     - { role: wordpress, tags: ['wordpress'] }
-    - { role: invoiceninjav5, tags: ['invoiceninja', 'invoice'] }
+    - { role: invoiceninjav5, tags: ['invoiceninja', 'invoice', 'invoiceninjav5'] }
     - { role: media_server, tags: ['bizbox', 'mediabox', 'media-server'] }
     - { role: tautulli, tags: ['bizbox', 'mediabox', 'tautulli'] }
     - { role: overseerr, tags: ['bizbox', 'mediabox', 'overseerr'] }
