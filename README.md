@@ -123,17 +123,17 @@ Please note :
 - Custom environment variables at domain level have the highest priority.
 - To apply custom environment variables changes you need to reinstall the role.
 
-Custom App/domain environment variables configuration files can be used to declare custom configuration before running bb install command :
+Custom App/domain environment variables configuration files can be used to declare custom configuration before running bb install command. See the following examples :
 ```
-mkdir -p /opt/domain.tld/role/config/
-vi /opt/domain.tld/role/config/role.env.yml
-bb install domain.tld role
+mkdir -p /opt/domain.tld/invoiceninjav5/config/
+vi /opt/domain.tld/role/invoiceninjav5/invoiceninjav5.env.yml
+bb install domain.tld invoiceninjav5
 ```
 Or
 ```
 mkdir /opt/domain.tld/
 vi /opt/domain.tld/domain.tld.env.yml
-bb install domain.tld role
+bb install domain.tld invoiceninjav5
 ```
 
 
