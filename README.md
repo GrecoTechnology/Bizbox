@@ -119,7 +119,9 @@ To configure custom environment variables for apps, there are two configuration 
   
 - /opt/domain.tld/role/config/role.env.yml : contains custom environment variables for the role belonging to domain.tld.
 
-Please note that custom environment variables at domain level have the highest priority.
+Please note :
+- Custom environment variables at domain level have the highest priority.
+- To apply custom environment variables changes you need to reinstall the role.
 
 Custom App/domain environment variables configuration files can be used to declare custom configuration before running bb install command :
 ```
