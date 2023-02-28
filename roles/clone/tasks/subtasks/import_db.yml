@@ -23,4 +23,5 @@
     login_user: "{{ DB_USER }}"
     login_password: "{{ DB_PASSWORD }}"
     query: UPDATE wp_options SET option_value = '{{ lookup('vars', app + '_web_url') }}'  WHERE option_name = 'home' OR option_name = 'siteurl';
+  ignore_errors: true
   when: app == "wordpress"
