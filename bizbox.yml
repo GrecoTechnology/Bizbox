@@ -10,7 +10,7 @@
     - { role: settings, tags: ['settings'] }
     - { role: pre_tasks, tags: ['pre_tasks'] }
     - { role: sanity_check, tags: ['sanity_check'] }
-    - { role: backup, tags: ['backup'] }
+    - { role: backup_old, tags: ['backup_old'] }
     - { role: backup2, tags: ['backup2'] }
     - { role: restore, tags: ['restore'] }
     # Core
