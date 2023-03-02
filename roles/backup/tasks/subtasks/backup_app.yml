@@ -1,0 +1,21 @@
+############################################################################
+# Title:            Bizbox: Backup | Backup apps Task                      #
+# Author(s):        btmarouane                                             #
+# URL:              https://github.com/GrecoTechnology/Bizbox              #
+# --                                                                       #
+############################################################################
+#                   GNU General Public License v3.0                        #
+############################################################################
+---
+- name: Backup apps | Backup app
+  block:
+  - name: Backup app | Backup database
+    ansible.builtin.include_role:
+      name: mariadb_backup
+
+  - name: Backup app | Backup app folder
+    community.general.archive:
+      path: "{{ lookup('vars', app + '_data_path') }}"
+      dest: "{{ backup_backup_path }}/{{app}}.latest.tar.gz"
+      format: gz
+      force_archive: true

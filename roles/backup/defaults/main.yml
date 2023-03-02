@@ -1,11 +1,34 @@
-##########################################################################
-# Title:         Bizbox: Backup | Default Variables                     #
-# Author(s):     salty                                                   #
-# URL:           https://github.com/GrecoTechnology/Bizbox                     #
-# --                                                                     #
-##########################################################################
-#                   GNU General Public License v3.0                      #
-##########################################################################
+#########################################################################
+# Title:         Bizbox: Backup Role                                    #
+# Author(s):     btmarouane                                             #
+# URL:           https://github.com/GrecoTechnology/Bizbox              #
+# --                                                                    #
+#########################################################################
+#                   GNU General Public License v3.0                     #
+#########################################################################
 ---
-backup_ignore_containers: []
-backup_user_defined_files: []
+################################
+# Basics
+################################
+
+backup_docker_container: "{{ user.domain | replace('.','-')+'-'+container_name }}"
+
+
+################################
+# Paths
+################################
+
+backup_paths_folder: "{{ app }}"
+backup_paths_location: "{{ server_appdata_path }}/{{ backup_paths_folder }}"
+backup_backup_path: "{{ backup_paths_location }}/backup"
+
+mariadb_backup_paths_folders_list:
+  - "{{ backup_backup_path }}"
+
+################################
+# Mariadb
+################################
+DB_HOST: "{{ user.domain | replace('.','-')+'-'+'mariadb' }}"
+DB_USER: "root"
+DB_PASSWORD: "password321"
+DB_NAME: "{{ app }}"
