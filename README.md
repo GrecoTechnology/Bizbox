@@ -124,12 +124,14 @@ Please note :
 - To apply custom environment variables changes you need to reinstall the role.
 
 Custom App/domain environment variables configuration files can be used to declare custom configuration before running bb install command. See the following examples :
+
+To declare environment variables for invoiceninjav5 before installing it you can run the following commands to create App/domain env variables config file :
 ```
 mkdir -p /opt/domain.tld/invoiceninjav5/config/
-vi /opt/domain.tld/role/invoiceninjav5/invoiceninjav5.env.yml
+vi /opt/domain.tld/invoiceninjav5/config/invoiceninjav5.env.yml
 bb install domain.tld invoiceninjav5
 ```
-Or
+Or create domain env variables config file :
 ```
 mkdir /opt/domain.tld/
 vi /opt/domain.tld/domain.tld.env.yml
