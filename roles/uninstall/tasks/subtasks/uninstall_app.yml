@@ -85,7 +85,7 @@
     block:
       - copy:
           dest: "{{ server_domain_env_path }}"
-          content: "\n"
+          content: ""
           owner: "{{ user.name }}"
           group: "{{ user.name }}"
           mode: 0775
