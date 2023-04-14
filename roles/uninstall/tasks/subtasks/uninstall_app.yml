@@ -82,10 +82,20 @@
       yyq e 'del(.{{app}})' {{server_domain_env_path}}
     register: updated_domain_env_config
   - name: Remove apps | Update domain.tld.env.yml
-    copy:
-      dest: "{{ server_domain_env_path }}"
-      content: "{{updated_domain_env_config.stdout}}\n"
-      owner: "{{ user.name }}"
-      group: "{{ user.name }}"
-      mode: 0775
-      force: true
+    block:
+      - copy:
+          dest: "{{ server_domain_env_path }}"
+          content: "\n"
+          owner: "{{ user.name }}"
+          group: "{{ user.name }}"
+          mode: 0775
+          force: true
+        when: updated_domain_env_config.stdout == '{}'
+      - copy:
+          dest: "{{ server_domain_env_path }}"
+          content: "{{updated_domain_env_config.stdout}}\n"
+          owner: "{{ user.name }}"
+          group: "{{ user.name }}"
+          mode: 0775
+          force: true
+        when: updated_domain_env_config.stdout != '{}'
