@@ -26,7 +26,6 @@ wordpress_env_path: "{{ wordpress_config_path }}/wordpress.env.yml"
 
 wordpress_paths_folders_list:
   - "{{ wordpress_paths_location }}"
-  - "{{ wordpress_config_path }}"
   - "{{ wordpress_data_path }}"
   - "{{ wordpress_config_path }}"
   - "{{ wordpress_config_ssl_path }}"
