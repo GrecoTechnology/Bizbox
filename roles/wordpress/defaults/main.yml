@@ -144,11 +144,7 @@ wordpress_docker_hosts: "{{ docker_hosts_common
 
 # Labels
 wordpress_docker_labels_default: {}
-wordpress_docker_labels_custom:
-  traefik.http.routers.wordpress-http.entrypoints: web
-  traefik.http.routers.wordpress-http.rule: "Host(`{{ user.domain }}`)"
-  traefik.http.routers.wordpress.entrypoints: websecure
-  traefik.http.routers.wordpress.rule: "Host(`{{ user.domain }}`)"
+wordpress_docker_labels_custom: {}
 
 wordpress_docker_labels: "{{ docker_labels_common
                              | combine(wordpress_docker_labels_default)
