@@ -1,3 +1,4 @@
+# Exclude these paths from linting
 exclude_paths:
   - .github/
   - .idea/
@@ -9,6 +10,7 @@ exclude_paths:
   - library/
   - scripts/
 
+# Skip these linting rules
 skip_list:
   - braces
   - git-latest
