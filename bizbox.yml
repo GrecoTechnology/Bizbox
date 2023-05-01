@@ -24,7 +24,7 @@
     - { role: common, tags: ['bizbox', 'mediabox', 'feederbox', 'preinstall', 'common'] }
     - { role: motd, tags: ['bizbox', 'mediabox', 'feederbox', 'motd'] }
     - { role: docker, tags: ['bizbox', 'mediabox', 'feederbox', 'preinstall', 'docker'] }
-    - { role: nvidia, tags: ['bizbox', 'mediabox', 'nvidia'], when: ['use_nvidia'] }
+    #- { role: nvidia, tags: ['bizbox', 'mediabox', 'nvidia'], when: ['use_nvidia'] }
     - { role: remote, tags: ['bizbox', 'mediabox', 'feederbox', 'mounts', 'mounts_override'], when: ['use_remote'] }
     - { role: unionfs, tags: ['bizbox', 'mediabox', 'feederbox', 'mounts', 'mounts_override'] }
     - { role: scripts, tags: ['bizbox', 'mediabox', 'feederbox', 'preinstall', 'scripts'] }
@@ -42,37 +42,20 @@
     - { role: phpmyadmin, tags: ['phpmyadmin'] }
     - { role: wordpress, tags: ['wordpress'] }
     - { role: invoiceninjav5, tags: ['invoiceninja', 'invoice', 'invoiceninjav5'] }
-    - { role: media_server, tags: ['bizbox', 'mediabox', 'media-server'] }
-    - { role: tautulli, tags: ['bizbox', 'mediabox', 'tautulli'] }
-    - { role: overseerr, tags: ['bizbox', 'mediabox', 'overseerr'] }
     - { role: portainer, tags: ['bizbox', 'feederbox', 'portainer'] }
-    - { role: cloudplow, tags: ['bizbox', 'feederbox', 'cloudplow'], when: ['use_remote'] }
-    - { role: rutorrent, tags: ['bizbox', 'feederbox', 'rutorrent'], when: ['use_torrents'] }
     - { role: iperf3, tags: ['bizbox', 'mediabox', 'feederbox', 'iperf3'] }
     - { role: nethogs, tags: ['bizbox', 'mediabox', 'feederbox', 'nethogs'] }
-    - { role: glances, tags: ['bizbox', 'mediabox', 'feederbox', 'glances'] }
-    - { role: btop, tags: ['bizbox', 'mediabox', 'feederbox', 'btop'] }
     - { role: authelia, tags: ['authelia', 'authelia-reset'] }
     - { role: autoheal, tags: ['autoheal'] }
     - { role: btrfsmaintenance, tags: ['btrfsmaintenance'] }
     - { role: cadvisor, tags: ['cadvisor'] }
-    - { role: ddclient, tags: ['ddclient'] }
-    - { role: diun, tags: ['diun'] }
-    - { role: grafana, tags: ['grafana'] }
-    - { role: mainline, tags: ['mainline'] }
+    #- { role: ddclient, tags: ['ddclient'] }
     - { role: mariadb, tags: ['mariadb'] }
     - { role: netdata, tags: ['netdata'] }
     - { role: nginx, tags: ['nginx'] }
-    - { role: node_exporter, tags: ['node_exporter'] }
-    - { role: petio, tags: ['petio'] }
-    - { role: postgres, tags: ['postgres'] }
-    - { role: prometheus, tags: ['prometheus'] }
+    #- { role: postgres, tags: ['postgres'] }
     - { role: python, tags: ['python'] }
     - { role: redis, tags: ['redis'] }
-    - { role: subliminal, tags: ['subliminal'] }
-    - { role: trackarr, tags: ['trackarr'] }
-    - { role: transfer, tags: ['transfer'] }
-    - { role: yyq, tags: ['yyq'] }
     # Apps End
     - { role: custom, tags: ['custom'] }
     - { role: hetzner_nfs, tags: ['hetzner_nfs_server', 'hetzner_nfs_server_uninstall', 'hetzner_nfs_client_mount', 'hetzner_nfs_client_unmount'] }
