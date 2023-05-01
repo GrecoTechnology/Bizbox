@@ -1,7 +1,11 @@
+# Start of the Ansible playbook
 ---
+# Define the target hosts for the playbook (localhost in this case)
 - hosts: localhost
+  # Load variable files, with fallbacks to default files if not found
   vars_files:
     - ['accounts.yml', 'defaults/accounts.yml.default']
     - ['backup_config.yml', 'defaults/backup_config.yml.default']
+  # Define the roles to be executed, with associated tags
   roles:
     - { role: backup, tags: ['backup'] }
