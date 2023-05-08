@@ -12,7 +12,6 @@
 
   # Define the roles and their tags to be executed in this playbook
   roles:
-<<<<<<< HEAD
     - { role: settings, tags: ['settings'] }
     - { role: pre_tasks, tags: ['pre_tasks'] }
     - { role: sanity_check, tags: ['sanity_check'] }
@@ -83,7 +82,6 @@
     - { role: custom, tags: ['custom'] }
     - { role: hetzner_nfs, tags: ['hetzner_nfs_server', 'hetzner_nfs_server_uninstall', 'hetzner_nfs_client_mount', 'hetzner_nfs_client_unmount'] }
     - { role: bizbox_mod, tags: ['bizbox_mod'] }
-=======
     # Configuration roles
     - { role: settings, tags: ['settings'] }  # Load general settings
     - { role: pre_tasks, tags: ['pre_tasks'] }  # Execute pre-installation tasks
@@ -141,4 +139,3 @@
     - { role: custom, tags: ['custom'] }  # Execute custom tasks and configurations
     - { role: hetzner_nfs, tags: ['hetzner_nfs_server', 'hetzner_nfs_server_uninstall', 'hetzner_nfs_client_mount', 'hetzner_nfs_client_unmount'] }  # Set up Hetzner NFS server and client
     - { role: bizbox_mod, tags: ['bizbox_mod'] }  # Execute Bizbox-specific modifications and tweaks
->>>>>>> 3c640372314bdc9a51a101f0a8e9f7752df43e7a
