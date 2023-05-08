@@ -14,7 +14,6 @@
     - { role: backup2, tags: ['backup2'] }
     - { role: restore, tags: ['restore'] }
     # Core
-    - { role: root_ca, tags: ['bizbox', 'preinstall', 'root_ca'] }
     - { role: kernel, tags: ['bizbox', 'mediabox', 'feederbox', 'preinstall', 'kernel'] }
     - { role: hetzner, tags: ['bizbox', 'mediabox', 'feederbox', 'preinstall', 'hetzner'] }
     - { role: user, tags: ['bizbox', 'mediabox', 'feederbox', 'preinstall', 'user'] }
@@ -28,6 +27,7 @@
     - { role: remote, tags: ['bizbox', 'mediabox', 'feederbox', 'mounts', 'mounts_override'], when: ['use_remote'] }
     - { role: unionfs, tags: ['bizbox', 'mediabox', 'feederbox', 'mounts', 'mounts_override'] }
     - { role: scripts, tags: ['bizbox', 'mediabox', 'feederbox', 'preinstall', 'scripts'] }
+    - { role: root_ca, tags: ['bizbox', 'preinstall', 'root_ca'] }
     - { role: sandbox, tags: ['bizbox', 'mediabox', 'feederbox', 'sandbox'] }
     - { role: traefik, tags: ['bizbox', 'mediabox', 'feederbox', 'traefik', 'traefik_reset_certs'], when: ['reverse_proxy_is_enabled'] }
     - { role: traefikauth, tags: ['bizbox', 'mediabox', 'feederbox', 'traefikauth', 'traefik_reset_certs'], when: ['reverse_proxy_is_enabled'] }
