@@ -1,6 +1,6 @@
 #########################################################################
 # Title:            Bizbox: InvoiceNinja v5                             #
-# Author(s):        addbee                                              #
+# Author(s):        GrecoTechnology                                     #
 # URL:              https://github.com/GrecoTechnology/Bizbox           #
 # --                                                                    #
 #########################################################################
@@ -10,20 +10,20 @@
 ################################
 # Basics
 ################################
-invoiceninjav5_name: "{{ user.domain | replace('.','-')+'-invoiceninjav5' }}"
+invoiceninjav5_name: "{{ user.domain | replace('.','-')+'-invoiceninjav5' }}" # Service name based on the user domain
 
 ################################
 # Paths
 ################################
 
-invoiceninjav5_paths_folder: invoiceninjav5
-invoiceninjav5_paths_location: "{{ server_appdata_path }}/{{ invoiceninjav5_paths_folder }}"
-invoiceninjav5_config_path: "{{ invoiceninjav5_paths_location }}/config"
-invoiceninjav5_vhost_conf_path: "{{ invoiceninjav5_config_path }}/in-vhost.conf"
-invoiceninjav5_php_path: "{{ invoiceninjav5_config_path }}/php.ini"
-invoiceninjav5_data_path: "{{ invoiceninjav5_paths_location }}/_data"
-invoiceninjav5_env_path: "{{ invoiceninjav5_config_path }}/invoiceninjav5.env.yml"
-invoiceninjav5_paths_folders_list:
+invoiceninjav5_paths_folder: invoiceninjav5 # Folder name for InvoiceNinja v5 paths
+invoiceninjav5_paths_location: "{{ server_appdata_path }}/{{ invoiceninjav5_paths_folder }}" # Base path for InvoiceNinja v5
+invoiceninjav5_config_path: "{{ invoiceninjav5_paths_location }}/config" # Configuration path for InvoiceNinja v5
+invoiceninjav5_vhost_conf_path: "{{ invoiceninjav5_config_path }}/in-vhost.conf" # Nginx virtual host configuration path
+invoiceninjav5_php_path: "{{ invoiceninjav5_config_path }}/php.ini" # PHP configuration path
+invoiceninjav5_data_path: "{{ invoiceninjav5_paths_location }}/_data" # Data storage path for InvoiceNinja v5
+invoiceninjav5_env_path: "{{ invoiceninjav5_config_path }}/invoiceninjav5.env.yml" # Environment variables file path
+invoiceninjav5_paths_folders_list: # List of folders to be created
   - "{{ invoiceninjav5_paths_location }}"
   - "{{ invoiceninjav5_data_path }}"
   - "{{ invoiceninjav5_data_path }}/public"
@@ -31,159 +31,189 @@ invoiceninjav5_paths_folders_list:
   - "{{ invoiceninjav5_config_path }}"
 
 ################################
-#PHP
+#PHP Variables
 ################################
-max_execution_time: 300
-
-################################
-# Nginx
-################################
-
-invoiceninjav5_nginx_name: "{{ user.domain | replace('.','-')+'-invoiceninjav5-nginx' }}"
+max_execution_time: 300 # PHP max execution time
 
 ################################
-# Web
+# Nginx Variables
 ################################
 
-invoiceninjav5_nginx_web_subdomain: "invoice"
-invoiceninjav5_nginx_web_domain: "{{ user.domain }}"
-invoiceninjav5_nginx_web_port: "80"
-invoiceninjav5_nginx_web_url: "{{ 'https://' + invoiceninjav5_web_subdomain + '.' + invoiceninjav5_web_domain
-                               if (reverse_proxy_is_enabled)
-                               else 'http://localhost:' + invoiceninjav5_web_port }}"
+invoiceninjav5_nginx_name: "{{ user.domain | replace('.','-')+'-invoiceninjav5-nginx' }}" # Nginx service name based on the user domain
 
 ################################
-# DNS
+# Web Variables
 ################################
 
-invoiceninjav5_nginx_dns_record: "{{ invoiceninjav5_nginx_web_subdomain }}"
-invoiceninjav5_nginx_dns_zone: "{{ invoiceninjav5_nginx_web_domain }}"
-invoiceninjav5_nginx_dns_proxy: "{{ dns.proxied }}"
+invoiceninjav5_nginx_web_subdomain: "invoice" # Web subdomain for InvoiceNinja v5
+invoiceninjav5_nginx_web_domain: "{{ user.domain }}" # Web domain for InvoiceNinja v5
+invoiceninjav5_nginx_web_port: "80" # Web port for InvoiceNinja v5
+invoiceninjav5_nginx_web_url: "{{ 'https://' + invoiceninjav5_web_subdomain + '.' + invoiceninjav5_web_domain if (reverse_proxy_is_enabled) else 'http://localhost:' + invoiceninjav5_web_port }}" # Web URL for InvoiceNinja v5
 
 ################################
-# Mariadb
+# DNS Variables
 ################################
 
-mariadb_db_name: invoiceninjav5
+invoiceninjav5_nginx_dns_record: "{{ invoiceninjav5_nginx_web_subdomain }}" # DNS record for InvoiceNinja v5
+invoiceninjav5_nginx_dns_zone: "{{ invoiceninjav5_nginx_web_domain }}" # DNS zone for InvoiceNinja v5
+invoiceninjav5_nginx_dns_proxy: "{{ dns.proxied }}" # DNS proxy setting for InvoiceNinja v5
 
 ################################
-# Traefik
+# Mariadb Variables
 ################################
 
-invoiceninjav5_nginx_traefik_middleware: "{{ ( user.domain | replace('.','-') )+'-invoiceninjav5' +'@file' +','+ traefik_default_middleware }}"
-invoiceninjav5_nginx_traefik_certresolver: "{{ traefik_default_certresolver }}"
-invoiceninjav5_nginx_traefik_enabled: true
+mariadb_db_name: invoiceninjav5 # Database name for InvoiceNinja v5
 
 ################################
-# Docker
+# Traefik Variables
 ################################
 
-# Container
-invoiceninjav5_docker_container: "{{ invoiceninjav5_name }}"
-invoiceninjav5_nginx_docker_container: "{{ invoiceninjav5_nginx_name }}"
+invoiceninjav5_nginx_traefik_middleware: "{{ ( user.domain | replace('.','-') )+'-invoiceninjav5' +'@file' +','+ traefik_default_middleware }}" # Traefik middleware for InvoiceNinja v5
+invoiceninjav5_nginx_traefik_certresolver: "{{ traefik_default_certresolver }}" # Traefik certresolver for InvoiceNinja v5
+invoiceninjav5_nginx_traefik_enabled: true # Enable Traefik for InvoiceNinja v5
 
-# Image
-invoiceninjav5_docker_image_pull: true
-invoiceninjav5_docker_image_tag: "5"
-invoiceninjav5_docker_image: "invoiceninja/invoiceninja:{{ invoiceninjav5_docker_image_tag }}"
+################################
+# Docker Variables
+################################
 
-# Envs
+# No docker variables at this time
+
+################################
+# Container Variables
+################################
+
+invoiceninjav5_docker_container: "{{ invoiceninjav5_name }}" # Docker container name for InvoiceNinja v5
+invoiceninjav5_nginx_docker_container: "{{ invoiceninjav5_nginx_name }}" # Docker container name for InvoiceNinja v5 Nginx
+
+################################
+# Image Variables
+################################
+
+invoiceninjav5_docker_image_pull: true # Pull InvoiceNinja v5 Docker image
+invoiceninjav5_docker_image_tag: "5" # Docker image tag for InvoiceNinja v5
+invoiceninjav5_docker_image: "invoiceninja/invoiceninja:{{ invoiceninjav5_docker_image_tag }}" # Docker image for InvoiceNinja v5
+
+################################
+# Environment Variables
+################################
+
 invoiceninjav5_docker_envs_default:
-  TZ: "{{ tz }}"
-  APP_URL: "https://{{ invoiceninjav5_nginx_web_subdomain + '.' + invoiceninjav5_nginx_web_domain }}"
-  APP_KEY: "{{ invoiceninja.app_key | default('base64:O1S3kAJEDgo92gPkXtxfdCJpoGShgKloUSdcaHMXmoY=', true) }}"
-  APP_ENV: "production"
-  APP_DEBUG: "false"
-  APP_CIPHER: "AES-256-CBC"
-  TRUSTED_PROXIES: "*"
-  REQUIRE_HTTPS: "true"
-  DB_STRICT: "false"
-  DB_TYPE: "mysql"
-  DB_HOST: "{{ user.domain | replace('.','-')+'-mariadb' }}"
-  DB_USERNAME: "root"
-  DB_PASSWORD: "password321"
-  DB_DATABASE: "{{ mariadb_db_name }}"
-  DB_PORT: "3306"
-  DB_HOST1: "{{ user.domain | replace('.','-')+'-mariadb' }}"
-  DB_USERNAME1: "root"
-  DB_PASSWORD1: "password321"
-  DB_DATABASE1: "{{ mariadb_db_name }}"
-  DB_PORT1: "3306"
-  MYSQL_ROOT_PASSWORD: "password321"
-  MYSQL_USER: "root"
-  MYSQL_PASSWORD: "password321"
-  MYSQL_DATABASE: "{{ mariadb_db_name }}"
-  PDF_GENERATOR: "snappdf"
-  MULTI_DB_ENABLED: "false"
-  IS_DOCKER: "true"
-  PHANTOMJS_PDF_GENERATION: "false"
-  IN_USER_EMAIL: "{{ user.email }}"
-  IN_PASSWORD: "{{ user.pass }}"
-invoiceninjav5_docker_envs_custom: "{{ (lookup('file', server_domain_env_path) | from_yaml ).invoiceninjav5 }}"
-invoiceninjav5_docker_envs: "{{ invoiceninjav5_docker_envs_default
-                                | combine(invoiceninjav5_docker_envs_custom) }}"
+  TZ: "{{ tz }}" # Timezone
+  APP_URL: "https://{{ invoiceninjav5_nginx_web_subdomain + '.' + invoiceninjav5_nginx_web_domain }}" # Application URL
+  APP_KEY: "{{ invoiceninja.app_key | default('base64:O1S3kAJEDgo92gPkXtxfdCJpoGShgKloUSdcaHMXmoY=', true) }}" # Application key for encryption
+  APP_ENV: "production" # Application environment
+  APP_DEBUG: "false" # Debug mode (false = off)
+  APP_CIPHER: "AES-256-CBC" # Encryption cipher
+  TRUSTED_PROXIES: "*" # Trusted proxy addresses
+  REQUIRE_HTTPS: "true" # Require HTTPS for all connections
+  DB_STRICT: "false" # Strict mode for database connections
+  DB_TYPE: "mysql" # Database type
+  DB_HOST: "{{ user.domain | replace('.','-')+'-mariadb' }}" # Database host
+  DB_USERNAME: "root" # Database username
+  DB_PASSWORD: "password321" # Database password
+  DB_DATABASE: "{{ mariadb_db_name }}" # Database name
+  DB_PORT: "3306" # Database port number
+  DB_HOST1: "{{ user.domain | replace('.','-')+'-mariadb' }}" # Secondary database host
+  DB_USERNAME1: "root" # Secondary database username
+  DB_PASSWORD1: "password321" # Secondary database password
+  DB_DATABASE1: "{{ mariadb_db_name }}" # Secondary database name
+  DB_PORT1: "3306" # Secondary database port number
+  MYSQL_ROOT_PASSWORD: "password321" # MySQL root password
+  MYSQL_USER: "root" # MySQL user
+  MYSQL_PASSWORD: "password321" # MySQL user password
+  MYSQL_DATABASE: "{{ mariadb_db_name }}" # MySQL database name
+  PDF_GENERATOR: "snappdf" # PDF generator to be used
+  MULTI_DB_ENABLED: "false" # Enable or disable multi-database support
+  IS_DOCKER: "true" # Running in Docker container
+  PHANTOMJS_PDF_GENERATION: "false" # Enable or disable PhantomJS for PDF generation
+  IN_USER_EMAIL: "{{ user.email }}" # Invoice Ninja user email
+  IN_PASSWORD: "{{ user.pass }}" # Invoice Ninja user password
 
+invoiceninjav5_docker_envs_custom: "{{ (lookup('file', server_domain_env_path) | from_yaml ).invoiceninjav5 }}" # Custom environment variables
+invoiceninjav5_docker_envs: "{{ invoiceninjav5_docker_envs_default | combine(invoiceninjav5_docker_envs_custom) }}" # Merged default and custom environment variables
+
+################################
 # Commands
-invoiceninjav5_docker_commands_default: []
-invoiceninjav5_docker_commands_custom: []
-invoiceninjav5_docker_commands: "{{ invoiceninjav5_docker_commands_default
-                                    + invoiceninjav5_docker_commands_custom }}"
+################################
 
+invoiceninjav5_docker_commands_default: [] # Default commands for Invoice Ninja container
+invoiceninjav5_docker_commands_custom: [] # Custom commands for Invoice Ninja container
+invoiceninjav5_docker_commands: "{{ invoiceninjav5_docker_commands_default + invoiceninjav5_docker_commands_custom }}" # Combined default and custom commands
+
+################################
 # Volumes
-invoiceninjav5_docker_volumes_default:
+################################
+
+invoiceninjav5_docker_volumes_default: # Default volume mappings for Invoice Ninja container
   - "{{ invoiceninjav5_data_path }}/public:/var/www/app/public"
   - "{{ invoiceninjav5_data_path }}/storage:/var/www/app/storage"
   - "{{ invoiceninjav5_paths_location }}/config/php.ini:/usr/local/etc/php/php.ini"
-invoiceninjav5_docker_volumes_custom: []
-invoiceninjav5_docker_volumes: "{{ invoiceninjav5_docker_volumes_default
-                                   + invoiceninjav5_docker_volumes_custom }}"
+invoiceninjav5_docker_volumes_custom: [] # Custom volume mappings for Invoice Ninja container
+invoiceninjav5_docker_volumes: "{{ invoiceninjav5_docker_volumes_default + invoiceninjav5_docker_volumes_custom }}" # Combined default and custom volume mappings
 
+################################
 # Devices
-invoiceninjav5_docker_devices_default: []
-invoiceninjav5_docker_devices_custom: []
-invoiceninjav5_docker_devices: "{{ invoiceninjav5_docker_devices_default
-                                   + invoiceninjav5_docker_devices_custom }}"
+################################
 
+invoiceninjav5_docker_devices_default: [] # Default device mappings for Invoice Ninja container
+invoiceninjav5_docker_devices_custom: [] # Custom device mappings for Invoice Ninja container
+invoiceninjav5_docker_devices: "{{ invoiceninjav5_docker_devices_default + invoiceninjav5_docker_devices_custom }}" # Combined default and custom device mappings
+
+################################
 # Hosts
-invoiceninjav5_docker_hosts_default: []
-invoiceninjav5_docker_hosts_custom: []
-invoiceninjav5_docker_hosts: "{{ docker_hosts_common
-                                 | combine(invoiceninjav5_docker_hosts_default)
-                                 | combine(invoiceninjav5_docker_hosts_custom) }}"
+################################
 
+invoiceninjav5_docker_hosts_default: [] # Default host settings for Invoice Ninja container
+invoiceninjav5_docker_hosts_custom: [] # Custom host settings for Invoice Ninja container
+invoiceninjav5_docker_hosts: "{{ docker_hosts_common | combine(invoiceninjav5_docker_hosts_default) | combine(invoiceninjav5_docker_hosts_custom) }}" # Combined default and custom host settings
+
+################################
 # Labels
+################################
 
-invoiceninjav5_docker_labels_default: {}
-invoiceninjav5_docker_labels_custom: {}
-invoiceninjav5_docker_labels: "{{ docker_labels_common
-                                  | combine(invoiceninjav5_docker_labels_default)
-                                  | combine(invoiceninjav5_docker_labels_custom) }}"
+invoiceninjav5_docker_labels_default: {} # Default labels for Invoice Ninja container
+invoiceninjav5_docker_labels_custom: {} # Custom labels for Invoice Ninja container
+invoiceninjav5_docker_labels: "{{ docker_labels_common | combine(invoiceninjav5_docker_labels_default) | combine(invoiceninjav5_docker_labels_custom) }}" # Combined default and custom labels
 
+################################
 # Hostname
-invoiceninjav5_docker_hostname: "{{ invoiceninjav5_name }}"
+################################
 
+invoiceninjav5_docker_hostname: "{{ invoiceninjav5_name }}" # Hostname for Invoice Ninja container
+
+################################
 # Networks
-invoiceninjav5_docker_networks_alias: "{{ invoiceninjav5_name }}"
-invoiceninjav5_docker_networks_default: []
-invoiceninjav5_docker_networks_custom: []
-invoiceninjav5_docker_networks: "{{ docker_networks_common
-                                    + invoiceninjav5_docker_networks_default
-                                    + invoiceninjav5_docker_networks_custom }}"
+################################
 
+invoiceninjav5_docker_networks_alias: "{{ invoiceninjav5_name }}" # Network alias for Invoice Ninja container
+invoiceninjav5_docker_networks_default: [] # Default networks for Invoice Ninja container
+invoiceninjav5_docker_networks_custom: [] # Custom networks for Invoice Ninja container
+invoiceninjav5_docker_networks: "{{ docker_networks_common + invoiceninjav5_docker_networks_default + invoiceninjav5_docker_networks_custom }}" # Combined default and custom networks
+
+################################
 # Capabilities
-invoiceninjav5_docker_capabilities_default: []
-invoiceninjav5_docker_capabilities_custom: []
-invoiceninjav5_docker_capabilities: "{{ invoiceninjav5_docker_capabilities_default
-                                        + invoiceninjav5_docker_capabilities_custom }}"
+################################
 
+invoiceninjav5_docker_capabilities_default: [] # Default capabilities for Invoice Ninja container
+invoiceninjav5_docker_capabilities_custom: [] # Custom capabilities for Invoice Ninja container
+invoiceninjav5_docker_capabilities: "{{ invoiceninjav5_docker_capabilities_default + invoiceninjav5_docker_capabilities_custom }}" # Combined default and custom capabilities
+
+################################
 # Security Opts
-invoiceninjav5_docker_security_opts_default: []
-invoiceninjav5_docker_security_opts_custom: []
-invoiceninjav5_docker_security_opts: "{{ invoiceninjav5_docker_security_opts_default
-                                         + invoiceninjav5_docker_security_opts_custom }}"
+################################
 
+invoiceninjav5_docker_security_opts_default: [] # Default security options for Invoice Ninja container
+invoiceninjav5_docker_security_opts_custom: [] # Custom security options for Invoice Ninja container
+invoiceninjav5_docker_security_opts: "{{ invoiceninjav5_docker_security_opts_default + invoiceninjav5_docker_security_opts_custom }}" # Combined default and custom security options
+
+################################
 # Restart Policy
-invoiceninjav5_docker_restart_policy: unless-stopped
+################################
 
+invoiceninjav5_docker_restart_policy: unless-stopped # Restart policy for Invoice Ninja container: restart unless stopped manually
+
+################################
 # State
-invoiceninjav5_docker_state: started
+################################
+
+invoiceninjav5_docker_state: started # Desired state for Invoice Ninja container: started

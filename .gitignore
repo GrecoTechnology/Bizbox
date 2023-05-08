@@ -1,17 +1,24 @@
+# Ignore MacOS system files
 ### MacOS ###
 .DS_Store
 
+# Ignore Python compiled files
 ### Python ###
 *.pyc
 
+# Ignore Ansible files
 ### Ansible ###
 /backup.lock
 
+# Ignore host variables except .gitkeep
 # Vars
 /inventories/host_vars/*
 !/inventories/host_vars/.gitkeep
+
+# Ignore role variables
 /roles/*/vars/*
 
+# Ignore various configuration files
 # Settings
 /ansible.cfg
 /accounts.yml
@@ -23,9 +30,9 @@
 /rclone.conf
 /settings.yml
 
+# Ignore miscellaneous files and directories
 ### Misc ###
 /.idea
 /*.log
 /*.log.*
 .vscode/settings.json
-

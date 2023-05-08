@@ -1,12 +1,18 @@
 ---
+# This playbook sets up the Bizbox server and its associated applications
 - hosts: localhost
+
+  # Load variables from the specified files
   vars_files:
     - ['accounts.yml', 'defaults/accounts.yml.default']
     - ['settings.yml', 'defaults/settings.yml.default']
     - ['adv_settings.yml', 'defaults/adv_settings.yml.default']
     - ['backup_config.yml', 'defaults/backup_config.yml.default']
     - ['providers.yml', 'defaults/providers.yml.default']
+
+  # Define the roles and their tags to be executed in this playbook
   roles:
+<<<<<<< HEAD
     - { role: settings, tags: ['settings'] }
     - { role: pre_tasks, tags: ['pre_tasks'] }
     - { role: sanity_check, tags: ['sanity_check'] }
@@ -77,3 +83,62 @@
     - { role: custom, tags: ['custom'] }
     - { role: hetzner_nfs, tags: ['hetzner_nfs_server', 'hetzner_nfs_server_uninstall', 'hetzner_nfs_client_mount', 'hetzner_nfs_client_unmount'] }
     - { role: bizbox_mod, tags: ['bizbox_mod'] }
+=======
+    # Configuration roles
+    - { role: settings, tags: ['settings'] }  # Load general settings
+    - { role: pre_tasks, tags: ['pre_tasks'] }  # Execute pre-installation tasks
+    - { role: sanity_check, tags: ['sanity_check'] }  # Perform system sanity checks
+    - { role: backup_old, tags: ['backup_old'] }  # Backup old data if necessary
+    - { role: backup2, tags: ['backup2'] }  # Create secondary backup
+    - { role: restore, tags: ['restore'] }  # Restore data from backup if needed
+
+    # Core roles
+    - { role: root_ca, tags: ['bizbox', 'preinstall', 'root_ca'] }  # Set up root certificate authority
+    - { role: kernel, tags: ['bizbox', 'preinstall', 'kernel'] }  # Configure the system kernel
+    - { role: hetzner, tags: ['bizbox', 'preinstall', 'hetzner'] }  # Configure Hetzner-specific settings
+    - { role: user, tags: ['bizbox', 'preinstall', 'user'] }  # Set up user accounts
+    - { role: shell, tags: ['bizbox', 'preinstall', 'shell'] }  # Configure shell environment
+    - { role: rclone, tags: ['bizbox', 'preinstall', 'rclone'] }  # Set up rclone for remote file access
+    - { role: system, tags: ['bizbox', 'preinstall', 'system'] }  # Perform system-level configuration
+    - { role: common, tags: ['bizbox', 'preinstall', 'common'] }  # Configure common settings across applications
+    - { role: motd, tags: ['bizbox', 'motd'] }  # Configure the Message of the Day
+    - { role: docker, tags: ['bizbox', 'preinstall', 'docker'] }  # Set up Docker for containerization
+    #- { role: nvidia, tags: ['bizbox', 'nvidia'], when: ['use_nvidia'] }  # Set up NVIDIA GPU support (if applicable)
+    - { role: remote, tags: ['bizbox', 'mounts', 'mounts_override'], when: ['use_remote'] }  # Set up remote filesystem mounts
+    - { role: unionfs, tags: ['bizbox', 'mounts', 'mounts_override'] }  # Set up UnionFS for merging directories
+    - { role: scripts, tags: ['bizbox', 'preinstall', 'scripts'] }  # Add custom scripts to the system
+    - { role: sandbox, tags: ['bizbox', 'sandbox'] }  # Set up sandbox environment for testing
+    - { role: traefik, tags: ['bizbox', '`traefik', 'traefik_reset_certs'], when: ['reverse_proxy_is_enabled'] } # Set up Traefik reverse proxy (if enabled)
+    - { role: traefikauth, tags: ['bizbox', 'traefikauth', 'traefik_reset_certs'], when: ['reverse_proxy_is_enabled'] }  # Set up Traefik authentication (if reverse proxy is enabled)
+    - { role: cloudflare, tags: ['bizbox', 'cloudflare'], when: ['cloudflare_is_enabled'] }  # Set up Cloudflare integration (if enabled)
+    - { role: reinstall, tags: ['reinstall'] }  # Reinstall applications or components
+    - { role: uninstall, tags: ['uninstall'] }  # Uninstall applications or components
+    - { role: clone, tags: ['clone'] }  # Clone applications or components
+    - { role: backup, tags: ['backup'] }  # Perform system backups
+
+    # Application roles
+    - { role: adguardhome, tags: ['adguardhome', 'adguard'] }  # Set up AdGuard Home for ad blocking
+    - { role: vaultwarden, tags: ['vaultwarden'] }  # Set up Vaultwarden for password management
+    - { role: phpmyadmin, tags: ['phpmyadmin'] }  # Set up phpMyAdmin for database management
+    - { role: wordpress, tags: ['wordpress'] }  # Set up WordPress for website management
+    - { role: invoiceninjav5, tags: ['invoiceninja', 'invoice', 'invoiceninjav5'] }  # Set up Invoice Ninja for invoicing
+    - { role: portainer, tags: ['bizbox', 'portainer'] }  # Set up Portainer for container management
+    - { role: iperf3, tags: ['bizbox', 'iperf3'] }  # Set up iPerf3 for network performance testing
+    - { role: nethogs, tags: ['bizbox', 'nethogs'] }  # Set up NetHogs for network traffic monitoring
+    - { role: authelia, tags: ['authelia', 'authelia-reset'] }  # Set up Authelia for authentication
+    - { role: autoheal, tags: ['autoheal'] }  # Set up Autoheal for automatic container healing
+    - { role: btrfsmaintenance, tags: ['btrfsmaintenance'] }  # Set up Btrfs maintenance tasks
+    - { role: cadvisor, tags: ['cadvisor'] }  # Set up cAdvisor for container monitoring
+    #- { role: ddclient, tags: ['ddclient'] }  # Set up DDclient for dynamic DNS updates
+    - { role: mariadb, tags: ['mariadb'] }  # Set up MariaDB for database management
+    - { role: netdata, tags: ['netdata'] }  # Set up Netdata for real-time performance monitoring
+    - { role: nginx, tags: ['nginx'] }  # Set up Nginx web server
+    #- { role: postgres, tags: ['postgres'] }  # Set up PostgreSQL database server
+    - { role: python, tags: ['python'] }  # Set up Python for scripting and applications
+    - { role: redis, tags: ['redis'] }  # Set up Redis for in-memory data storage
+
+    # Custom roles and add-ons
+    - { role: custom, tags: ['custom'] }  # Execute custom tasks and configurations
+    - { role: hetzner_nfs, tags: ['hetzner_nfs_server', 'hetzner_nfs_server_uninstall', 'hetzner_nfs_client_mount', 'hetzner_nfs_client_unmount'] }  # Set up Hetzner NFS server and client
+    - { role: bizbox_mod, tags: ['bizbox_mod'] }  # Execute Bizbox-specific modifications and tweaks
+>>>>>>> 3c640372314bdc9a51a101f0a8e9f7752df43e7a

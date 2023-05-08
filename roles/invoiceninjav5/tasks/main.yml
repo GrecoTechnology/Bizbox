@@ -6,6 +6,18 @@
 #########################################################################
 #                   GNU General Public License v3.0                     #
 #########################################################################
+
+# This Ansible playbook configures and deploys the Invoice Ninja v5 application
+# using Nginx, MariaDB, and PHP. It performs the following tasks:
+# - Checks if the MariaDB Docker container exists and runs the MariaDB role if needed
+# - Creates the ninja database in MariaDB
+# - Sets up the necessary permissions, groups, and directories
+# - Imports and configures the in-vhost.conf and php.ini files
+# - Sets up the environment variables and HTTP headers
+# - Executes the Nginx role with the appropriate variables
+# - Removes any existing Docker container and creates a new one
+# - Waits for 30 seconds and restarts the Nginx Docker container
+
 ---
 - name: Check Docker Container
   ansible.builtin.include_tasks: "{{ resources_tasks_path }}/docker/check_docker_container.yml"
