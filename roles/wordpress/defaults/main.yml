@@ -81,6 +81,7 @@ mariadb_db_name: wordpress
 wordpress_traefik_middleware: "{{ wordpress_name +'@file' +','+ traefik_default_middleware }}"
 wordpress_traefik_certresolver: "{{ traefik_default_certresolver }}"
 wordpress_traefik_enabled: true
+wordpress_enable_www_rule: true
 
 ################################
 # Docker
