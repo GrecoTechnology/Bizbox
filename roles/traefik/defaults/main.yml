@@ -24,7 +24,7 @@ authelia_name: "{{ user.domain | replace('.','-')+'-authelia' }}"
 
 traefik_trusted_ips: ""
 traefik_file_watch: "true"
-traefik_x_robots: "none,noarchive,nosnippet,notranslate,noimageindex"
+# traefik_x_robots: "none,noarchive,nosnippet,notranslate,noimageindex"
 
 ################################
 # Paths
